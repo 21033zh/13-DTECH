@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- firebase start ****************************************-->
+        <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+        <!-- firebase end ******************************************-->
+         <script src="/fb_setup.js"></script>
+    </head>
+    <body>
+        <script src="/addProducts/addProducts.js"></script>
+        <a href="/index.html">Home</a>
+        <a href="/shopAll/shopAll.html">Shop page</a>
+        <a href="/makeAccount/makeAccount.html">Make an account</a>
+        <a href="/addProducts/addProducts.html">Add products</a>
+
+        <form onsubmit="createProduct(event); return false">
+            <label for="title">Product title:</label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="price">Price:</label><br>
+            <input type="number" id="price" name="price">
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>
