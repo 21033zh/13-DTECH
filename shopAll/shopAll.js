@@ -21,14 +21,32 @@ function displayProducts() {
                 <td>${productsArray[i].key}</td> 
                 <td>${productsArray[i].value.name}</td> 
                 <td>${productsArray[i].value.price}
-                <td><button class="joinButton" onclick="html_p2Details(
-                    '${productsArray[i].key}'
+                <td><button class="joinButton" onclick="goToPage(
+                    '${productsArray[i].key}',
+                    '${productsArray[i].value.name}',
+                    '${productsArray[i].value.price}'
                     )">see more</button></td>
                 </tr>`
             productTable.innerHTML += row;
             }
         };
     }, fb_error);
+}
+
+function goToPage(productID, productName, productPrice) {
+    sessionStorage.setItem("productID", productID)
+    sessionStorage.setItem("productName", productName)
+    sessionStorage.setItem("productPrice", productPrice)
+    window.location = "productPage.html"
+}
+
+function displayProductPage() {
+    var productName = sessionStorage.getItem("productName");
+    var productPrice = sessionStorage.getItem("productPrice");
+    nameDiv = document.getElementById("nameP")
+    nameDiv.innerHTML = productName;
+    priceDiv = document.getElementById("priceP")
+    priceDiv.innerHTML += productPrice;
 }
 
 function fb_error(error) {
