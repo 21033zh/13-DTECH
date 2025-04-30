@@ -9,16 +9,65 @@
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
         <!-- firebase end ******************************************-->
+         <!-- fonts start ****************************************-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Staatliches&display=swap" rel="stylesheet">
          <script src="/fb_setup.js"></script>
+         <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
     <body onload="displayProducts()">
         <script src="/shopAll/shopAll.js"></script>
-        
-        <a href="index.html">Home</a>
-        <a href="/shopAll/shopAll.html">Shop page</a>
-        <a href="/makeAccount/makeAccount.html">Make an account</a>
-        <a href="/addProducts/addProducts.html">Add products</a>
+
+        <header>
+          <h1>Doll Planet</h1>
+        </header>
+        <nav>
+            <a href="/index.html">Home</a>
+            <a href="/shopAll/shopAll.html">Shop page</a>
+            <a href="/makeAccount/makeAccount.html">Make an account</a>
+            <a href="/addProducts/addProducts.html">Add products</a>
+        </nav>
+
+        <h6>Filter by category</h6>
+        <button onclick="displayProducts()">Shop All</button>
+        <button onclick="var filter='tops'; filterCategory(filter)">Tops</button>
+        <button onclick="var filter='bottoms'; filterCategory(filter)">Bottoms</button>
+        <button onclick="var filter='dresses'; filterCategory(filter)">Dresses</button>
+        <button onclick="var filter='shoes'; filterCategory(filter)">Shoes</button>
+        <button onclick="var filter='accessories'; filterCategory(filter)">Accessories</button>
+        <button onclick="var filter='prints'; filterCategory(filter)">Prints</button><br>
+
+        <form onsubmit="filterSettings(event); return false">
+          <label for="colour">Colour:</label>
+            <select id="colourDropdown" name="colour">
+              <option value="all">All</option>
+              <option value="red">Red</option>
+              <option value="orange">Orange</option>
+              <option value="yellow">Yellow</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+              <option value="purple">Purple</option>
+              <option value="black">Black</option>
+              <option value="white">White</option>
+              <option value="multi">Multicolour</option>
+            </select><br>
+
+          <label for="size">Size:</label>
+            <select id="sizeDropdown" name="size">
+              <option value="all">All</option>
+              <option value="4">4</option>
+              <option value="6">6</option>
+              <option value="8">8</option>
+              <option value="10">10</option>
+              <option value="12">12</option>
+              <option value="14">14</option>
+          </select><br>
+
+          <input type="submit" value="Submit">
+        </form>
 
         <table id="productTable">
             <thead>
@@ -26,6 +75,7 @@
                 <th class="productTable_row">ID</th>
                 <th class="productTable_row">Name</th>
                 <th class="productTable_row">Price</th>
+                <th class="productTable_row">Image</th>
               </tr>
             </thead>
             <tbody>

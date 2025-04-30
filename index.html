@@ -10,13 +10,45 @@
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
         <!-- firebase end ******************************************-->
+        <!-- fonts start ****************************************-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Staatliches&display=swap" rel="stylesheet">
+        <!-- fonts end ****************************************-->
          <script src="fb_setup.js"></script>
+         <link href="style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <script src="script.js"></script>
-        <a href="index.html">Home</a>
-        <a href="shopAll/shopAll.html">Shop page</a>
-        <a href="makeAccount/makeAccount.html">Make an account</a>
-        <a href="addProducts/addProducts.html">Add products</a>
+        <div class="home_container">
+            <header>
+                <h1>Doll Planet</h1>
+            </header>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="shopAll/shopAll.html">Shop page</a>
+                <a href="makeAccount/makeAccount.html">Make an account</a>
+                <a href="addProducts/addProducts.html">Add products</a>
+            </nav>
+            <div id="header_img">
+                <img src="/images/header.png">
+            </div>
+            <div id="featured">
+                <h1>Featured items</h1>
+            </div>
+            <div id="about_us">
+                <h1>About Us</h1>
+                <p>Doll Planet is an NZ owned fashion brand committed to sustainability 
+                    and ethical fashion. We specialise in preloved and upcycled clothing, 
+                    as well as handmade accessories and original art prints!
+                </p>
+            </div>
+            <div id="about_us_img">
+                <img src="/images/sitting.png">
+            </div>
+            <div id="footer">
+                <p>footer</p>
+            </div>
+        </div>
     </body>
 </html>

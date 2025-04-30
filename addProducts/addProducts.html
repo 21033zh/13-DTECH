@@ -9,21 +9,80 @@
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
         <!-- firebase end ******************************************-->
+         <!-- fonts start ****************************************-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Staatliches&display=swap" rel="stylesheet">
          <script src="/fb_setup.js"></script>
+         <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <script src="/addProducts/addProducts.js"></script>
-        <a href="/index.html">Home</a>
-        <a href="/shopAll/shopAll.html">Shop page</a>
-        <a href="/makeAccount/makeAccount.html">Make an account</a>
-        <a href="/addProducts/addProducts.html">Add products</a>
+        <header>
+            <h1>Doll Planet</h1>
+        </header>
+        <nav>
+            <a href="/index.html">Home</a>
+            <a href="/shopAll/shopAll.html">Shop page</a>
+            <a href="/makeAccount/makeAccount.html">Make an account</a>
+            <a href="addProducts/addProducts.html">Add products</a>
+        </nav>
 
         <form onsubmit="createProduct(event); return false">
             <label for="title">Product title:</label><br>
             <input type="text" id="title" name="title"><br>
+
             <label for="price">Price:</label><br>
-            <input type="number" id="price" name="price">
+            <input type="number" id="price" name="price"><br>
+
+            <label for="size">size:</label><br>
+            <input type="number" id="size" name="size"><br>
+
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+            <option value="tops">Tops</option>
+            <option value="bottoms">Bottoms</option>
+            <option value="dresses">Dresses</option>
+            <option value="shoes">Shoes</option>
+            <option value="accessories">Accessories</option>
+            <option value="prints">Prints</option>
+            </select><br>
+
+            <label for="colour">Colour 1:</label>
+            <select id="colour1" name="colour">
+            <option value="red">Red</option>
+            <option value="orange">Orange</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+            <option value="purple">Purple</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            <option value="multi">Multicolour</option>
+            </select><br>
+
+            <label for="colour">Colour 2:</label>
+            <select id="colour2" name="colour">
+            <option value="none">None</option>
+            <option value="red">Red</option>
+            <option value="orange">Orange</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+            <option value="purple">Purple</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            </select><br>
+
+
+            <label for="image">Primary image:</label><br>
+            <input type="file" id="main_image" name="main_image" accept="image/png, image/jpeg" /><br>
+            
+            <label for="image">Images:</label><br>
+            <input type="file" id="images" name="main_image" accept="image/png, image/jpeg" multiple />
+            
             <input type="submit" value="Submit">
         </form>
     </body>

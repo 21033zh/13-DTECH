@@ -1,0 +1,98 @@
+html {
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+.montecarlo-regular {
+    font-family: "MonteCarlo", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.home_container {
+    display: grid;
+    grid-template-areas: 
+    "header header header header header header"
+    "nav nav nav nav nav nav"
+    "header_img header_img header_img header_img header_img header_img"
+    "featured featured featured featured featured featured"
+    "about_us about_us about_us_img about_us_img about_us_img about_us_img"
+    "footer footer footer footer footer footer"
+}
+
+header {
+    grid-area: header;
+    background-color: black;
+    color: white;
+    justify-content: center;
+    text-align: center;
+}
+
+header > h1 {
+    font-size: 2.5rem;
+    font-family: "MonteCarlo";
+    margin: 0px;
+}
+
+nav {
+    grid-area: nav;
+    background-color: black;
+    color: white;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 20px;
+}
+
+nav > a {
+    font-size: 0.9rem;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-decoration: none;
+    color: white;
+}
+
+#header_img {
+    grid-area: header_img;
+}
+
+#header_img > img {
+    width: 100%;
+}
+
+#featured {
+    grid-area: featured;
+}
+
+#about_us {
+    grid-area: about_us;
+    background-color: #dbd4df;
+    margin: 0px;
+}
+
+#about_us_img {
+    grid-area: about_us_img;
+    background-color: #dbd4df;
+    margin: 0px;
+    padding: 60px 0px 60px 30px;
+}
+
+#about_us_img > img {
+    width: 100%;
+}
+
+#footer {
+    grid-area: footer;
+}
+
+/* SHOPALL.HTML */
+td > img {
+    width: 100px;
+    height: auto;
+}
