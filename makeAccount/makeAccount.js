@@ -7,11 +7,14 @@ function createAccount(event) {
     console.log('name: ' + name + ', email: ' + email);
 
     let newAccountRef = firebase.database().ref('accounts').push();
+    let accountID = newAccountRef.key;
     newAccountRef.set({
     name: name,
     email: email,
     password: password
     });
+
+    sessionStorage.setItem("uid", accountID);
 
     if (mailingList === true) {
         console.log('join mailing list')

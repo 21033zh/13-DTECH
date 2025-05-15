@@ -1,45 +1,48 @@
+
 function createProduct(event) {
     event.preventDefault();
-    var productName = document.getElementById("title").value;
-    var productPrice = document.getElementById("price").value;
-    var productSize = document.getElementById("size").value;
-    var productCategory = document.getElementById("category").value;
-    var productColour1 = document.getElementById("colour1").value;
-    var productColour2 = document.getElementById("colour2").value;
-
-    console.log('title: ' + productName + ', price: ' + productPrice);
+        productName = document.getElementById("title").value,
+        price = document.getElementById("price").value,
+        size = document.getElementById("size").value,
+        stock = document.getElementById("stock").value,
+        brand = document.getElementById("brand").value,
+        category = document.getElementById("category").value,
+        colour1 = document.getElementById("colour1").value,
+        colour2 = document.getElementById("colour2").value
 
     let newProductRef = firebase.database().ref('products').push();
         newProductRef.set({
-        name: productName,
-        price: productPrice,
-        size: productSize,
-        category: productCategory,
-        colour1: productColour1,
-        colour2: productColour2
+        productName, price, size, stock,
+        brand, category, colour1, colour2
     });
 
     var productID = newProductRef.key;
     const file = document.getElementById("main_image").files[0];
 
     if (file) {
+        statusDiv = document.getElementById("status")
+        statusDiv.innerHTML = 'Uploading primary image...'
         const storageRef = firebase.storage().ref("product_images/" + productID + "_" + file.name);
         storageRef.put(file).then(snapshot => {
             return snapshot.ref.getDownloadURL(); 
             }).then(downloadURL => {
             console.log(downloadURL)
-            return firebase.database().ref("products/" + productID).set({
+            return firebase.database().ref("products/" + productID).update({
                 mainImage: downloadURL 
             });
             }).then(() => {
             console.log("Product uploaded with image.");
+            statusDiv.innerHTML = 'Primary image uploaded successfully'
             }).catch(error => {
             console.error("Upload failed:", error);
+            statusDiv.innerHTML = 'Primary image upload failed'
             });
     }
 
     const imageArray = document.getElementById("images").files;
     if (imageArray) {
+        statusDiv = document.getElementById("status2")
+        statusDiv.innerHTML = 'Uploading images...'
         for (i = 0; i < imageArray.length; i++) {
             let imageNum = 'image' + i;
             console.log(imageNum)
@@ -53,10 +56,14 @@ function createProduct(event) {
                 });
             }).then(() => {
                 console.log("Images added.");
+                statusDiv.innerHTML = 'Images uploaded successfully...'
             }).catch(error => {
                 console.error("Extra images upload failed:", error);
+                statusDiv.innerHTML = 'Images upload failed'
             });  
         }
     }
+
+
 }
 //add file type validation

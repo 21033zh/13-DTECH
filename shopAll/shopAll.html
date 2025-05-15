@@ -47,6 +47,7 @@
               <option value="red">Red</option>
               <option value="orange">Orange</option>
               <option value="yellow">Yellow</option>
+              <option value="pink">Pink</option>
               <option value="green">Green</option>
               <option value="blue">Blue</option>
               <option value="purple">Purple</option>
@@ -69,17 +70,17 @@
           <input type="submit" value="Submit">
         </form>
 
-        <table id="productTable">
-            <thead>
-              <tr>
-                <th class="productTable_row">ID</th>
-                <th class="productTable_row">Name</th>
-                <th class="productTable_row">Price</th>
-                <th class="productTable_row">Image</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
+        <form onsubmit="sortSettings(event); return false">
+          <label for="sort">Sort by:</label>
+          <select id="sortDropdown" name="sortDropdown">
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="lowPrice">Lowest price</option>
+            <option value="highPrice">Highest price</option>
+          </select><input type="submit" value="Submit">
+        </form>
+
+        <div id="products_container">
+        </div>
     </body>
 </html>
