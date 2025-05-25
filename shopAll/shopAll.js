@@ -1,6 +1,7 @@
 var colourFilter;
 var sizeFilter;
 var sortSettings;
+var sortBy;
 var productsArray = [];
 var allProductsArray = []
 
@@ -92,13 +93,12 @@ function filterCategory(filter) {
 
 function filterSettings(event) {
     event.preventDefault();
-    productsArray = [].concat(allProductsArray);
     document.getElementById("products_container").innerHTML = '';
     colourFilter = document.getElementById("colourDropdown").value;
     sizeFilter = document.getElementById("sizeDropdown").value;
     console.log('colour: ' + colourFilter);
     console.log('size: ' + sizeFilter);
-    var oldProductsArray = [].concat(productsArray);
+    var oldProductsArray = [].concat(allProductsArray);
     productsArray = []
 
     console.log("Current filters:", colourFilter, sizeFilter);
@@ -114,29 +114,40 @@ function filterSettings(event) {
                     key: child.key,
                     value: child.value
                 });
+                console.log(productsArray)
         } else {
             console.log('not filtered')
         }
     });
-    createGrid()
+
+    if (sortBy === 'date') {
+        if (sortSettings === 'newest') {
+            displayProducts();
+            console.log('date new to old')
+        } else {
+            console.log('date old to new')
+        }
+    } else if (sortBy === 'price') {
+        if (sortSettings === 'lowPrice') {
+            sortLowPrice();
+        } else {
+            sortHighPrice();
+        }
+    } else {
+        createGrid();
+    }
 }
 
 function sortSettings(event) {
     event.preventDefault();
     document.getElementById("products_container").innerHTML = '';
     sortSettings = document.getElementById("sortDropdown").value;
-    let sortBy;
 
     if (sortSettings === 'newest' || sortSettings === 'oldest') {
         sortBy = 'date'
     } else if (sortSettings === 'lowPrice' || sortSettings === 'highPrice') {
         sortBy = 'price'
     }
-
-    console.log('sort By: ' + sortBy)
-    console.log('colour: ' + colourFilter);
-    console.log('size: ' + sizeFilter);
-    console.log("sort settings: ", sortSettings);
 
      if (sortBy === 'date') {
         if (sortSettings === 'newest') {
@@ -147,33 +158,39 @@ function sortSettings(event) {
         }
     } else if (sortBy === 'price') {
         if (sortSettings === 'lowPrice') {
-            console.log('price low to high')
-            productsArray.sort(function(a, b) {
-                return b.value.price - a.value.price;
-            });
-            productsArray.reverse();
-            productsArray.forEach(function(child){
-                console.log(child.key, child.value)
-            }
-            );
-            createGrid();
+            sortLowPrice();
         } else {
-            console.log('price high to low')
-            productsArray.sort(function(a, b) {
-                return b.value.price - a.value.price;
-            });
-            productsArray.forEach(function(child){
-                console.log(child.key, child.value)
-            }
-            );
-            createGrid();
+            sortHighPrice();
         }
     }
+}
+
+function sortLowPrice() {
+    console.log('sort price low to high')
+        productsArray.sort(function(a, b) {
+            return b.value.price - a.value.price;
+        });
+        productsArray.reverse();
+        productsArray.forEach(function(child){
+            console.log(child.key, child.value)
+        }
+        );
+    createGrid();
+}
+
+function sortHighPrice() {
+    console.log('sort price high to low')
+    productsArray.sort(function(a, b) {
+        return b.value.price - a.value.price;
+    });
+    productsArray.forEach(function(child){
+        console.log(child.key, child.value)
+    }
+    );
+    createGrid();
 }
 
 function fb_error(error) {
     console.log("fb_error");
     console.log(error);
 }
-
-/** making the FILTERS AND SORT functions compatible */

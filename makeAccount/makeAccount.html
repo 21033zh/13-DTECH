@@ -17,7 +17,7 @@
          <script src="/fb_setup.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body>
+    <body onload="displayWishlist()">
         <script src="/makeAccount/makeAccount.js"></script>
 
         <header>
@@ -41,5 +41,8 @@
             <input type="checkbox" id="mailingList"><p>Join our mailing list</p>
             <input type="submit" value="Submit">
         </form>
+
+        <div id="products_container">
+        </div>
     </body>
 </html>
