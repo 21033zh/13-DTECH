@@ -39,6 +39,12 @@ function displayWishlist() {
 function createGrid(productsArray) {
     console.log(productsArray)
     for (i = 0; i < productsArray.length; i++) {
-        console.log('name: ' + productsArray[i].value.productID)
+        console.log('name: ' + productsArray[i].value.productName)
+        const product = 
+            `<div>
+            <img src="${productsArray[i].value.productImage}" class="productImage">
+            <h6>${productsArray[i].value.productName}</h6>
+            </div>`
+    document.getElementById("wishlist_products_container").innerHTML += product;
     };
 }

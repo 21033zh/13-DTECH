@@ -30,10 +30,11 @@ function createGrid() {
             <p>$${productsArray[i].value.price}</p>
             <p>size ${productsArray[i].value.size}</p>
             <button class="wishlist" onclick=
-            "addToWishlist('${productsArray[i].key}')">add to wishlist</button>
+            "addToWishlist('${productsArray[i].key}', '${productsArray[i].value.productName}', 
+            '${productsArray[i].value.mainImage}')">add to wishlist</button>
             <button class="joinButton" onclick="goToPage(
                 '${productsArray[i].key}',
-                '${productsArray[i].value.productName}',
+                '${productsArray[i].value.productName},',
                 '${productsArray[i].value.price}'
                 )">see more</button></div>`;
         console.log(productsArray[i].value.productName)
@@ -41,15 +42,16 @@ function createGrid() {
     };
 }
 
-function addToWishlist(productID) {
+function addToWishlist(productID, productName, productImage) {
     var uid = sessionStorage.getItem("uid");
     if (uid){
-        console.log('uid: ' + uid)
-        firebase.database().ref("/accounts/" + uid + "/wishlist/").update({
-            productID: productID 
+        console.log('uid: ' + uid);
+        firebase.database().ref("/accounts/" + uid + "/wishlist/" + productID).update({
+            productName: productName,
+            productImage: productImage
         });
     } else {
-        alert("make an account")
+        alert("make an account");
     }
 }
 

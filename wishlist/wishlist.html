@@ -18,7 +18,7 @@
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
     <body onload="displayWishlist()">
-        <script src="/makeAccount/makeAccount.js"></script>
+        <script src="/wishlist/wishlist.js"></script>
 
         <header>
             <h1>Doll Planet</h1>
@@ -29,19 +29,7 @@
             <a href="makeAccount/makeAccount.html">Make an account</a>
             <a href="/addProducts/addProducts.html">Add products</a>
         </nav>
-
-        <form onsubmit="createAccount(event); return false">
-            <h1>Create account</h1>
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name"><br>
-            <label for="email">Email:</label><br>
-            <input type="text" id="email" name="email"><br>
-            <label for="email">Password:</label><br>
-            <input type="text" id="password" name="password"><br>
-            <input type="checkbox" id="mailingList"><p>Join our mailing list</p>
-            <input type="submit" value="Submit">
-        </form>
-
+        <h1>Wishlist</h1>
         <div id="wishlist_products_container">
         </div>
     </body>

@@ -103,3 +103,14 @@ nav > a {
     width: 100%;
     height: auto;
 }
+
+#wishlist_products_container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.wishlistImage {
+    width: 100%;
+    height: auto;
+}
