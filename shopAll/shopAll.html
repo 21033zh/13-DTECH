@@ -5,20 +5,24 @@
         <!-- firebase start ****************************************-->
         <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+    
+
         <!-- Add Firebase products that you want to use -->
-        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
+        <script src="/fb_setup.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
         <!-- firebase end ******************************************-->
          <!-- fonts start ****************************************-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Staatliches&display=swap" rel="stylesheet">
-         <script src="/fb_setup.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body onload="displayProducts()">
+    <body onload="displayProducts(), checkSignIn()">
         <script src="/shopAll/shopAll.js"></script>
         <script type="text/javascript">document.getElementById('sortDropdown').onchange = sortSettings()</script>
 
@@ -28,7 +32,7 @@
         <nav>
             <a href="/index.html">Home</a>
             <a href="/shopAll/shopAll.html">Shop page</a>
-            <a href="/makeAccount/makeAccount.html">Make an account</a>
+            <a href="/makeAccount/account.html">Make an account</a>
             <a href="/addProducts/addProducts.html">Add products</a>
         </nav>
 

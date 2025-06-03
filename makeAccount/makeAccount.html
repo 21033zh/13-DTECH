@@ -9,6 +9,8 @@
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
         <!-- firebase end ******************************************-->
          <!-- fonts start ****************************************-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,8 +18,10 @@
         <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Staatliches&display=swap" rel="stylesheet">
          <script src="/fb_setup.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
+
+
     </head>
-    <body onload="displayWishlist()">
+    <body onload="signIn()">
         <script src="/makeAccount/makeAccount.js"></script>
 
         <header>
@@ -30,19 +34,9 @@
             <a href="/addProducts/addProducts.html">Add products</a>
         </nav>
 
-        <form onsubmit="createAccount(event); return false">
-            <h1>Create account</h1>
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name"><br>
-            <label for="email">Email:</label><br>
-            <input type="text" id="email" name="email"><br>
-            <label for="email">Password:</label><br>
-            <input type="text" id="password" name="password"><br>
-            <input type="checkbox" id="mailingList"><p>Join our mailing list</p>
-            <input type="submit" value="Submit">
-        </form>
-
-        <div id="wishlist_products_container">
-        </div>
-    </body>
+    <!-- The surrounding HTML is left untouched by FirebaseUI.
+         Your app may use that space for branding, controls and other customizations.-->
+    <h1>Sign in/Sign up</h1>
+    <div id="firebaseui-auth-container"></div>
+  </body>
 </html>

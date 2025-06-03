@@ -5,6 +5,19 @@ var sortBy;
 var productsArray = [];
 var allProductsArray = []
 
+ function checkSignIn() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            console.log("User is signed in")
+            
+        } else {
+            // User is signed out.
+            console.log("user signed out")
+        }
+    });
+}
+
 function displayProducts() {
     firebase.database().ref('/products/').once('value', function(snapshot) {
         console.log(productsArray);
@@ -31,28 +44,32 @@ function createGrid() {
             <p>size ${productsArray[i].value.size}</p>
             <button class="wishlist" onclick=
             "addToWishlist('${productsArray[i].key}', '${productsArray[i].value.productName}', 
+            '${productsArray[i].value.productPrice}', 
             '${productsArray[i].value.mainImage}')">add to wishlist</button>
             <button class="joinButton" onclick="goToPage(
-                '${productsArray[i].key}',
-                '${productsArray[i].value.productName},',
-                '${productsArray[i].value.price}'
+                '${productsArray[i].key}', '${productsArray[i].value.productName}', 
+                '${productsArray[i].value.productPrice}', 
+                '${productsArray[i].value.mainImage}'
                 )">see more</button></div>`;
         console.log(productsArray[i].value.productName)
     document.getElementById("products_container").innerHTML += product;
     };
 }
 
-function addToWishlist(productID, productName, productImage) {
-    var uid = sessionStorage.getItem("uid");
-    if (uid){
-        console.log('uid: ' + uid);
-        firebase.database().ref("/accounts/" + uid + "/wishlist/" + productID).update({
+function addToWishlist(productID, productName, productPrice, productImage) {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log("User is signed in:", user);
+            firebase.database().ref("/accounts/" + user.uid + "/wishlist/" + productID).update({
             productName: productName,
+            productPrice: productPrice,
             productImage: productImage
         });
-    } else {
-        alert("make an account");
-    }
+        } else {
+            // User is signed out.
+            alert("make an account");
+        }
+    });
 }
 
 function goToPage(productID, productName, productPrice, productImage) {
