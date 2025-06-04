@@ -5,19 +5,6 @@ var sortBy;
 var productsArray = [];
 var allProductsArray = []
 
- function checkSignIn() {
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            // User is signed in.
-            console.log("User is signed in")
-            
-        } else {
-            // User is signed out.
-            console.log("user signed out")
-        }
-    });
-}
-
 function displayProducts() {
     firebase.database().ref('/products/').once('value', function(snapshot) {
         console.log(productsArray);

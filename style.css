@@ -70,6 +70,21 @@ nav > a {
     grid-area: featured;
 }
 
+#featured_products_container {
+    display: grid;
+    align-items: center;
+    grid-auto-flow: column;
+    grid-auto-columns: 15%; /* play with this to change height of the children, 50% will fill half */
+    grid-template-columns: unset; /* do not set template columns and rows */
+    grid-template-rows: unset;
+    overflow: scroll;
+}
+
+.featured_product {
+    width: 100%;
+    height: auto;
+}
+
 #about_us {
     grid-area: about_us;
     background-color: #dbd4df;
