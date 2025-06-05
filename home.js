@@ -15,19 +15,13 @@ function createRow(productsArray) {
     for (i = 0; i < 10; i++) {
             const product = 
             `<div class="featured_product">
-            <img src="${productsArray[i].value.mainImage}" class="productImage">
-            <h6>${productsArray[i].value.productName}</h6>
-            <p>$${productsArray[i].value.price}</p>
+            <img src="${productsArray[i].value.mainImage}" class="featured_image">
+            <div class="info_card">
+            <p>${productsArray[i].value.productName}</p>
             <p>size ${productsArray[i].value.size}</p>
-            <button class="wishlist" onclick=
-            "addToWishlist('${productsArray[i].key}', '${productsArray[i].value.productName}', 
-            '${productsArray[i].value.productPrice}', 
-            '${productsArray[i].value.mainImage}')">add to wishlist</button>
-            <button class="joinButton" onclick="goToPage(
-                '${productsArray[i].key}', '${productsArray[i].value.productName}', 
-                '${productsArray[i].value.productPrice}', 
-                '${productsArray[i].value.mainImage}'
-                )">see more</button></div>`;
+            <p class="price">$${productsArray[i].value.price}</p>
+            </div>
+            </div>`;
         console.log(productsArray[i].value.productName)
         document.getElementById("featured_products_container").innerHTML += product;
     };

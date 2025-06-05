@@ -13,7 +13,9 @@
         <!-- fonts start ****************************************-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Staatliches&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;400;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100&display=swap" rel="stylesheet">
+
         <!-- fonts end ****************************************-->
          <script src="fb_setup.js"></script>
          <script src="home.js"></script>
@@ -21,33 +23,53 @@
     </head>
     <body onload="displayFeaturedProducts()">
         <div class="home_container">
+<!-- NAV BAR  ********************************************************-->
             <header>
-                <h1>Doll Planet</h1>
-                <a href="makeAccount/account.html">wishlist</a>
+                <img src="/images/logo.png">
             </header>
             <nav>
-                <a href="index.html">Home</a>
-                <a href="shopAll/shopAll.html">Shop page</a>
-                <a href="makeAccount/makeAccount.html">Make an account</a>
-                <a href="addProducts/addProducts.html">Add products</a>
+                <a href="index.html">HOME</a>
+                <div class="shopDropdown">
+                    <button class="dropbtn">SHOP</button>
+                    <div class="shopDropdownContent">
+                      <a href="/shopAll/shopAll.html">Shop All</a>
+                      <a href="/shopAll/shopTops.html">Tops</a>
+                      <a href="/shopAll/shopBottoms.html">Bottoms</a>
+                      <a href="/shopAll/shopDresses.html">Dresses</a>
+                      <a href="/shopAll/shopShoes.html">Shoes</a>
+                      <a href="/shopAll/shopAccessories.html">Accessories</a>
+                      <a href="/shopAll/shopArt.html">Art</a>
+                    </div>
+                  </div>
+                <a href="makeAccount/makeAccount.html">ABOUT</a>
+                <a href="addProducts/addProducts.html">GALLERY</a>
             </nav>
+<!-- NAV BAR END ********************************************************-->
+<!-- HEADER IMAGE ********************************************************-->
             <div id="header_img">
                 <img src="/images/header.png">
             </div>
+<!-- HEADER IMAGE END ********************************************************-->
+<!-- FEATURED PRODUCTS ********************************************************-->
             <div id="featured">
-                <h1>Featured items</h1>
+                <h1>FEATURED ITEMS</h1>
+                <a href="/shopAll/shopAll.html">SHOP ALL</a>
                 <div id="featured_products_container"></div>
             </div>
+<!-- FEATURED PRODUCTS END ********************************************************-->
+<!-- ABOUT SECTION ********************************************************-->
             <div id="about_us">
-                <h1>About Us</h1>
+                <h1>ABOUT US</h1>
                 <p>Doll Planet is an NZ owned fashion brand committed to sustainability 
                     and ethical fashion. We specialise in preloved and upcycled clothing, 
                     as well as handmade accessories and original art prints!
                 </p>
+                <a href="/about/about.html">FIND OUT MORE</a>
             </div>
             <div id="about_us_img">
                 <img src="/images/sitting.png">
             </div>
+<!-- ABOUT SECTION END ********************************************************-->
             <div id="footer">
                 <p>footer</p>
             </div>

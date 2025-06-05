@@ -2,6 +2,8 @@ html {
     padding: 0px;
     margin: 0px;
     font-size: 20px;
+    font-family: "Alegreya Sans";
+    font-weight: 400;
 }
 
 body {
@@ -9,12 +11,96 @@ body {
     margin: 0px;
 }
 
-.montecarlo-regular {
-    font-family: "MonteCarlo", cursive;
-    font-weight: 400;
-    font-style: normal;
+a {
+    text-decoration: none;
+    text-align: center;
+}
+/*--- NAV BAR --------------------------------------*/
+/*----LOGO-----*/
+header {
+    grid-area: header;
+    background-color: black;
+    color: white;
+    justify-content: center;
+    text-align: center;
+}
+
+header > img {
+    width: 20%;
+    padding: 20px
+}
+
+/*-----NAV------*/
+nav {
+    grid-area: nav;
+    background-color: black;
+    color: white;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.9rem;
+    padding-bottom: 20px;
+}
+
+nav a, nav button {
+    font-family: "Poppins";
+    font-size: 0.8rem;
+    margin-left: 3%;
+    margin-right: 3%;
+    color: white;
+}
+
+/*----DROPDOWN-----*/
+.shopDropdown .dropbtn {
+    color: white;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    background-color: inherit;
   }
 
+.shopDropdown {
+    display: inline;
+    position: relative;
+}
+
+nav a:hover, .shopDropdown:hover .dropbtn {
+    color: rgb(161, 161, 161);
+  }
+
+.shopDropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #000000;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: 30px;
+  }
+  
+.shopDropdownContent a {
+    color: white;
+    padding: 12px 16px;
+    display: block;
+    text-align: left;
+}
+  
+.shopDropdownContent a:hover {
+    color:#dbd4df;
+}
+
+.shopDropdown:hover  .shopDropdownContent {
+    display: block;
+}
+
+/*--- NAV BAR END --------------------------------------*/
+
+/*--- FOOTER --------------------------------------*/
+#footer {
+    grid-area: footer;
+}
+/*--- FOOTER END --------------------------------------*/
+
+/*--- HOME PAGE ----------------------------------------*/
 .home_container {
     display: grid;
     grid-template-areas: 
@@ -26,38 +112,7 @@ body {
     "footer footer footer footer footer footer"
 }
 
-header {
-    grid-area: header;
-    background-color: black;
-    color: white;
-    justify-content: center;
-    text-align: center;
-}
-
-header > h1 {
-    font-size: 2.5rem;
-    font-family: "MonteCarlo";
-    margin: 0px;
-}
-
-nav {
-    grid-area: nav;
-    background-color: black;
-    color: white;
-    justify-content: center;
-    text-align: center;
-    font-size: 0.9rem;
-    padding: 20px;
-}
-
-nav > a {
-    font-size: 0.9rem;
-    margin-left: 20px;
-    margin-right: 20px;
-    text-decoration: none;
-    color: white;
-}
-
+/*---HEADER----*/
 #header_img {
     grid-area: header_img;
 }
@@ -66,59 +121,128 @@ nav > a {
     width: 100%;
 }
 
+/*---FEATURED-PRODUCTS----*/
 #featured {
     grid-area: featured;
+    margin: 40px 0px 40px 0px;
 }
 
+#featured > h1 {
+    font-weight: 700;
+    text-align: center;
+    margin: 0px;
+}
+
+#featured > a {
+    background-color: #7b628b;
+    color: white;
+    font-weight: 400;
+    padding: 10px;
+    font-size: 0.8rem;
+    margin: 20px;
+    display: block;
+    width: 5em;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 #featured_products_container {
     display: grid;
     align-items: center;
     grid-auto-flow: column;
-    grid-auto-columns: 15%; /* play with this to change height of the children, 50% will fill half */
+    grid-auto-columns: 20%; /* play with this to change height of the children, 50% will fill half */
     grid-template-columns: unset; /* do not set template columns and rows */
     grid-template-rows: unset;
     overflow: scroll;
 }
 
 .featured_product {
-    width: 100%;
+    width: 90%;
     height: auto;
+    margin: 10px;
 }
 
-#about_us {
-    grid-area: about_us;
-    background-color: #dbd4df;
+.featured_product .featured_image {
+    width: 100%;
+    height: auto;
     margin: 0px;
+    display: block;
+}
+
+.info_card {
+    background-color: black;
+    color: white;
+    font-family: "Alegreya Sans";
+    text-transform: uppercase;
+    padding: 5px;
+    margin: 0px;
+    display: block;
+}
+
+.info_card  p {
+    margin: 0px;
+    font-size: 15px;
+    font-weight: 100;
+    padding: 3px 0px 3px 0px;
+}
+
+.info_card  .price {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+/*---ABOUT-SECTION----*/
+#about_us {
+    background-color: #dbd4df;
+    grid-area: about_us;
+    padding: 80px 80px 80px 80px;
+}
+
+#about_us > h1 {
+    text-align: center;
+    margin-top: 0px;
+}
+
+#about_us > a {
+    background-color:#000000;
+    color: #dbd4df;
+    padding: 10px;
+    margin-top: 30px;
+    text-align: center;
+    display: block;
+    width: 40%;
 }
 
 #about_us_img {
-    grid-area: about_us_img;
     background-color: #dbd4df;
-    margin: 0px;
-    padding: 60px 0px 60px 30px;
+    grid-area: about_us_img;
+    padding: 50px 0px 50px 0px;
 }
 
 #about_us_img > img {
     width: 100%;
+    height: auto;
+    display:block;
 }
 
-#footer {
-    grid-area: footer;
-}
+/*--- HOME PAGE END ----------------------------------------*/
 
-/* SHOPALL.HTML */
+/*--- SHOP PAGE ----------------------------------------*/
 #products_container {
     display: grid;
     width: 100%;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-
 .productImage {
     width: 100%;
     height: auto;
 }
 
+
+/*--- SHOP PAGE END ----------------------------------------*/
+
+/*--- ACCOUNT PAGE ----------------------------------------*/
 #wishlist_products_container {
     display: grid;
     width: 100%;
@@ -129,3 +253,5 @@ nav > a {
     width: 100%;
     height: auto;
 }
+
+/*--- ACCOUNT PAGE END----------------------------------------*/
