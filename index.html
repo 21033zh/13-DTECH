@@ -9,6 +9,7 @@
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+
         <!-- firebase end ******************************************-->
         <!-- fonts start ****************************************-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +26,23 @@
         <div class="home_container">
 <!-- NAV BAR  ********************************************************-->
             <header>
-                <img src="/images/logo.png">
+                <div id="logoDiv">
+                    <a href="index.html">
+                        <img id="logo" src="/images/logo.png">
+                    </a>
+                </div>
+                <div id="searchBar">
+                    <form action="">
+                        <input id="inputBar" type="search" placeholder="Search..." required>
+                        <input id="submitButton" type="image" src="/images/search.png" alt="submit" class="fa">
+                      </form>
+                </div>
+                    <a href="/wishlist/wishlist.html">
+                        <img class="navIcons" src="/images/heart.png">
+                    </a>
+                    <a href="cart">
+                        <img class="navIcons" src="/images/cart.png">
+                    </a>
             </header>
             <nav>
                 <a href="index.html">HOME</a>
@@ -74,5 +91,6 @@
                 <p>footer</p>
             </div>
         </div>
+    </div>
     </body>
 </html>
