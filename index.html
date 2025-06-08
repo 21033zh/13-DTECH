@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head title="Doll Planet">
         <meta charset="UTF-8">
+        <meta name="viewport">
         <!-- firebase start ****************************************-->
         <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
@@ -32,7 +33,7 @@
                     </a>
                 </div>
                 <div id="searchBar">
-                    <form action="">
+                    <form>
                         <input id="inputBar" type="search" placeholder="Search..." required>
                         <input id="submitButton" type="image" src="/images/search.png" alt="submit" class="fa">
                       </form>
@@ -63,8 +64,9 @@
             </nav>
 <!-- NAV BAR END ********************************************************-->
 <!-- HEADER IMAGE ********************************************************-->
-            <div id="header_img">
-                <img src="/images/header.png">
+            <div id="header_img" width="100">
+                <div id="header_img_background"></div>
+                <p>Welcome to doll planet</p>
             </div>
 <!-- HEADER IMAGE END ********************************************************-->
 <!-- FEATURED PRODUCTS ********************************************************-->
@@ -84,13 +86,12 @@
                 <a href="/about/about.html">FIND OUT MORE</a>
             </div>
             <div id="about_us_img">
-                <img src="/images/sitting.png">
+                <img src="/images/sitting.webp">
             </div>
 <!-- ABOUT SECTION END ********************************************************-->
             <div id="footer">
                 <p>footer</p>
             </div>
-        </div>
     </div>
     </body>
 </html>

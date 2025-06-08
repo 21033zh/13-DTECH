@@ -1,3 +1,4 @@
+
 function displayFeaturedProducts() {
     firebase.database().ref('/products/').once('value', function(snapshot) {
         var productsArray = [];

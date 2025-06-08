@@ -53,12 +53,12 @@ header {
 @keyframes logo-size-in {
     from {width: 20%;
         height: auto;}
-    to {width: 22%; 
+    to {width: 21%; 
         height: auto;}
 }
 
 @keyframes logo-size-out {
-    from {width: 22%;
+    from {width: 21%;
         height: auto;}
     to {width: 20%; 
         height: auto;}
@@ -140,12 +140,22 @@ form {
   form:valid{
     width: 200px;
     cursor: pointer;
+    background-color:black;
   }
+
+  input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px rgb(0, 0, 0) inset !important;
+    -webkit-text-fill-color: rgb(255, 255, 255) !important;
+}
   
   form:hover #inputBar,
   form:focus-within #inputBar,
   form:valid #inputBar {
     width: 90%;
+    background-color:black;
   } 
 
 /*-----NAV------*/
@@ -189,7 +199,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     display: none;
     position: absolute;
     background-color: #000000;
-    min-width: 160px;
+    min-width: 140px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     left: 30px;
@@ -236,10 +246,17 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*---HEADER----*/
 #header_img {
     grid-area: header_img;
+    width: 100%;
+    height: 700px;
 }
 
-#header_img > img {
-    width: 100%;
+#header_img_background {
+    background-image: linear-gradient(to bottom, rgb(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0.75) ),
+    url("/images/header-image.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
 }
 
 /*---FEATURED-PRODUCTS----*/
@@ -256,6 +273,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 #featured > a {
     background-color: #7b628b;
+    border-radius: 5px;
     color: white;
     font-weight: 400;
     padding: 10px;
@@ -354,6 +372,31 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- HOME PAGE END ----------------------------------------*/
 
 /*--- SHOP PAGE ----------------------------------------*/
+#categoriesContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    text-align: center;
+    color: white;
+}
+
+#categoriesContainer div {
+    position: relative;;
+    margin: 15px;
+}
+
+#categoriesContainer p {
+    margin: 0px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+}
+
+#categoriesContainer img {
+    width: 100%;
+}
+
 #products_container {
     display: grid;
     width: 100%;

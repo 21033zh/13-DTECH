@@ -1,40 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head title="Doll Planet">
         <meta charset="UTF-8">
+        <meta name="viewport">
         <!-- firebase start ****************************************-->
         <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
-    
-
         <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
-        <script src="/fb_setup.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
-        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+
         <!-- firebase end ******************************************-->
-         <!-- fonts start ****************************************-->
+        <!-- fonts start ****************************************-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Staatliches&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;400;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100&display=swap" rel="stylesheet">
+
+        <!-- fonts end ****************************************-->
+         <script src="/fb_setup.js"></script>
+         <script src="shopAll.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
+
     <body onload="displayProducts()">
         <script src="/shopAll/shopAll.js"></script>
         <script type="text/javascript">document.getElementById('sortDropdown').onchange = sortSettings()</script>
 
-        <header>
-          <h1>Doll Planet</h1>
-        </header>
-        <nav>
-            <a href="/index.html">Home</a>
-            <a href="/shopAll/shopAll.html">Shop page</a>
-            <a href="/makeAccount/account.html">Make an account</a>
-            <a href="/addProducts/addProducts.html">Add products</a>
-        </nav>
+       <!-- NAV BAR  ********************************************************-->
+       <header>
+        <div id="logoDiv">
+            <a href="index.html">
+                <img id="logo" src="/images/logo.png">
+            </a>
+        </div>
+        <div id="searchBar">
+            <form>
+                <input id="inputBar" type="search" placeholder="Search..." required>
+                <input id="submitButton" type="image" src="/images/search.png" alt="submit" class="fa">
+              </form>
+        </div>
+            <a href="/wishlist/wishlist.html">
+                <img class="navIcons" src="/images/heart.png">
+            </a>
+            <a href="cart">
+                <img class="navIcons" src="/images/cart.png">
+            </a>
+    </header>
+    <nav>
+        <a href="/index.html">HOME</a>
+        <div class="shopDropdown">
+            <button class="dropbtn">SHOP</button>
+            <div class="shopDropdownContent">
+              <a href="shopAll/shopAll.html">Shop All</a>
+              <a href="shopAll/shopTops.html">Tops</a>
+              <a href="shopAll/shopBottoms.html">Bottoms</a>
+              <a href="shopAll/shopDresses.html">Dresses</a>
+              <a href="shopAll/shopShoes.html">Shoes</a>
+              <a href="shopAll/shopAccessories.html">Accessories</a>
+              <a href="shopAll/shopArt.html">Art</a>
+            </div>
+          </div>
+        <a href="/makeAccount/makeAccount.html">ABOUT</a>
+        <a href="/addProducts/addProducts.html">GALLERY</a>
+    </nav>
+<!-- NAV BAR END ********************************************************-->
+<!-- CATEGORIES START ***************************************************-->
+ <div id="categoriesContainer">
+  <div>
+    <img src="/images/images.png" alt="all">
+    <p>All</p>
+  </div>
+  <div>
+    <img src="/images/images.png" alt="dresses">
+    <p>Dresses</p>
+  </div>
+  <div>
+    <img src="/images/images.png" alt="tops">
+    <p>Tops</p>
+  </div>
+  <div>
+    <img src="/images/images.png" alt="shoes">
+    <p>Shoes</p>
+  </div>
+  <div>
+    <img src="/images/images.png" alt="bottoms">
+    <p>Bottoms</p>
+  </div>
+  <div>
+    <img src="/images/images.png" alt="accessories">
+    <p>Accessories</p>
+  </div>
+  <div>
+    <img src="/images/images.png" alt="prints">
+    <p>Prints</p>
+  </div>
+ </div>
 
         <h6>Filter by category</h6>
         <button onclick="displayProducts()">Shop All</button>
