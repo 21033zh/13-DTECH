@@ -24,33 +24,41 @@ function createGrid() {
     console.log(productsArray)
     document.getElementById("products_container").innerHTML = '';
     for (i = 0; i < productsArray.length; i++) {
-        console.log('name: ' + productsArray[i].value.name)
-            const product = 
+        appendProduct(
+            productsArray[i].value.mainImage,
+            productsArray[i].key,
+            productsArray[i].value.productName,
+            productsArray[i].value.price,
+            productsArray[i].value.size
+        );
+    };
+}
+
+function appendProduct(mainImage, key, productName, productPrice, productSize) {
+    let allInfo = [
+        mainImage,
+        key,
+        productName,
+        productPrice,
+        productSize
+    ]
+    const product = 
             `<div class="productContainer">
             <div class="productImageContainer">
-                <img class="productImage" src="${productsArray[i].value.mainImage}"
+                <img class="productImage" src="${mainImage}"
                  onclick="goToPage(
-                '${productsArray[i].key}', '${productsArray[i].value.productName}', 
-                '${productsArray[i].value.productPrice}', 
-                '${productsArray[i].value.mainImage}'
+                '${allInfo}', 
                 )">
                 <img class="addToWishlistButton" src="/images/heart.png" onclick=
-                "addToWishlist('${productsArray[i].key}', '${productsArray[i].value.productName}', 
-                '${productsArray[i].value.productPrice}', 
-                '${productsArray[i].value.mainImage}')">
+                "addToWishlist('${allInfo}')">
             </div>
             <button class="addToCartButton">Add to cart</button>
             <p class="productName"  onclick="goToPage(
-                '${productsArray[i].key}', '${productsArray[i].value.productName}', 
-                '${productsArray[i].value.productPrice}', 
-                '${productsArray[i].value.mainImage}'
-                )">${productsArray[i].value.productName}</p>
-            <p class="productSize" >size ${productsArray[i].value.size}</p>
-            <p class="productPrice">$${productsArray[i].value.price}</p>
+                '${allInfo}')">${productName}</p>
+            <p class="productSize" >size ${productSize}</p>
+            <p class="productPrice">$${productPrice}</p>
             </div>`;
-        console.log(productsArray[i].value.productName)
     document.getElementById("products_container").innerHTML += product;
-    };
 }
 
 function addToWishlist(productID, productName, productPrice, productImage) {
@@ -90,21 +98,15 @@ function filterCategory(filter) {
     document.getElementById("products_container").innerHTML = '';
         for (i = 0; i < productsArray.length; i++) {
             if (productsArray[i].value.category === filter) {
-                const product = 
-                `<div>
-                <img src="${productsArray[i].value.mainImage}" class="productImage">
-                <h6>${productsArray[i].value.productName}</h6>
-                <p>$${productsArray[i].value.price}</p>
-                <p>size ${productsArray[i].value.size}</p>
-                <button class="joinButton" onclick="goToPage(
-                    '${productsArray[i].key}',
-                    '${productsArray[i].value.productName}',
-                    '${productsArray[i].value.price}'
-                    )">see more</button></div>`;
-        document.getElementById("products_container").innerHTML += product;
-            }
-                
+                appendProduct(
+                    productsArray[i].value.mainImage,
+                    productsArray[i].key,
+                    productsArray[i].value.productName,
+                    productsArray[i].value.price,
+                    productsArray[i].value.size
+                );    
         };
+}
 }
 
 function filterSettings(event) {
