@@ -6,6 +6,7 @@ var productsArray = [];
 var allProductsArray = []
 
 function displayProducts() {
+    productsArray = [];
     firebase.database().ref('/products/').once('value', function(snapshot) {
         console.log(productsArray);
         snapshot.forEach(function(childSnapshot) {
@@ -21,23 +22,32 @@ function displayProducts() {
 
 function createGrid() {
     console.log(productsArray)
+    document.getElementById("products_container").innerHTML = '';
     for (i = 0; i < productsArray.length; i++) {
         console.log('name: ' + productsArray[i].value.name)
             const product = 
-            `<div>
-            <img src="${productsArray[i].value.mainImage}" class="productImage">
-            <h6>${productsArray[i].value.productName}</h6>
-            <p>$${productsArray[i].value.price}</p>
-            <p>size ${productsArray[i].value.size}</p>
-            <button class="wishlist" onclick=
-            "addToWishlist('${productsArray[i].key}', '${productsArray[i].value.productName}', 
-            '${productsArray[i].value.productPrice}', 
-            '${productsArray[i].value.mainImage}')">add to wishlist</button>
-            <button class="joinButton" onclick="goToPage(
+            `<div class="productContainer">
+            <div class="productImageContainer">
+                <img class="productImage" src="${productsArray[i].value.mainImage}"
+                 onclick="goToPage(
                 '${productsArray[i].key}', '${productsArray[i].value.productName}', 
                 '${productsArray[i].value.productPrice}', 
                 '${productsArray[i].value.mainImage}'
-                )">see more</button></div>`;
+                )">
+                <img class="addToWishlistButton" src="/images/heart.png" onclick=
+                "addToWishlist('${productsArray[i].key}', '${productsArray[i].value.productName}', 
+                '${productsArray[i].value.productPrice}', 
+                '${productsArray[i].value.mainImage}')">
+            </div>
+            <button class="addToCartButton">Add to cart</button>
+            <p class="productName"  onclick="goToPage(
+                '${productsArray[i].key}', '${productsArray[i].value.productName}', 
+                '${productsArray[i].value.productPrice}', 
+                '${productsArray[i].value.mainImage}'
+                )">${productsArray[i].value.productName}</p>
+            <p class="productSize" >size ${productsArray[i].value.size}</p>
+            <p class="productPrice">$${productsArray[i].value.price}</p>
+            </div>`;
         console.log(productsArray[i].value.productName)
     document.getElementById("products_container").innerHTML += product;
     };

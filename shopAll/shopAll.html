@@ -36,7 +36,7 @@
             </a>
         </div>
         <div id="searchBar">
-            <form>
+            <form  id="searchBarForm">
                 <input id="inputBar" type="search" placeholder="Search..." required>
                 <input id="submitButton" type="image" src="/images/search.png" alt="submit" class="fa">
               </form>
@@ -62,90 +62,89 @@
               <a href="shopAll/shopArt.html">Art</a>
             </div>
           </div>
-        <a href="/makeAccount/makeAccount.html">ABOUT</a>
+          <a href="about/about.html">ABOUT</a>
         <a href="/addProducts/addProducts.html">GALLERY</a>
     </nav>
 <!-- NAV BAR END ********************************************************-->
+
 <!-- CATEGORIES START ***************************************************-->
  <div id="categoriesContainer">
-  <div>
+  <div id="selectedCategory" onclick="displayProducts()">
     <img src="/images/images.png" alt="all">
     <p>All</p>
   </div>
-  <div>
+  <div onclick="var filter='dresses'; filterCategory(filter)">
     <img src="/images/images.png" alt="dresses">
     <p>Dresses</p>
   </div>
-  <div>
+  <div onclick="var filter='tops'; filterCategory(filter)">
     <img src="/images/images.png" alt="tops">
     <p>Tops</p>
   </div>
-  <div>
+  <div onclick="var filter='shoes'; filterCategory(filter)">
     <img src="/images/images.png" alt="shoes">
     <p>Shoes</p>
   </div>
-  <div>
+  <div onclick="var filter='bottoms'; filterCategory(filter)">
     <img src="/images/images.png" alt="bottoms">
     <p>Bottoms</p>
   </div>
-  <div>
+  <div onclick="var filter='accessories'; filterCategory(filter)">
     <img src="/images/images.png" alt="accessories">
     <p>Accessories</p>
   </div>
-  <div>
+  <div onclick="var filter='prints'; filterCategory(filter)">
     <img src="/images/images.png" alt="prints">
     <p>Prints</p>
   </div>
  </div>
+<!-- CATEGORIES END ***************************************************-->
 
-        <h6>Filter by category</h6>
-        <button onclick="displayProducts()">Shop All</button>
-        <button onclick="var filter='tops'; filterCategory(filter)">Tops</button>
-        <button onclick="var filter='bottoms'; filterCategory(filter)">Bottoms</button>
-        <button onclick="var filter='dresses'; filterCategory(filter)">Dresses</button>
-        <button onclick="var filter='shoes'; filterCategory(filter)">Shoes</button>
-        <button onclick="var filter='accessories'; filterCategory(filter)">Accessories</button>
-        <button onclick="var filter='prints'; filterCategory(filter)">Prints</button><br>
+<!-- FILTERS START ***************************************************-->
 
-        <form onsubmit="filterSettings(event); return false">
-          <label for="colour">Colour:</label>
-            <select id="colourDropdown" name="colour">
-              <option value="all">All</option>
-              <option value="red">Red</option>
-              <option value="orange">Orange</option>
-              <option value="yellow">Yellow</option>
-              <option value="pink">Pink</option>
-              <option value="green">Green</option>
-              <option value="blue">Blue</option>
-              <option value="purple">Purple</option>
-              <option value="black">Black</option>
-              <option value="white">White</option>
-              <option value="multi">Multicolour</option>
-            </select><br>
+<h1>SHOP ALL</h1>
 
-          <label for="size">Size:</label>
-            <select id="sizeDropdown" name="size">
-              <option value="all">All</option>
-              <option value="4">4</option>
-              <option value="6">6</option>
-              <option value="8">8</option>
-              <option value="10">10</option>
-              <option value="12">12</option>
-              <option value="14">14</option>
-          </select><br>
+<div id="filters">
+<form id="shopForm" onchange="filterSettings(event); return false">
+<div id="colourFilterDiv">
+    <select id="colourDropdown" name="colour">
+      <option value="all">All colours</option>
+      <option value="red">Red</option>
+      <option value="orange">Orange</option>
+      <option value="yellow">Yellow</option>
+      <option value="pink">Pink</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="purple">Purple</option>
+      <option value="black">Black</option>
+      <option value="white">White</option>
+      <option value="multi">Multicolour</option>
+    </select><br>
+</div>
 
-          <input type="submit" value="Submit">
-        </form>
+<div id="sizeFilterDiv">
+    <select id="sizeDropdown" name="size">
+      <option value="all">All sizes</option>
+      <option value="4">Size 4</option>
+      <option value="6">Size 6</option>
+      <option value="8">Size 8</option>
+      <option value="10">Size 10</option>
+      <option value="12">Size 12</option>
+      <option value="14">Size 14</option>
+  </select><br>
+</div>
+</form>
 
-        <form onsubmit="sortSettings(event); return false">
-          <label for="sort">Sort by:</label>
-          <select id="sortDropdown" name="sortDropdown">
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-            <option value="lowPrice">Lowest price</option>
-            <option value="highPrice">Highest price</option>
-          </select><input type="submit" value="Submit">
-        </form>
+<form id="sortDiv" onchange="sortSettings(event); return false">
+  <select id="sortDropdown" name="sortDropdown">
+    <option value="newest">Sort by newest</option>
+    <option value="oldest">Sory by oldest</option>
+    <option value="lowPrice">Sort by lowest price</option>
+    <option value="highPrice">Sort by highest price</option>
+  </select>
+</form>
+</div>
+<!-- FILTERS END ***************************************************-->
 
         <div id="products_container">
         </div>

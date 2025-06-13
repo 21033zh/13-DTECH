@@ -19,12 +19,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100&display=swap" rel="stylesheet">
 
         <!-- fonts end ****************************************-->
-         <script src="fb_setup.js"></script>
-         <script src="home.js"></script>
-         <link href="style.css" rel="stylesheet" type="text/css">
+         <script src="/fb_setup.js"></script>
+         <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body onload="displayFeaturedProducts()">
-        <div class="home_container">
+    <body>
 <!-- NAV BAR  ********************************************************-->
             <header>
                 <div id="logoDiv">
@@ -33,7 +31,7 @@
                     </a>
                 </div>
                 <div id="searchBar">
-                    <form id="searchBarForm">
+                    <form>
                         <input id="inputBar" type="search" placeholder="Search..." required>
                         <input id="submitButton" type="image" src="/images/search.png" alt="submit" class="fa">
                       </form>
@@ -59,39 +57,25 @@
                       <a href="/shopAll/shopArt.html">Art</a>
                     </div>
                   </div>
-                <a href="about/about.html">ABOUT</a>
+                  <a href="about/about.html">ABOUT</a>
                 <a href="addProducts/addProducts.html">GALLERY</a>
             </nav>
 <!-- NAV BAR END ********************************************************-->
-<!-- HEADER IMAGE ********************************************************-->
-            <div id="header_img" width="100">
-                <div id="header_img_background"></div>
-                <p>Welcome to doll planet</p>
+        <div id="teamDiv">
+            <div id="zuriDiv">
+                <img src="/images/zuri.png">
+                <p>Hi i'm zuri!</p>
             </div>
-<!-- HEADER IMAGE END ********************************************************-->
-<!-- FEATURED PRODUCTS ********************************************************-->
-            <div id="featured">
-                <h1>FEATURED ITEMS</h1>
-                <a href="/shopAll/shopAll.html">SHOP ALL</a>
-                <div id="featured_products_container"></div>
+            <div id="graceDiv">
+                <img src="/images/grace.png">
+                <p>I’m Grace, a seventeen year old bundle of joy. I met Zuri 
+                    in 2020 through mutual friends, and I have leeched onto her 
+                    since. We have a shared interests in art, fashion, film, and 
+                    being addicted to the Sims. We gave birth to Doll Planet 
+                    last year after a brutal shared pregnancy.  I am ecstatic 
+                    to watch our baby grow up!</p>
             </div>
-<!-- FEATURED PRODUCTS END ********************************************************-->
-<!-- ABOUT SECTION ********************************************************-->
-            <div id="about_us">
-                <h1>ABOUT US</h1>
-                <p>Doll Planet is an NZ owned fashion brand committed to sustainability 
-                    and ethical fashion. We specialise in preloved and upcycled clothing, 
-                    as well as handmade accessories and original art prints!
-                </p>
-                <a href="/about/about.html">FIND OUT MORE</a>
-            </div>
-            <div id="about_us_img">
-                <img src="/images/about-image_webp.webp">
-            </div>
-<!-- ABOUT SECTION END ********************************************************-->
-            <div id="footer">
-                <p>footer</p>
-            </div>
-    </div>
+        </div>
+
     </body>
 </html>

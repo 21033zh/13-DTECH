@@ -82,7 +82,7 @@ header {
 
 /*----SEARCH-BAR-----*/
 
-form {
+#searchBarForm {
     position: relative;
     top: 50%;
     left: 50%;
@@ -135,13 +135,13 @@ form {
     width: 100%;
   }
 
-  form:focus-within,
-  form:hover,
-  form:valid{
+#searchBarForm:focus-within,
+#searchBarForm:hover,
+#searchBarForm:valid{
     width: 200px;
     cursor: pointer;
     background-color:black;
-  }
+}
 
   input:-webkit-autofill,
 input:-webkit-autofill:hover, 
@@ -151,9 +151,9 @@ input:-webkit-autofill:active{
     -webkit-text-fill-color: rgb(255, 255, 255) !important;
 }
   
-  form:hover #inputBar,
-  form:focus-within #inputBar,
-  form:valid #inputBar {
+searchBarForm:hover #inputBar,
+searchBarForm:focus-within #inputBar,
+searchBarForm:valid #inputBar {
     width: 90%;
     background-color:black;
   } 
@@ -372,6 +372,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- HOME PAGE END ----------------------------------------*/
 
 /*--- SHOP PAGE ----------------------------------------*/
+/*---CATEGORIES-SECTION----*/
 #categoriesContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -380,11 +381,13 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 
 #categoriesContainer div {
-    position: relative;;
+    position: relative;
     margin: 15px;
+    cursor: pointer
 }
 
 #categoriesContainer p {
+    font-size: 90%;
     margin: 0px;
     position: absolute;
     top: 50%;
@@ -393,19 +396,117 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     text-transform: uppercase;
 }
 
-#categoriesContainer img {
-    width: 100%;
+#categoriesContainer button {
+    padding: 0px;
+    margin: 0px;
 }
 
+#categoriesContainer img {
+    width: 100%;
+    filter: drop-shadow(2px 2px 10px #000000);
+    display: block;
+}
+
+/*---FILTERS-SECTION----*/
+#filters {
+    
+    display: flex;
+}
+#colourDropdown, #sizeDropdown, #sortDropdown {
+    background-color: #dbd4df;
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 20px;
+    font-family: "Alegreya Sans";
+    font-weight: 400;
+    font-size: 0.8rem;
+    display: block;
+    width: 150px;
+    text-transform: uppercase;
+}
+
+#colourFilterDiv, #sizeFilterDiv, #sortDiv {
+    display: inline-block;
+    margin: 10px;
+    text-transform: uppercase;
+}
+
+#sortDiv {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+/*---PRODUCTS-SECTION----*/
 #products_container {
     display: grid;
     width: 100%;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-.productImage {
+.productContainer {
+    margin: 0px 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.productContainer .productImageContainer {
+    position: relative;
+}
+
+.productImageContainer .productImage {
     width: 100%;
     height: auto;
+    margin: 0px;
+    padding: 0px;
+    display: block;
+}
+
+.productImageContainer .addToWishlistButton {
+    position: absolute;
+    margin: 10px;
+    right: 0;
+    top: 0;
+    width: 11%;
+}
+
+.productImageContainer .addToWishlistButton:hover {
+    opacity: 0.3;
+}
+
+.productContainer .addToCartButton {
+    background-color: black;
+    color: white;
+    border: 0px;
+    text-transform: uppercase;
+    padding: 10px;
+    width: 100%;
+    margin: 0px 0px 3px 0px;
+    display: block;
+    cursor: pointer;
+}
+
+.productContainer .addToCartButton:hover {
+    background-color: rgb(70, 70, 70);
+}
+
+.productContainer .productName  {
+    font-size: 1.2rem;
+    padding: 3px 0px;
+    margin: 0px;
+    display: block;
+}
+
+.productContainer .productSize  {
+    font-size: 1rem;
+    padding: 3px 0px;
+    margin: 0px;
+}
+
+.productContainer .productPrice  {
+    font-size: 1rem;
+    padding: 5px;
+    margin: 0px;
+    font-weight:800;
 }
 
 
@@ -424,3 +525,28 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 
 /*--- ACCOUNT PAGE END----------------------------------------*/
+
+/*--- ABOUT PAGE --------------------------------------------*/
+#teamDiv {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#zuriDiv, #graceDiv {
+    position: relative;
+    margin: 15px;
+}
+
+#zuriDiv img, #zuriDiv p, #graceDiv img, #graceDiv p {
+    display: block;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
+
+/*--- ABOUT PAGE END ----------------------------------------*/
