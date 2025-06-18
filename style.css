@@ -65,9 +65,10 @@ header {
 }
 
 /*----ICONS-----*/
-#iconsDiv {
+#icons {
     align-self: end;
-    display: block;
+    display: grid;
+    grid-template-columns: 70px 70px;
 }
 
 .navIcons {
@@ -151,9 +152,9 @@ input:-webkit-autofill:active{
     -webkit-text-fill-color: rgb(255, 255, 255) !important;
 }
   
-searchBarForm:hover #inputBar,
-searchBarForm:focus-within #inputBar,
-searchBarForm:valid #inputBar {
+#searchBarForm:hover #inputBar,
+#searchBarForm:focus-within #inputBar,
+#searchBarForm:valid #inputBar {
     width: 90%;
     background-color:black;
   } 
@@ -189,6 +190,7 @@ nav a, nav button {
 .shopDropdown {
     display: inline;
     position: relative;
+    background-color: #000000;
 }
 
 nav a:hover, .shopDropdown:hover .dropbtn {
@@ -201,7 +203,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     background-color: #000000;
     min-width: 140px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 2;
     left: 30px;
   }
   
@@ -211,6 +213,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     display: block;
     text-align: left;
     text-transform: uppercase;
+    background-color: #000000;
     font-size: 0.6rem;
 }
   
@@ -221,6 +224,20 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 .shopDropdown:hover  .shopDropdownContent {
     display: block;
+}
+
+@media only screen and (max-width: 600px) {
+    #icons {
+        display: none;
+    }
+
+    nav {
+        display: none;
+    }
+
+    #logoDiv {
+        width: 50%;
+    }
 }
 
 /*--- NAV BAR END --------------------------------------*/
@@ -257,6 +274,17 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     background-position: center;
     background-repeat: no-repeat;
     height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+#header_img_logo {
+    width: 50%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 15px 0px;
 }
 
 /*---FEATURED-PRODUCTS----*/
@@ -369,6 +397,44 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     display:block;
 }
 
+@media only screen and (max-width: 600px) {
+    .home_container {
+        display: grid;
+        grid-template-areas: 
+        "header"
+        "nav"
+        "header_img"
+        "featured"
+        "about_us"
+        "about_us_img"
+        "footer"
+    }
+
+    #header_img {
+        grid-area: header_img;
+        width: 100%;
+        height: 400px;
+    }
+
+    #featured_products_container {
+        grid-auto-columns: 50%; 
+    }
+
+    #about_us {
+        padding: 80px 20px 80px 20px;
+        text-align: center;
+    }
+
+    #about_us > a {
+        margin: auto;
+        margin-top: 30px;
+    }
+
+    #about_us_img {
+        padding: 20px;
+        padding-top: 0px;
+    }
+}
 /*--- HOME PAGE END ----------------------------------------*/
 
 /*--- SHOP PAGE ----------------------------------------*/
@@ -509,6 +575,21 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     font-weight:800;
 }
 
+@media only screen and (max-width: 600px) {
+    #products_container {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .productImageContainer .addToWishlistButton {
+        width: 17%;
+    }
+
+    #categoriesContainer {
+        display: none;
+    }
+}
 
 /*--- SHOP PAGE END ----------------------------------------*/
 

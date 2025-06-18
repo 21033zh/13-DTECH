@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head title="Doll Planet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
-        <meta name="viewport">
         <!-- firebase start ****************************************-->
         <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
@@ -29,21 +29,24 @@
             <header>
                 <div id="logoDiv">
                     <a href="index.html">
-                        <img id="logo" src="/images/logo.png">
+                        <img id="logo" src="/images/translogo.png">
                     </a>
                 </div>
+                
                 <div id="searchBar">
                     <form id="searchBarForm">
                         <input id="inputBar" type="search" placeholder="Search..." required>
                         <input id="submitButton" type="image" src="/images/search.png" alt="submit" class="fa">
                       </form>
                 </div>
+                <div id="icons">
                     <a href="/wishlist/wishlist.html">
                         <img class="navIcons" src="/images/heart.png">
                     </a>
                     <a href="cart">
                         <img class="navIcons" src="/images/cart.png">
                     </a>
+                </div>
             </header>
             <nav>
                 <a href="index.html">HOME</a>
@@ -65,9 +68,13 @@
 <!-- NAV BAR END ********************************************************-->
 <!-- HEADER IMAGE ********************************************************-->
             <div id="header_img" width="100">
-                <div id="header_img_background"></div>
-                <p>Welcome to doll planet</p>
+                <div id="header_img_background">
+                    <img id="header_img_logo" src="/images/translogo.png">
+                </div>
             </div>
+<!--              <p>Welcome to doll planet</p>
+                <a href="/addProducts/addProducts.html">add products</a>
+            </div> -->  
 <!-- HEADER IMAGE END ********************************************************-->
 <!-- FEATURED PRODUCTS ********************************************************-->
             <div id="featured">
