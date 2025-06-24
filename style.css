@@ -501,6 +501,55 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     margin-left: auto;
     margin-right: 20px;
 }
+/*----MOBILE-FILTERS-----*/
+@media only screen and (max-width: 600px) {
+    .mobileFiltersDropdown .filtersDropButton {
+        color: white;
+        border: none;
+        outline: none;
+        padding: 14px 16px;
+        background-color: inherit;
+      }
+    
+    .mobileFiltersDropdown {
+        display: inline;
+        position: relative;
+        background-color: #000000;
+    }
+    
+    nav a:active, .mobileFiltersDropdown:active .filtersDropButton {
+        color: rgb(161, 161, 161);
+      }
+    
+    .filtersDropdownContent {
+        display: none;
+        position: absolute;
+        background-color: #000000;
+        min-width: 140px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 2;
+        left: 30px;
+      }
+      
+    .filtersDropdownContent a {
+        color: white;
+        padding: 10px;
+        display: block;
+        text-align: left;
+        text-transform: uppercase;
+        background-color: #000000;
+        font-size: 0.6rem;
+    }
+      
+    .shopDropdownContent a:active, .shopDropdownContent a:hover {
+        color:#dbd4df;
+        text-decoration: underline;
+    }
+    
+    .mobileFiltersDropdown:active  .shopDropdownContent, .mobileFiltersDropdown:hover  .shopDropdownContent {
+        display: block;
+    }
+}
 
 /*---PRODUCTS-SECTION----*/
 #products_container {
@@ -626,8 +675,11 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     margin-right: auto;
 }
 
-
-
-
-
 /*--- ABOUT PAGE END ----------------------------------------*/
+
+/*--- REVIEW PAGE --------------------------------------------*/
+#reviewsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+/*--- REVIEW PAGE END --------------------------------------------*/

@@ -20,11 +20,10 @@
 
         <!-- fonts end ****************************************-->
          <script src="fb_setup.js"></script>
-         <script src="home.js"></script>
-         <link href="style.css" rel="stylesheet" type="text/css">
+         <script src="reviews.js"></script>
+         <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body onload="displayFeaturedProducts()">
-        <div class="home_container">
+    <body onload="checkAuth()">
 <!-- NAV BAR  ********************************************************-->
             <header>
                 <div id="logoDiv">
@@ -49,7 +48,7 @@
                 </div>
             </header>
             <nav>
-                <a href="index.html">HOME</a>
+                <a href="/index.html">HOME</a>
                 <div class="shopDropdown">
                     <button class="dropbtn">SHOP</button>
                     <div class="shopDropdownContent">
@@ -64,42 +63,40 @@
                   </div>
                 <a href="about/about.html">ABOUT</a>
                 <a href="addProducts/addProducts.html">GALLERY</a>
-                <a href="/reviews/reviews.html">REVIEWS</a>
+                <a href="reviews.html">REVIEWS</a>
             </nav>
 <!-- NAV BAR END ********************************************************-->
-<!-- HEADER IMAGE ********************************************************-->
-            <div id="header_img" width="100">
-                <div id="header_img_background">
-                    <img id="header_img_logo" src="/images/translogo.png">
-                </div>
-            </div>
-<!--              <p>Welcome to doll planet</p>
-                <a href="/addProducts/addProducts.html">add products</a>
-            </div> -->  
-<!-- HEADER IMAGE END ********************************************************-->
-<!-- FEATURED PRODUCTS ********************************************************-->
-            <div id="featured">
-                <h1>FEATURED ITEMS</h1>
-                <a href="/shopAll/shopAll.html">SHOP ALL</a>
-                <div id="featured_products_container"></div>
-            </div>
-<!-- FEATURED PRODUCTS END ********************************************************-->
-<!-- ABOUT SECTION ********************************************************-->
-            <div id="about_us">
-                <h1>ABOUT US</h1>
-                <p>Doll Planet is an NZ owned fashion brand committed to sustainability 
-                    and ethical fashion. We specialise in preloved and upcycled clothing, 
-                    as well as handmade accessories and original art prints!
-                </p>
-                <a href="/about/about.html">FIND OUT MORE</a>
-            </div>
-            <div id="about_us_img">
-                <img src="/images/about-image_webp.webp">
-            </div>
-<!-- ABOUT SECTION END ********************************************************-->
+<!-- HEADER ********************************************************-->
+
+ <h1>LEAVE A REVIEW</h1>
+
+<!-- HEADER END ********************************************************-->
+<!-- REVIEWS START ********************************************************-->
+
+<form onsubmit="checkReview(event); return false">
+    <label for="textReview">Text:</label><br>
+    <input type="text" id="textReview" name="textReview"><br>
+
+    <label for="stars">Stars:</label>
+    <select id="stars" name="stars">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    </select><br>
+
+    <label for="image">Images:</label><br>
+    <input type="file" id="images" name="main_image" accept="image/png, image/jpeg" multiple />
+
+    <input type="submit" value="Submit">
+    <p id="status"></p>
+</form>
+
+<!-- REVIEWS END ********************************************************-->
+
             <div id="footer">
                 <p>footer</p>
             </div>
-    </div>
     </body>
 </html>
