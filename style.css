@@ -682,4 +682,12 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
+
+#reviewsContainer > div {
+    width: 100%;
+}
+
+#reviewsContainer  img {
+    width: 100%;
+}
 /*--- REVIEW PAGE END --------------------------------------------*/
