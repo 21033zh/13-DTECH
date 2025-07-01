@@ -679,15 +679,49 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 /*--- REVIEW PAGE --------------------------------------------*/
 #reviewsContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    column-count: 3;
+    column-gap: 20px;
+    margin: 30px;
 }
 
 #reviewsContainer > div {
     width: 100%;
+    display: inline-block;
+    margin: 10px 0px;
+    padding: 0px;
+    background-color: #dbd4df;
 }
 
-#reviewsContainer  img {
+.reviewImage {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+#reviewsContainer  p {
+    margin: 10px;
+    padding: 0px;
+}
+
+#star {
+    width: 20px;
+    padding: 5px;
+}
+
+.reviewDiv .name {
+    margin: 0px 10px;
+    text-align: right;
+}
+
+#products_review_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+#products_review_container > div{
+    width: 100%
+}
+
+#products_review_container img {
     width: 100%;
 }
 /*--- REVIEW PAGE END --------------------------------------------*/

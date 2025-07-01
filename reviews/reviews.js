@@ -1,12 +1,61 @@
-function checkAuth() {
+function displayProducts() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+            let uid = user.uid;
             console.log('user logged in')
-        } else {
-            // User is signed out.
-            alert("make an account");
-        }
+            productsArray = [];
+            firebase.database().ref(uid + '/wishlist/').once('value', function(snapshot) {
+                console.log(productsArray);
+                snapshot.forEach(function(childSnapshot) {
+                productsArray.push({
+                    key: childSnapshot.key,
+                    value: childSnapshot.val()
+                });
+                });
+                allProductsArray = [].concat(productsArray);
+                createProductsGrid();
+            });
+            } else {
+                // User is signed out.
+                alert("make an account");
+            }
     });
+}
+
+function createProductsGrid() {
+    console.log(productsArray)
+    document.getElementById("products_container").innerHTML = '';
+    for (i = 0; i < productsArray.length; i++) {
+        appendProduct(
+            productsArray[i].value.mainImage,
+            productsArray[i].key,
+            productsArray[i].value.productName,
+            productsArray[i].value.price,
+            productsArray[i].value.size
+        );
+    };
+}
+
+function appendProduct(mainImage, key, productName, productPrice, productSize) {
+    let allInfo = [
+        mainImage,
+        key,
+        productName,
+        productPrice,
+        productSize
+    ]
+    const product = 
+            `<div class="productContainer">
+            <div class="productImageContainer">
+                <img class="productImage" src="${mainImage}"
+                 onclick="goToPage(
+                '${allInfo}', 
+                )">
+            </div>
+            <p class="productName"  onclick="chooseProduct(
+                '${allInfo}')">${productName}</p>
+            </div>`;
+    document.getElementById("products_review_container").innerHTML += product;
 }
 
 function checkReview(event) {
@@ -14,14 +63,13 @@ function checkReview(event) {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             console.log('user logged in')
-            let uid = user.uid;
+            let name = user.displayName;
             let textReview = document.getElementById("textReview").value;
             let stars = document.getElementById("stars").value;
-            console.log(user.uid);
 
-            let newProductRef = firebase.database().ref('/reviews/'+ uid);
+            let newProductRef = firebase.database().ref("/reviews/pgppgpg");
             newProductRef.update({
-                    textReview, stars
+                    textReview, stars, name
             });
 
             const imageArray = document.getElementById("images").files;
@@ -34,7 +82,7 @@ function checkReview(event) {
                     storageRef.put(imageArray[i]).then(snapshot => {
                         return snapshot.ref.getDownloadURL(); // Get public image URL
                     }).then(downloadURL => {
-                        return firebase.database().ref("reviews/" + uid).update({
+                        return firebase.database().ref("reviews/pgppgpg").update({
                             [imageNum]: downloadURL 
                         });
                     }).then(() => {
@@ -57,7 +105,6 @@ function checkReview(event) {
 
 
 
-
 function displayReviews() {
     reviewsArray = [];
     firebase.database().ref('/reviews/').once('value', function(snapshot) {
@@ -74,31 +121,36 @@ function displayReviews() {
 }
 
 function createGrid(reviewsArray) {
-    console.log(reviewsArray)
+    console.log(reviewsArray.length)
     document.getElementById("reviewsContainer").innerHTML = '';
     for (i = 0; i < reviewsArray.length; i++) {
-        appendProduct(
+        console.log('review');
+        var stars = reviewsArray[i].value.stars;
+        appendReview(
             reviewsArray[i].value.image0,
             reviewsArray[i].value.textReview,
-            reviewsArray[i].value.stars,
-            reviewsArray[i].key,
+            reviewsArray[i].value.name,
+            stars,
+            i,
         );
     };
 }
 
-function appendProduct(image, text, stars, uid) {
-    let allInfo = [
-        image,
-        text,
-        stars,
-        uid
-    ]
+function appendReview(image, text, name, stars, num) {
+    console.log('append review')
     const review = 
             `<div class="reviewDiv">
-                <img class="productImage" src="${image}")">
-            <p class="stars">${stars}</p>
-            <p class="text" >size ${text}</p>
-            <p class="uid">$${uid}</p>
+                <img class="productImage reviewImage" src="${image}")">
+                <p id="${num}stars"></p>
+                <p class="text" >${text}</p>
+                <div class="nameDiv">
+                    <p class="name">- ${name}</p>
+                <div>
             </div>`;
     document.getElementById("reviewsContainer").innerHTML += review;
+    for (s = 0; s < stars; s++ ) {
+        const starRow = 
+        `<img id="star" src="/images/star.webp">`
+        document.getElementById(`${num}stars`).innerHTML += starRow;
+    }  
 }
