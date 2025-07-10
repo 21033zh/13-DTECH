@@ -51,7 +51,9 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
                 )">
                 <img class="addToWishlistButton" src="/images/heart.png" 
                     onclick="addToWishlist(
-                    '${productID}')">
+                    '${productID}',
+                    '${productName}',
+                    '${mainImage}')">
             </div>
             <button class="addToCartButton">Add to cart</button>
             <p class="productName"  onclick="goToPage(
@@ -62,12 +64,13 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
     document.getElementById("products_container").innerHTML += product;
 }
 
-function addToWishlist(productID) {
+function addToWishlist(productID, productName, mainImage) {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             console.log("User is signed in:", user);
-            firebase.database().ref("/accounts/" + user.uid + "/wishlist/").update({
-                productID
+            firebase.database().ref("/accounts/" + user.uid + "/wishlist/" + productID ).update({
+                productName,
+                mainImage
             });
         } else {
             // User is signed out.

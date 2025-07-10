@@ -8,13 +8,13 @@ function displayProductPage() {
         var productName = productInfo.productName;
         var size = productInfo.size;
         
-        mainImage = document.getElementById("mainImage");
+        var mainImage = document.getElementById("mainImage");
         mainImage.src = mainImageURL;
 
-        nameP = document.getElementById("nameP");
+        var nameP = document.getElementById("nameP");
         nameP.innerHTML = productName;
 
-        priceP = document.getElementById("priceP");
+        var priceP = document.getElementById("priceP");
         priceP.innerHTML = price;
         
     });

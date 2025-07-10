@@ -747,15 +747,74 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     text-align: right;
 }
 
-#products_review_container {
+
+/*--- REVIEW PAGE END --------------------------------------------*/
+
+/*--- CREATE REVIEW PAGE -----------------------------------------*/
+
+
+#form_createReview, #div_purchases {
+    padding: 10px;
+    margin: 20px;
+    background-color: #dbd4df;
+}
+
+#div_purchasesList {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
-#products_review_container > div{
+#div_purchases > div{
     width: 100%
 }
 
-#products_review_container img {
+#div_purchases img {
     width: 100%;
 }
-/*--- REVIEW PAGE END --------------------------------------------*/
+
+#form_createReview button {
+    display:block;
+    padding: 10px;
+    margin: 5px 5px 20px 5px;
+    font-size: 0.6rem;
+    background-color:black;
+    color: white;
+    text-transform: uppercase;
+    border: 0px;
+    cursor: pointer;
+}
+
+#form_createReview label {
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#form_createReview input {
+    padding: 10px;
+    margin: 10px;
+    font-size: 0.8rem;
+}
+
+#form_createReview #textReview {
+    width: 60%;
+}
+
+#form_createReview #div_image {
+    padding: 10px;
+    margin: 10px;
+    background-color: #e5e1e7
+}
+
+#form_createReview select {
+    padding: 10px;
+    margin: 10px;
+    font-size: 0.8rem;
+}
+
+#form_createReview .selected-image-preview {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+/*--- CRETE REVIEW PAGE END--------------------------------------*/
