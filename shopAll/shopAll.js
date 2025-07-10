@@ -34,10 +34,10 @@ function createGrid() {
     };
 }
 
-function appendProduct(mainImage, key, productName, productPrice, productSize) {
+function appendProduct(mainImage, productID, productName, productPrice, productSize) {
     let allInfo = [
         mainImage,
-        key,
+        productID,
         productName,
         productPrice,
         productSize
@@ -49,8 +49,9 @@ function appendProduct(mainImage, key, productName, productPrice, productSize) {
                  onclick="goToPage(
                 '${allInfo}', 
                 )">
-                <img class="addToWishlistButton" src="/images/heart.png" onclick=
-                "addToWishlist('${allInfo}')">
+                <img class="addToWishlistButton" src="/images/heart.png" 
+                    onclick="addToWishlist(
+                    '${productID}')">
             </div>
             <button class="addToCartButton">Add to cart</button>
             <p class="productName"  onclick="goToPage(
@@ -61,15 +62,13 @@ function appendProduct(mainImage, key, productName, productPrice, productSize) {
     document.getElementById("products_container").innerHTML += product;
 }
 
-function addToWishlist(productID, productName, productPrice, productImage) {
+function addToWishlist(productID) {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             console.log("User is signed in:", user);
-            firebase.database().ref("/accounts/" + user.uid + "/wishlist/" + productID).update({
-            productName: productName,
-            productPrice: productPrice,
-            productImage: productImage
-        });
+            firebase.database().ref("/accounts/" + user.uid + "/wishlist/").update({
+                productID
+            });
         } else {
             // User is signed out.
             alert("make an account");

@@ -1,28 +1,32 @@
 var uiConfig = {
     callbacks: {
-        signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-          var user = authResult.user;
-          var credential = authResult.credential;
-          var isNewUser = authResult.additionalUserInfo.isNewUser;
-          var providerId = authResult.additionalUserInfo.providerId;
-          var operationType = authResult.operationType;
-          if (isNewUser) {
-            // This is a new user
-            console.log('new user')
-            firebase.database().ref("/accounts/" + user.uid).update({
-                email: user.email,
-                name: user.displayName
-              });
-          } else {
-            // This is an existing user
-            console.log(isNewUser)
-            console.log('not new user')
-          }
-          // Do something with the returned AuthResult.
-          // Return type determines whether we continue the redirect
-          // automatically or whether we leave that to developer to handle.
-          return true;
-        },
+
+      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+        var user = authResult.user;
+        var isNewUser = authResult.additionalUserInfo.isNewUser;
+      
+        if (isNewUser && user && user.uid) {
+          const displayName = user.displayName || "Unnamed User";
+      
+          return firebase.database().ref("/accounts/" + user.uid).set({
+            email: user.email,
+            name: displayName,
+            createdAt: firebase.database.ServerValue.TIMESTAMP
+          }).then(() => {
+            // Only redirect *after* the write is successful
+            window.location.href = "account.html";
+            return false;
+          }).catch((error) => {
+            console.error("Failed to save new user data:", error);
+            alert("There was an error creating your account. Please try again.");
+            return false;
+          });
+        } else {
+          // Existing user — redirect immediately
+          window.location.href = "account.html";
+          return false;
+        }
+      },
         signInFailure: function(error) {
           // Some unrecoverable error occurred during sign-in.
           // Return a promise when error handling is completed and FirebaseUI
@@ -39,7 +43,6 @@ var uiConfig = {
     queryParameterForSignInSuccessUrl: 'signInSuccessUrl',
     signInFlow: 'popup',
     
-  signInSuccessUrl: 'account.html',
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,

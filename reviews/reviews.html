@@ -67,12 +67,23 @@
             </nav>
 <!-- NAV BAR END ********************************************************-->
 <!-- HEADER ********************************************************-->
-
+<div id="reviewsHeading">
  <h1>REVIEWS</h1>
+ <p>Check out photos and reviews from our happy customers!</p>
  <a href="createReview.html">Leave a review</a>
+</div>
 
 <!-- HEADER END ********************************************************-->
 <!-- REVIEWS START ********************************************************-->
+
+<form id="sortReviewsDiv" onchange="sortSettings(event); return false">
+    <select id="sortDropdown" name="sortDropdown">
+      <option value="newest">Sort by newest</option>
+      <option value="oldest">Sory by oldest</option>
+      <option value="lowest">Sort by lowest reviews</option>
+      <option value="highest">Sort by highest reviews</option>
+    </select>
+  </form>
 
 <div id="reviewsContainer"></div>
 

@@ -21,10 +21,10 @@
 
         <!-- fonts end ****************************************-->
          <script src="/fb_setup.js"></script>
-         <script src="reviews.js"></script>
+         <script src="createReview.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body onload="displayWishlist()">
+    <body onload="displayProducts()">
 <!-- NAV BAR  ********************************************************-->
             <header>
                 <div id="logoDiv">
@@ -73,7 +73,7 @@
 
 <!-- HEADER END ********************************************************-->
 <!-- REVIEWS START ********************************************************-->
- <h2>Choose a product to review: </h2>
+ <h2>Which purchase would you like to review?</h2>
  <div id="products_review_container"></div>
 
 <form onsubmit="checkReview(event); return false">

@@ -678,6 +678,34 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- ABOUT PAGE END ----------------------------------------*/
 
 /*--- REVIEW PAGE --------------------------------------------*/
+#reviewsHeading {
+    text-align: center;
+    margin: 0px;
+    display: block;
+}
+
+#reviewsHeading h1 {
+    margin: 20px;
+}
+
+#reviewsHeading p {
+    margin: 0px;
+}
+
+#reviewsHeading a {
+    padding: 10px;
+    margin: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 0.8rem;
+    background-color:#7b628b;
+    color: white;
+    text-decoration: none;
+    border: none;
+    text-transform: uppercase;
+    display: block;
+    width: 20%;
+}
 #reviewsContainer {
     column-count: 3;
     column-gap: 20px;
@@ -698,9 +726,15 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     padding: 0px;
 }
 
+
 #reviewsContainer  p {
     margin: 10px;
     padding: 0px;
+}
+
+#sortReviewsDiv {
+    color: white;
+    padding: 10px
 }
 
 #star {
