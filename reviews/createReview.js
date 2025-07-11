@@ -7,31 +7,44 @@ function checkReview(event) {
             let textReview = document.getElementById("textReview").value;
             let stars = document.getElementById("stars").value;
 
+            var p_uploadStatus = document.getElementById("p_uploadStatus")
+            p_uploadStatus.innerHTML = "Uploading review...."
+
             let newProductRef = firebase.database().ref("/reviews/pgppgpg");
             newProductRef.update({
-                    textReview, stars, name
+                textReview,
+                stars,
+                name
+            }).then(() => {
+                const imageArray = document.getElementById("images").files;
+                if (imageArray) {
+                    for (i = 0; i < imageArray.length; i++) {
+                        let imageNum = 'image' + i;
+                        console.log(imageNum)
+                        console.log(imageArray[i]);
+                        const storageRef = firebase.storage().ref("/reviews_images/" + imageArray[i].name);
+                        storageRef.put(imageArray[i]).then(snapshot => {
+                            return snapshot.ref.getDownloadURL(); // Get public image URL
+                        }).then(downloadURL => {
+                            return firebase.database().ref("reviews/pgppgpg").update({
+                                [imageNum]: downloadURL 
+                            });
+                        }).then(() => {
+                            console.log("Images added.");
+                        }).catch(error => {
+                            console.error("Extra images upload failed:", error);
+                        });  
+                    }
+            }
+            }).then(() => {
+                console.log('uploaded');
+                p_uploadStatus.innerHTML = "Your review has been uploaded!";
+            }).catch((error) => {
+                console.error("Error uploading review:", error);
+                p_uploadStatus.innerHTML = "Error uploading your review. Please try again";
             });
 
-            const imageArray = document.getElementById("images").files;
-            if (imageArray) {
-                for (i = 0; i < imageArray.length; i++) {
-                    let imageNum = 'image' + i;
-                    console.log(imageNum)
-                    console.log(imageArray[i]);
-                    const storageRef = firebase.storage().ref("/reviews_images/" + imageArray[i].name);
-                    storageRef.put(imageArray[i]).then(snapshot => {
-                        return snapshot.ref.getDownloadURL(); // Get public image URL
-                    }).then(downloadURL => {
-                        return firebase.database().ref("reviews/pgppgpg").update({
-                            [imageNum]: downloadURL 
-                        });
-                    }).then(() => {
-                        console.log("Images added.");
-                    }).catch(error => {
-                        console.error("Extra images upload failed:", error);
-                    });  
-                }
-            }
+            
 
 
         } else {
@@ -114,7 +127,8 @@ function chooseProduct(key) {
         `<form id="form_createReview" onsubmit="checkReview(event); return false">
         <button onclick="displayProducts()">Back</button>
             <label for="textReview">Your review:</label><br>
-            <input type="text" id="textReview" name="textReview"><br>
+            <textarea id="textReview" name="textReview" 
+            rows="3" maxlength="150"></textarea><br>
 
             <label for="stars">Stars:</label>
             <select id="stars" name="stars">

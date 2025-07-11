@@ -144,10 +144,10 @@ header {
     background-color:black;
 }
 
-  input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
+#searchBarForm input:-webkit-autofill,
+#searchBarForm input:-webkit-autofill:hover, 
+#searchBarForm input:-webkit-autofill:focus, 
+#searchBarForm input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px rgb(0, 0, 0) inset !important;
     -webkit-text-fill-color: rgb(255, 255, 255) !important;
 }
@@ -753,10 +753,14 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- CREATE REVIEW PAGE -----------------------------------------*/
 
 
-#form_createReview, #div_purchases {
+#div_formContainer {
     padding: 10px;
     margin: 20px;
     background-color: #dbd4df;
+}
+
+#div_formContainer h2 {
+    margin: 20px 10px;
 }
 
 #div_purchasesList {
@@ -789,14 +793,23 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     font-weight: bold;
 }
 
-#form_createReview input {
+
+#form_createReview #textReview {
     padding: 10px;
     margin: 10px;
     font-size: 0.8rem;
+    resize: none;
+    font-family: "Algera Sans";
+    font-weight: 400;
+    width: 50%;
 }
 
-#form_createReview #textReview {
-    width: 60%;
+#form_createReview #textReview:focus-within,
+#form_createReview #textReview:hover,
+#form_createReview #textReview:valid{
+    background-color:rgb(255, 255, 255);
+    border: 0px;
+    outline: none;
 }
 
 #form_createReview #div_image {
@@ -809,6 +822,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     padding: 10px;
     margin: 10px;
     font-size: 0.8rem;
+    cursor: pointer;
 }
 
 #form_createReview .selected-image-preview {
