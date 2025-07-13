@@ -7,10 +7,14 @@ var uiConfig = {
     
       if (isNewUser && user && user.uid) {
         const displayName = user.displayName || "Unnamed User";
-    
+        const nameArray = displayName.split(" ");
+        const firstName = nameArray[0];
+        const lastName = nameArray[0];
+
         return firebase.database().ref("/accounts/" + user.uid).set({
           email: user.email,
-          name: displayName,
+          firstName,
+          lastName,
           createdAt: firebase.database.ServerValue.TIMESTAMP
         }).then(() => {
           // Only redirect *after* the write is successful

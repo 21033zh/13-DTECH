@@ -2,6 +2,7 @@ function checkSignIn() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in.
+            console.log('user logged in');
             populateAccountInfo(user.uid);
         } else {
             // User is signed out.
