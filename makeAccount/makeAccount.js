@@ -9,31 +9,26 @@ var uiConfig = {
           if (isNewUser) {
             // This is a new user
             console.log('new user')
+            var displayName = user.displayName;
+            var nameArray = displayName.split(" ");
+            var firstName = nameArray[0];
+            var lastName = nameArray[1];
             firebase.database().ref("/accounts/" + user.uid).update({
                 email: user.email,
-                name: user.displayName
+                firstName,
+                lastName
               });
           } else {
             // This is an existing user
             console.log(isNewUser)
             console.log('not new user')
           }
-          // Do something with the returned AuthResult.
-          // Return type determines whether we continue the redirect
-          // automatically or whether we leave that to developer to handle.
           return true;
         },
         signInFailure: function(error) {
-          // Some unrecoverable error occurred during sign-in.
-          // Return a promise when error handling is completed and FirebaseUI
-          // will reset, clearing any UI. This commonly occurs for error code
-          // 'firebaseui/anonymous-upgrade-merge-conflict' when merge conflict
-          // occurs. Check below for more details on this.
           return handleUIError(error);
         },
         uiShown: function() {
-          // The widget is rendered.
-          // Hide the loader.
         }
       },
     queryParameterForSignInSuccessUrl: 'signInSuccessUrl',
