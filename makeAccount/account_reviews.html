@@ -24,7 +24,7 @@
 
 
     </head>
-    <body onload="checkSignIn()">
+    <body onload="acc_reviews_checkSignIn()">
         <script src="/makeAccount/account.js"></script>
 
 <!-- NAV BAR  ********************************************************-->
@@ -84,12 +84,11 @@
     </div>
 
     <div id="div_info">
+        <h1>MY REVIEWS</h1>
+        <a id="a_createReview" href="/reviews/createReview.html">CREATE REVIEW</a>
 
+        <div id="acc_reviewsContainer"></div>
     </div>
 </div>
-
-    <h1>Account</h1>
-    <button onclick="signOut()">sign out</button>
-    <a href="/wishlist/wishlist.html">wishlist</a>
   </body>
 </html>

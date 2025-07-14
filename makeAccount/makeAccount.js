@@ -9,7 +9,7 @@ var uiConfig = {
         const displayName = user.displayName || "Unnamed User";
         const nameArray = displayName.split(" ");
         const firstName = nameArray[0];
-        const lastName = nameArray[0];
+        const lastName = nameArray[1];
 
         return firebase.database().ref("/accounts/" + user.uid).set({
           email: user.email,

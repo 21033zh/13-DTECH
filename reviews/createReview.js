@@ -1,4 +1,4 @@
-function checkReview(event) {
+function checkReview(event, productID) {
     event.preventDefault();
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -10,11 +10,12 @@ function checkReview(event) {
             var p_uploadStatus = document.getElementById("p_uploadStatus")
             p_uploadStatus.innerHTML = "Uploading review...."
 
-            let newProductRef = firebase.database().ref("/reviews/pgppgpg");
+            let newProductRef = firebase.database().ref("/reviews/" + productID);
             newProductRef.update({
                 textReview,
                 stars,
-                name
+                name,
+                'user': user.uid
             }).then(() => {
                 const imageArray = document.getElementById("images").files;
                 if (imageArray) {
@@ -26,7 +27,7 @@ function checkReview(event) {
                         storageRef.put(imageArray[i]).then(snapshot => {
                             return snapshot.ref.getDownloadURL(); // Get public image URL
                         }).then(downloadURL => {
-                            return firebase.database().ref("reviews/pgppgpg").update({
+                            return firebase.database().ref("reviews/" + productID).update({
                                 [imageNum]: downloadURL 
                             });
                         }).then(() => {
@@ -43,9 +44,6 @@ function checkReview(event) {
                 console.error("Error uploading review:", error);
                 p_uploadStatus.innerHTML = "Error uploading your review. Please try again";
             });
-
-            
-
 
         } else {
             // User is signed out.
@@ -117,14 +115,14 @@ function appendProduct(mainImage, key, productName) {
     document.getElementById("div_purchasesList").innerHTML += product;
 }
 
-function chooseProduct(key) {
-    firebase.database().ref('/products/' + key).once('value', function(snapshot) {
+function chooseProduct(productID) {
+    firebase.database().ref('/products/' + productID).once('value', function(snapshot) {
     var productsReviewContainer = document.getElementById("div_purchases");
     productsReviewContainer.style.display = "none";
     var createReviewForm = document.getElementById("createReviewForm")
     createReviewForm.style.display = "block"
     createReviewForm.innerHTML = 
-        `<form id="form_createReview" onsubmit="checkReview(event); return false">
+        `<form id="form_createReview" onsubmit="checkReview(event, '${productID}'); return false">
         <button onclick="displayProducts()">Back</button>
             <label for="textReview">Your review:</label><br>
             <textarea id="textReview" name="textReview" 
