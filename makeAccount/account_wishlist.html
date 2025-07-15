@@ -24,7 +24,7 @@
 
 
     </head>
-    <body onload="checkSignIn()">
+    <body onload="acc_wl_checkSignIn()">
         <script src="/makeAccount/account.js"></script>
 
 <!-- NAV BAR  ********************************************************-->
@@ -51,7 +51,7 @@
         </div>
     </header>
     <nav>
-        <a href="index.html">HOME</a>
+        <a href="/index.html">HOME</a>
         <div class="shopDropdown">
             <button class="dropbtn">SHOP</button>
             <div class="shopDropdownContent">
@@ -64,8 +64,8 @@
               <a href="/shopAll/shopArt.html">Art</a>
             </div>
           </div>
-        <a href="about/about.html">ABOUT</a>
-        <a href="addProducts/addProducts.html">GALLERY</a>
+        <a href="/about/about.html">ABOUT</a>
+        <a href="/addProducts/addProducts.html">GALLERY</a>
         <a href="/reviews/reviews.html">REVIEWS</a>
         <a href="/makeAccount/account.html">ACCOUNT</a>
     </nav>
@@ -84,12 +84,9 @@
     </div>
 
     <div id="div_info">
-
+        <h1>MY WISHLIST</h1>
+        <div id="div_accWishlist"></div>
     </div>
 </div>
-
-    <h1>Account</h1>
-    <button onclick="signOut()">sign out</button>
-    <a href="/wishlist/wishlist.html">wishlist</a>
   </body>
 </html>

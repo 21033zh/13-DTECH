@@ -971,4 +971,19 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     text-align: right;
 }
 
+#div_accWishlist {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#div_accWishlist > div {
+    margin: 20px;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+}
+
+#div_accWishlist img {
+    width: 100%
+}
+
 /*--- ACCOUNT PAGE END  ------------------------------------------*/

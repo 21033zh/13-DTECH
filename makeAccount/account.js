@@ -169,3 +169,75 @@ function appendReview(image, text, stars, num, uid) {
 function deleteReview(uid) {
     console.log('uid: ', uid)
 }
+
+/**-------------------------------------------------------------------
+ * 
+ * account_reviews.html
+ * 
+ --------------------------------------------------------------------*/
+
+ function acc_wl_checkSignIn() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            console.log('user logged in');
+            displayWishlist(user.uid)
+        } else {
+            // User is signed out.
+            console.log("user signed out")
+            window.location="makeAccount.html"
+        }
+    });
+}
+
+function displayWishlist(uid) {
+    var wishlistArray = [];
+    firebase.database().ref('/accounts/'+ uid + '/wishlist/').once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+            wishlistArray.push({
+                key: childSnapshot.key,
+                value: childSnapshot.val()
+            });
+        });
+        createWishlistGrid(wishlistArray, uid);
+    });
+}
+
+function createWishlistGrid(wishlistArray) {
+    console.log(wishlistArray.length)
+    firebase.database().ref('/products/').once('value', function(snapshot) {
+        var productsArray = snapshot.val();
+        console.log(productsArray);
+
+        for (i = 0; i < wishlistArray.length; i++) {      
+            var productID = wishlistArray[i].key;
+            var mainImage = productsArray[productID].mainImage;
+            var productName = productsArray[productID].productName;
+            var price = productsArray[productID].price;
+            var size = productsArray[productID].size;
+            appendProduct(
+                mainImage,
+                productName,
+                price,
+                size
+            );
+        };
+    });
+    document.getElementById("div_accWishlist").innerHTML = '';
+    
+}
+
+function appendProduct(mainImage, productName, productPrice, productSize) {
+    const product = 
+           `<div class="productContainer">
+            <div class="productImageContainer">
+                <img class="productImage" src="${mainImage}"
+                 onclick="goToPage()">
+            </div>
+            <button class="addToCartButton">Add to cart</button>
+            <p class="productName"  onclick="goToPage()">${productName}</p>
+            <p class="productSize" >size ${productSize}</p>
+            <p class="productPrice">$${productPrice}</p>
+            </div>`;
+    document.getElementById("div_accWishlist").innerHTML += product;
+}
