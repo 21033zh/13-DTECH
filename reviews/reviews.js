@@ -85,11 +85,15 @@ function sortByRating(sortSettings) {
             });
         });
         reviewsArray.sort(function(a, b) {
-            return b.value.price - a.value.price;
+            c = Number(b.value.stars);
+            d =  Number(a.value.stars)
+            console.log(a, b)
+            return c - d;
         });
         if (sortSettings === 'lowest') {
             reviewsArray.reverse();
         }
+        console.log(reviewsArray);
         createGrid(reviewsArray);
     });
 }

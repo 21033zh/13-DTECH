@@ -8,27 +8,31 @@ function signOut() {
  * account.html
  * 
  --------------------------------------------------------------------*/
-function account_checkSignIn() {
+function account_redirect() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            // User is signed in.
-            console.log('user logged in');
-            populateAccountInfo(user.uid);
+            window.location="account.html";
         } else {
-            // User is signed out.
-            console.log("user signed out")
             window.location="makeAccount.html"
         }
     });
 }
 
-function populateAccountInfo(uid) {
-    firebase.database().ref('/accounts/' + uid).once('value', function(snapshot) {
-        var accountInfo = snapshot.val();
-        document.getElementById("p_welcomeName").innerHTML = accountInfo.firstName;
-        document.getElementById("p_firstName").innerHTML = accountInfo.firstName;
-        document.getElementById("p_lastName").innerHTML = accountInfo.lastName;
-        document.getElementById("p_email").innerHTML = accountInfo.email;
+function populateAccountInfo() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            var uid = user.uid;
+            firebase.database().ref('/accounts/' + uid).once('value', function(snapshot) {
+                var accountInfo = snapshot.val();
+                sessionStorage.setItem("firstName", accountInfo.firstName);
+                document.getElementById("p_welcomeName").innerHTML = accountInfo.firstName;
+                document.getElementById("p_firstName").innerHTML = accountInfo.firstName;
+                document.getElementById("p_lastName").innerHTML = accountInfo.lastName;
+                document.getElementById("p_email").innerHTML = accountInfo.email;
+            });
+        } else {
+            window.location="makeAccount.html"
+        }
     });
 }
 
@@ -106,6 +110,8 @@ function acc_reviews_checkSignIn() {
         if (user) {
             // User is signed in.
             console.log('user logged in');
+            var name = sessionStorage.getItem("firstName");
+            document.getElementById("p_welcomeName").innerHTML = name;
             displayUserReviews(user.uid)
         } else {
             // User is signed out.
@@ -182,6 +188,8 @@ function deleteReview(uid) {
             // User is signed in.
             console.log('user logged in');
             displayWishlist(user.uid)
+            var name = sessionStorage.getItem("firstName");
+            document.getElementById("p_welcomeName").innerHTML = name;
         } else {
             // User is signed out.
             console.log("user signed out")

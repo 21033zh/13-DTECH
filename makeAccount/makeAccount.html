@@ -12,10 +12,13 @@
         <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
         <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
         <!-- firebase end ******************************************-->
-         <!-- fonts start ****************************************-->
+        <!-- fonts start ****************************************-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Staatliches&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;400;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100&display=swap" rel="stylesheet">
+
+        <!-- fonts end ****************************************-->
          <script src="/fb_setup.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
 
@@ -24,19 +27,57 @@
     <body onload="signIn()">
         <script src="/makeAccount/makeAccount.js"></script>
 
+<!-- NAV BAR  ********************************************************-->
         <header>
-            <h1>Doll Planet</h1>
+            <div id="logoDiv">
+                <a href="index.html">
+                    <img id="logo" src="/images/translogo.png">
+                </a>
+            </div>
+            
+            <div id="searchBar">
+                <form id="searchBarForm">
+                    <input id="inputBar" type="search" placeholder="Search..." required>
+                    <input id="submitButton" type="image"
+                    src="/images/search.png" alt="submit" class="fa">
+                  </form>
+            </div>
+            <div id="icons">
+                <a href="/wishlist/wishlist.html">
+                    <img class="navIcons" src="/images/heart.png">
+                </a>
+                <a href="cart">
+                    <img class="navIcons" src="/images/cart.png">
+                </a>
+            </div>
         </header>
         <nav>
-            <a href="/index.html">Home</a>
-            <a href="/shopAll/shopAll.html">Shop page</a>
-            <a href="makeAccount/makeAccount.html">Make an account</a>
-            <a href="/addProducts/addProducts.html">Add products</a>
+            <a href="/index.html">HOME</a>
+            <div class="shopDropdown">
+                <button class="dropbtn">SHOP</button>
+                <div class="shopDropdownContent">
+                  <a href="/shopAll/shopAll.html">Shop All</a>
+                  <a href="/shopAll/shopTops.html">Tops</a>
+                  <a href="/shopAll/shopBottoms.html">Bottoms</a>
+                  <a href="/shopAll/shopDresses.html">Dresses</a>
+                  <a href="/shopAll/shopShoes.html">Shoes</a>
+                  <a href="/shopAll/shopAccessories.html">Accessories</a>
+                  <a href="/shopAll/shopArt.html">Art</a>
+                </div>
+              </div>
+            <a href="/about/about.html">ABOUT</a>
+            <a href="/addProducts/addProducts.html">GALLERY</a>
+            <a href="/reviews/reviews.html">REVIEWS</a>
+            <a href="/makeAccount/account.html">ACCOUNT</a>
         </nav>
+<!-- NAV BAR END ********************************************************-->
 
     <!-- The surrounding HTML is left untouched by FirebaseUI.
          Your app may use that space for branding, controls and other customizations.-->
-    <h1>Sign in/Sign up</h1>
-    <div id="firebaseui-auth-container"></div>
+         <div id="div_makeAcccountContainer">
+            <h1 class="center">SIGN IN</h1>
+            <div class="h_line"></div>
+            <div id="firebaseui-auth-container"></div>
+        </div>
   </body>
 </html>
