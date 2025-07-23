@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- firebase start ****************************************-->
+        <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
+        <!-- firebase end ******************************************-->
+         <!-- fonts start ****************************************-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;400;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100&display=swap" rel="stylesheet">
+
+        <!-- fonts end ****************************************-->
+         <script src="/fb_setup.js"></script>
+         <link href="/style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <script src="/admin/addProducts.js"></script>
+
+        <!-- NAV BAR  ********************************************************-->
+        <header>
+            <div id="div_search">
+                <form id="form_searchBar">
+                    <input id="submitButton" type="image"
+                    src="/images/search.png" alt="submit">
+                    <input id="inputBar" type="search" placeholder="Search..." required>
+                    <div id="inputBar_line"></div>
+                </form>
+            </div>
+
+            <div id="logoDiv">
+                <a href="index.html">
+                    <img id="logo" src="/images/translogo.png">
+                </a>
+            </div>
+
+            <div id="div_filler"></div>
+            
+            <div class="icon">
+                <a href="/wishlist/wishlist.html">
+                    <img class="navIcons" src="/images/heart.png">
+                </a>
+            </div>
+            <div class="icon">
+                <a href="cart">
+                    <img class="navIcons" src="/images/cart.png">
+                </a>
+            </div>
+            <div class="icon">
+                <a href="/makeAccount/account.html">
+                    <img class="navIcons" src="/images/account.png">
+                </a>
+            </div>
+        </header>
+        <nav>
+            <a href="index.html">HOME</a>
+            <div class="shopDropdown">
+                <button class="dropbtn">SHOP</button>
+                <div class="shopDropdownContent">
+                  <a href="/shopAll/shopAll.html">Shop All</a>
+                  <a href="/shopAll/shopTops.html">Tops</a>
+                  <a href="/shopAll/shopBottoms.html">Bottoms</a>
+                  <a href="/shopAll/shopDresses.html">Dresses</a>
+                  <a href="/shopAll/shopShoes.html">Shoes</a>
+                  <a href="/shopAll/shopAccessories.html">Accessories</a>
+                  <a href="/shopAll/shopArt.html">Art</a>
+                </div>
+              </div>
+            <a href="about/about.html">ABOUT</a>
+            <a href="admin/addProducts.html">GALLERY</a>
+            <a href="/reviews/reviews.html">REVIEWS</a>
+            <a href="/makeAccount/account_redirect.html">ACCOUNT</a>
+        </nav>
+<!-- NAV BAR END ********************************************************-->
+
+        <form id="form_addProducts" onsubmit="createProduct(event); return false">
+            <h1>Add a product</h1>
+            <label for="title">Product title:</label>
+            <h6>Small unique description of the product.</h6>
+            <input type="text" id="title" name="title">
+
+            <label for="price">Price:</label>
+            <h6>Price of the product. Do not include the $.</h6>
+            <input type="number" id="price" name="price">
+
+            <label for="size">size:</label>
+            <h6>Size of the product, using NZ sizing numbers standard</h6>
+            <input type="number" id="size" name="size">
+
+            <label for="stock">stock:</label>
+            <h6>How much stock do we have of this product?</h6>
+            <input type="number" id="stock" name="stock">
+
+            <label for="brand">brand:</label>
+            <h6>Add the brand if it is designer.</h6>
+            <input type="text" id="brand" name="brand">
+
+            <label for="price">Flaws:</label>
+            <h6>List all of the product's flaws</h6>
+            <input type="number" id="price" name="price">
+
+            <label for="price">Description:</label>
+            <h6>Write a description of the product and any other information.</h6>
+            <input type="number" id="price" name="price">
+
+            <label for="category">Category:</label>
+            <h6>Product category?</h6>
+            <select id="category" name="category">
+            <option value="tops">Tops</option>
+            <option value="bottoms">Bottoms</option>
+            <option value="dresses">Dresses</option>
+            <option value="shoes">Shoes</option>
+            <option value="accessories">Accessories</option>
+            <option value="prints">Prints</option>
+            </select>
+
+            <label for="colour">Colour 1:</label>
+            <select id="colour1" name="colour">
+            <option value="red">Red</option>
+            <option value="orange">Orange</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+            <option value="pink">Pink</option>
+            <option value="purple">Purple</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            <option value="multi">Multicolour</option>
+            </select>
+
+            <label for="colour">Colour 2:</label>
+            <select id="colour2" name="colour">
+            <option value="none">None</option>
+            <option value="red">Red</option>
+            <option value="orange">Orange</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+            <option value="purple">Purple</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            </select>
+
+
+            <label for="image">Primary image:</label>
+            <h6>The main image that will be displayed on the shop page</h6>
+            <input type="file" id="main_image" name="main_image" accept="image/png, image/jpeg" />
+            
+            <label for="image">Images:</label>
+            <h6>The other images that will be displayed on the product page</h6>
+            <input type="file" id="images" name="main_image" accept="image/png, image/jpeg" multiple />
+            
+            <input id="submit" type="submit" value="Submit">
+
+            <p id="status"></p>
+        </form>
+    </body>
+</html>
