@@ -456,7 +456,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     font-weight: 400;
     font-size: 0.8rem;
     display: block;
-    width: 150px;
+    width: max-width;
     text-transform: uppercase;
 }
 

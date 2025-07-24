@@ -9,44 +9,50 @@ function searchSubmit(event) {
 
 function displayProducts() {
     productsArray = [];
-    var SEARCH_INPUT = sessionStorage.getItem("SEARCH_INPUT")
+    var SEARCH_INPUT = sessionStorage.getItem("SEARCH_INPUT");
     const searchWords = SEARCH_INPUT.split(" ");
     console.log(SEARCH_INPUT);
-    document.getElementById("div_searchedFor").innerHTML = `<h1>${SEARCH_INPUT}</h1>`
+    document.getElementById("div_searchedFor").innerHTML = `<h1>${SEARCH_INPUT}</h1>`;
+
     firebase.database().ref('/products/').once('value', function(snapshot) {
-        
         snapshot.forEach(function(childSnapshot) {
             var productInfo = childSnapshot.val();
             var searched = 0;
-            for (i = 0; i < searchWords.length; i++) {
-                if (productInfo.productName.includes(searchWords[i])) {
+
+            for (let i = 0; i < searchWords.length; i++) {
+                const word = searchWords[i].toLowerCase();
+                if (
+                    productInfo.productName.toLowerCase().includes(word) ||
+                    productInfo.brand.toLowerCase().includes(word) ||
+                    productInfo.colour1.toLowerCase().includes(word)
+                ) {
+                    searched += 2;
+                } else if (productInfo.colour2.toLowerCase().includes(word)) {
                     searched += 1;
-                } else if (productInfo.brand.includes(searchWords[i])) {
-                    searched += 1;
-                } else if (productInfo.colour1.includes(searchWords[i])) {
-                    searched += 1;
-                } else if (productInfo.colour2.includes(searchWords[i])) {
-                    searched += 1;
-                } else {
-                    searched += 0;
                 }
-            };
+            }
+
             if (searched > 0) {
                 productsArray.push({
                     key: childSnapshot.key,
-                    value: productInfo
+                    value: productInfo,
+                    relevance: searched
                 });
             }
         });
-        allProductsArray = [].concat(productsArray);
-        createGrid();
-});
+
+        // Sort by relevance (descending)
+        productsArray.sort((a, b) => b.relevance - a.relevance);
+
+        allProductsArray = [].concat(productsArray); // optional copy
+        createGrid(productsArray);
+    });
 }
-    
-function createGrid() {
-    console.log(productsArray)
+
+function createGrid(productsArray) {
+    console.log(productsArray);
     document.getElementById("products_container").innerHTML = '';
-    for (i = 0; i < productsArray.length; i++) {
+    for (let i = 0; i < productsArray.length; i++) {
         appendProduct(
             productsArray[i].value.mainImage,
             productsArray[i].key,
@@ -54,7 +60,7 @@ function createGrid() {
             productsArray[i].value.price,
             productsArray[i].value.size
         );
-    };
+    }
 }
     
     function appendProduct(mainImage, productID, productName, productPrice, productSize) {
@@ -181,32 +187,32 @@ function createGrid() {
         }
     }
     
-    function sortSettings(event) {
-        event.preventDefault();
-        document.getElementById("products_container").innerHTML = '';
-        sortSettings = document.getElementById("sortDropdown").value;
-    
-        if (sortSettings === 'newest' || sortSettings === 'oldest') {
-            sortBy = 'date'
-        } else if (sortSettings === 'lowPrice' || sortSettings === 'highPrice') {
-            sortBy = 'price'
+function sortSettings(event) {
+    event.preventDefault();
+    document.getElementById("products_container").innerHTML = '';
+    sortSettings = document.getElementById("sortDropdown").value;
+
+    if (sortSettings === 'newest' || sortSettings === 'oldest') {
+        sortBy = 'date'
+    } else if (sortSettings === 'lowPrice' || sortSettings === 'highPrice') {
+        sortBy = 'price'
+    }
+
+        if (sortBy === 'date') {
+        if (sortSettings === 'newest') {
+            displayProducts();
+            console.log('date new to old')
+        } else {
+            console.log('date old to new')
         }
-    
-         if (sortBy === 'date') {
-            if (sortSettings === 'newest') {
-                displayProducts();
-                console.log('date new to old')
-            } else {
-                console.log('date old to new')
-            }
-        } else if (sortBy === 'price') {
-            if (sortSettings === 'lowPrice') {
-                sortLowPrice();
-            } else {
-                sortHighPrice();
-            }
+    } else if (sortBy === 'price') {
+        if (sortSettings === 'lowPrice') {
+            sortLowPrice();
+        } else {
+            sortHighPrice();
         }
     }
+}
     
     function sortLowPrice() {
         console.log('sort price low to high')
