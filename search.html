@@ -20,16 +20,14 @@
 
         <!-- fonts end ****************************************-->
          <script src="fb_setup.js"></script>
-         <script src="home.js"></script>
          <script src="search.js"></script>
          <link href="style.css" rel="stylesheet" type="text/css">
     </head>
-    <body onload="displayFeaturedProducts()">
-        <div class="home_container">
+    <body onload="displayProducts()">
 <!-- NAV BAR  ********************************************************-->
             <header>
                 <div id="div_search">
-                    <form id="form_searchBar" onsubmit="searchSubmit(event); return false">
+                    <form id="form_searchBar">
                         <input id="submitButton" type="image"
                         src="/images/search.png" alt="submit">
                         <input id="inputBar" type="search" placeholder="Search..." required>
@@ -81,39 +79,53 @@
                 <a href="/makeAccount/account_redirect.html">ACCOUNT</a>
             </nav>
 <!-- NAV BAR END ********************************************************-->
-<!-- HEADER IMAGE ********************************************************-->
-            <div id="header_img" width="100">
-                <div id="header_img_background">
-                    <img id="header_img_logo" src="/images/translogo.png">
-                </div>
-            </div>
-<!--              <p>Welcome to doll planet</p>
-                <a href="/addProducts/addProducts.html">add products</a>
-            </div> -->  
-<!-- HEADER IMAGE END ********************************************************-->
-<!-- FEATURED PRODUCTS ********************************************************-->
-            <div id="featured">
-                <h1>FEATURED ITEMS</h1>
-                <a href="/shopAll/shopAll.html">SHOP ALL</a>
-                <div id="featured_products_container"></div>
-            </div>
-<!-- FEATURED PRODUCTS END ********************************************************-->
-<!-- ABOUT SECTION ********************************************************-->
-            <div id="about_us">
-                <h1>ABOUT US</h1>
-                <p>Doll Planet is an NZ owned fashion brand committed to sustainability 
-                    and ethical fashion. We specialise in preloved and upcycled clothing, 
-                    as well as handmade accessories and original art prints!
-                </p>
-                <a href="/about/about.html">FIND OUT MORE</a>
-            </div>
-            <div id="about_us_img">
-                <img src="/images/about-image_webp.webp">
-            </div>
-<!-- ABOUT SECTION END ********************************************************-->
-            <div id="footer">
-                <p>footer</p>
-            </div>
-    </div>
+
+<h1>SEARCH RESULTS FOR: </h1>
+<div id="div_searchedFor"></div>
+
+<div id="filters">
+<form id="shopForm" onchange="filterSettings(event); return false">
+<div id="colourFilterDiv">
+    <select id="colourDropdown" name="colour">
+      <option value="all">All colours</option>
+      <option value="red">Red</option>
+      <option value="orange">Orange</option>
+      <option value="yellow">Yellow</option>
+      <option value="pink">Pink</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="purple">Purple</option>
+      <option value="black">Black</option>
+      <option value="white">White</option>
+      <option value="multi">Multicolour</option>
+    </select><br>
+</div>
+
+<div id="sizeFilterDiv">
+    <select id="sizeDropdown" name="size">
+      <option value="all">All sizes</option>
+      <option value="4">Size 4</option>
+      <option value="6">Size 6</option>
+      <option value="8">Size 8</option>
+      <option value="10">Size 10</option>
+      <option value="12">Size 12</option>
+      <option value="14">Size 14</option>
+  </select><br>
+</div>
+</form>
+
+<form id="sortDiv" onchange="sortSettings(event); return false">
+  <select id="sortDropdown" name="sortDropdown">
+    <option value="newest">Sort by newest</option>
+    <option value="oldest">Sory by oldest</option>
+    <option value="lowPrice">Sort by lowest price</option>
+    <option value="highPrice">Sort by highest price</option>
+  </select>
+</form>
+</div>
+<!-- FILTERS END ***************************************************-->
+
+        <div id="products_container">
+        </div>
     </body>
 </html>
