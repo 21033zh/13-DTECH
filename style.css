@@ -517,6 +517,48 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 /*--- HOME PAGE END ----------------------------------------*/
 
+/*--- HOME PAGE MOBILE ----------------------------------------*/
+@media only screen and (max-width: 600px) {
+    #header_img {
+        height: 300px;
+        width: auto;
+    }
+    #header_img_background {
+        background-image: linear-gradient(to bottom, rgb(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0.75) ),
+        url("/images/mobile_headerImage.png");
+    }
+
+    #header_img_logo {
+        width: 70%;
+    }
+
+    #featured h1 {
+        font-size: 1.5rem;
+    }
+
+    #featured #featured_products_container {
+        grid-auto-columns: 50%;
+    }
+
+    #featured .info_card {
+        height: 100px;
+    }
+
+    #about_us {
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+    #about_us a {
+        margin: 20px auto 0px auto;
+    }
+
+    #about_us_img {
+        padding: 0px;
+    }
+}
+/*--- HOME PAGE MOBILE END ------------------------------------*/
+
 /*--- SHOP PAGE ----------------------------------------*/
 /*---CATEGORIES-SECTION----*/
 #categoriesContainer {
