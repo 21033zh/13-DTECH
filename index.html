@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head title="Doll Planet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta charset="UTF-8">
         <!-- firebase start ****************************************-->
         <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
@@ -19,68 +19,92 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100&display=swap" rel="stylesheet">
 
         <!-- fonts end ****************************************-->
-         <script src="fb_setup.js"></script>
-         <script src="home.js"></script>
-         <script src="search.js"></script>
-         <link href="style.css" rel="stylesheet" type="text/css">
+         <script src="/fb_setup.js"></script>
+         <script src="shopAll.js"></script>
+         <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
+
     <body onload="displayFeaturedProducts()">
-        <div class="home_container">
+        <script src="home.js"></script>
+
 <!-- NAV BAR  ********************************************************-->
-            <header>
-                <div id="div_search">
-                    <form id="form_searchBar" onsubmit="searchSubmit(event); return false">
-                        <input id="submitButton" type="image"
-                        src="/images/search.png" alt="submit">
-                        <input id="inputBar" type="search" placeholder="Search..." required>
-                        <div id="inputBar_line"></div>
-                    </form>
-                </div>
+<header>
+    <div id="hamburger_menu">
+        <a id="a_hamburger" href="javascript:void(0);" onclick="openHamburger()">
+            <img id="hamburger" src="/images/hamburger.png">
+        </a>
+        <div id="myLinks">
+            <button onclick="openHamburger()">exit</button>
+            <div id="mobile_div_search">
+                <form id="form_searchBar" onsubmit="searchSubmit(event); return false">
+                    <input id="submitButton" type="image"
+                    src="/images/search.png" alt="submit">
+                    <input id="inputBar" type="search" placeholder="Search..." required>
+                    <div id="inputBar_line"></div>
+                </form>
+                <div class="line"></div>
+            </div>
 
-                <div id="logoDiv">
-                    <a href="index.html">
-                        <img id="logo" src="/images/translogo.png">
-                    </a>
-                </div>
+            <a class="a_pageLink" href="index.html">HOME</a>
+            <a class="a_pageLink" href="/shopAll/shopAll.html">SHOP</a>
+            <a class="a_pageLink" href="/about/about.html">ABOUT</a>
+        </div>
+    </div>
+  <div id="div_search">
+      <form id="form_searchBar" onsubmit="searchSubmit(event); return false">
+          <input id="submitButton" type="image"
+          src="/images/search.png" alt="submit">
+          <input id="inputBar" type="search" placeholder="Search..." required>
+          <div id="inputBar_line"></div>
+      </form>
+  </div>
 
-                <div id="div_filler"></div>
-                
-                <div class="icon">
-                    <a href="/wishlist/wishlist.html">
-                        <img class="navIcons" src="/images/heart.png">
-                    </a>
-                </div>
-                <div class="icon">
-                    <a href="cart">
-                        <img class="navIcons" src="/images/cart.png">
-                    </a>
-                </div>
-                <div class="icon">
-                    <a href="/makeAccount/account.html">
-                        <img class="navIcons" src="/images/account.png">
-                    </a>
-                </div>
-            </header>
-            <nav>
-                <a href="index.html">HOME</a>
-                <div class="shopDropdown">
-                    <button class="dropbtn">SHOP</button>
-                    <div class="shopDropdownContent">
-                      <a href="/shopAll/shopAll.html">Shop All</a>
-                      <a href="/shopAll/shopTops.html">Tops</a>
-                      <a href="/shopAll/shopBottoms.html">Bottoms</a>
-                      <a href="/shopAll/shopDresses.html">Dresses</a>
-                      <a href="/shopAll/shopShoes.html">Shoes</a>
-                      <a href="/shopAll/shopAccessories.html">Accessories</a>
-                      <a href="/shopAll/shopArt.html">Art</a>
-                    </div>
-                  </div>
-                <a href="about/about.html">ABOUT</a>
-                <a href="admin/addProducts.html">GALLERY</a>
-                <a href="/reviews/reviews.html">REVIEWS</a>
-                <a href="/makeAccount/account_redirect.html">ACCOUNT</a>
-            </nav>
+  <div id="logoDiv">
+      <a href="index.html">
+          <img id="logo" src="/images/translogo.png">
+      </a>
+  </div>
+  
+
+  <div id="div_filler"></div>
+  
+  <div class="icon" id="wishlist">
+      <a href="/wishlist/wishlist.html">
+          <img class="navIcons" src="/images/heart.png">
+      </a>
+  </div>
+  <div class="icon" id="cart">
+      <a href="cart">
+          <img class="navIcons" src="/images/cart.png">
+      </a>
+  </div>
+  <div class="icon" id="account">
+      <a href="/makeAccount/account.html">
+          <img class="navIcons" src="/images/account.png">
+      </a>
+  </div>
+</header>
+<nav>
+  <a href="index.html">HOME</a>
+  <div class="shopDropdown">
+      <button class="dropbtn">SHOP</button>
+      <div class="shopDropdownContent">
+        <a href="/shopAll/shopAll.html">Shop All</a>
+        <a href="/shopAll/shopTops.html">Tops</a>
+        <a href="/shopAll/shopBottoms.html">Bottoms</a>
+        <a href="/shopAll/shopDresses.html">Dresses</a>
+        <a href="/shopAll/shopShoes.html">Shoes</a>
+        <a href="/shopAll/shopAccessories.html">Accessories</a>
+        <a href="/shopAll/shopArt.html">Art</a>
+      </div>
+    </div>
+  <a href="about/about.html">ABOUT</a>
+  <a href="admin/addProducts.html">GALLERY</a>
+  <a href="/reviews/reviews.html">REVIEWS</a>
+  <a href="/makeAccount/account_redirect.html">ACCOUNT</a>
+</nav>
 <!-- NAV BAR END ********************************************************-->
+
 <!-- HEADER IMAGE ********************************************************-->
             <div id="header_img" width="100">
                 <div id="header_img_background">

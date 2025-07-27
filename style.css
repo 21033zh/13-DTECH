@@ -9,6 +9,7 @@ html {
 body {
     padding: 0px;
     margin: 0px;
+    width: 100%;
 }
 
 a {
@@ -31,27 +32,35 @@ header {
     position: relative;
     display: grid;
     grid-template-columns: 220px 1fr 50px 50px 50px;
-}
-
-#logoDiv {
-    width: 20%;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: block;
-    padding: 20px 0px 0px 0px;
+    height:min-content;
 }
 
 #logo {
     width: 100%;
 }
 
-#logoDiv:hover {
-    animation: logo-size-in 0.7s forwards;
-}
+@media only screen and (min-width: 600px) {
+    #logoDiv {
+        width: 20%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: block;
+        padding: 20px 0px 0px 0px;
+    }
 
-#logoDiv:not(:hover) {
-    animation: logo-size-out 0.7s forwards;
+    #logoDiv:hover {
+        animation: logo-size-in 0.7s forwards;
+    }
+    
+    #logoDiv:not(:hover) {
+        animation: logo-size-out 0.7s forwards;
+    }
+
+    #hamburger_menu {
+        display: none;
+    }
+
 }
 
 @keyframes logo-size-in {
@@ -75,6 +84,19 @@ header {
     height: 22px;
     padding: 15px;
 }
+
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* or fixed height like 40px */
+  }
+  
+  .icon img {
+    padding: 0;
+    margin: 0;
+    display: block;
+  }
 
 .icon img:hover {
     opacity: 50%;
@@ -195,21 +217,147 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     display: block;
 }
 
-@media only screen and (max-width: 600px) {
-    #icons {
-        display: none;
-    }
+/*--- NAV BAR END --------------------------------------*/
 
+/*--- MOBILE NAV BAR --------------------------------------*/
+#hamburger_menu #myLinks {
+    display: none;
+    position:absolute;
+    background-color: black;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 60%;
+    height: 100vh;
+  }
+  
+  #hamburger_menu #hamburger, #a_hamburger {
+    width: 18px;
+    height: auto;
+    display: block;
+    margin: 0px;
+}
+
+#hamburger_menu #a_hamburger {
+    margin: 0px 10px;
+}
+
+#myLinks {
+    padding: 10px;
+}
+
+#myLinks .a_pageLink {
+    display: block;
+    color: white;
+    padding: 20px;
+    text-align: left;
+}
+
+.icon {
+    width: 18px;
+    height: auto;
+    padding: 5px;
+    display: inline;
+}
+
+.icon img {
+    width: 100%;
+    height: auto;
+}
+
+#mobile_div_search {
+    padding: 15px;
+    height: min-content;
+}
+
+#mobile_div_search #form_searchBar {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+}
+
+#mobile_div_search #submitButton {
+    width: 22px
+}
+
+#mobile_div_search #inputBar {
+    background-color: black;
+    border: none;
+    border-bottom: 1px solid black;
+    width: 100%;
+    color: white;
+    font-size: 0.8rem;
+    padding: 0px;
+    margin-left: 10px;
+}
+
+#mobile_div_search #inputBar:focus, #div_search #inputBar:hover {
+    background-color: black;
+    border: none;
+    outline: none;
+    animation: inputBar_border 0.7s forwards;
+}
+
+#mobile_div_search #inputBar:not(:hover) {
+    animation: inputBar_border_out 0.7s forwards;
+}
+
+#mobile_div_search .line {
+    width: 100%;
+    background-color: white;
+    height: 1px;
+    margin: 25px auto 0px auto;
+}
+
+@media only screen and (max-width: 600px) {
     nav {
         display: none;
     }
 
-    #logoDiv {
-        width: 50%;
+    header {
+        grid-template-columns: 80px 1fr 40px 40px;
+        padding: 5px;
+        height: 65px;
+        align-items: center;
     }
+
+    #wishlist {
+        display: none;
+    }
+
+    #div_filler {
+        display: none;
+    }
+
+    #div_search {
+        display: none;
+    }
+
+#logoDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 70%;
+    padding: 0px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+#logoDiv a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+  .logoDiv img {
+    padding: 0;
+    margin: 0;
+    display: block;
+  }
 }
 
-/*--- NAV BAR END --------------------------------------*/
+/*--- MOBILE NAV BAR END --------------------------------------*/
 
 /*--- FOOTER --------------------------------------*/
 #footer {
@@ -219,6 +367,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 /*--- HOME PAGE ----------------------------------------*/
 .home_container {
+    width: 100%;
     display: grid;
     grid-template-areas: 
     "header header header header header header"
@@ -366,44 +515,6 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     display:block;
 }
 
-@media only screen and (max-width: 600px) {
-    .home_container {
-        display: grid;
-        grid-template-areas: 
-        "header"
-        "nav"
-        "header_img"
-        "featured"
-        "about_us"
-        "about_us_img"
-        "footer"
-    }
-
-    #header_img {
-        grid-area: header_img;
-        width: 100%;
-        height: 400px;
-    }
-
-    #featured_products_container {
-        grid-auto-columns: 50%; 
-    }
-
-    #about_us {
-        padding: 80px 20px 80px 20px;
-        text-align: center;
-    }
-
-    #about_us > a {
-        margin: auto;
-        margin-top: 30px;
-    }
-
-    #about_us_img {
-        padding: 20px;
-        padding-top: 0px;
-    }
-}
 /*--- HOME PAGE END ----------------------------------------*/
 
 /*--- SHOP PAGE ----------------------------------------*/

@@ -28,48 +28,59 @@
         <script src="/makeAccount/makeAccount.js"></script>
 
 <!-- NAV BAR  ********************************************************-->
-        <header>
-            <div id="logoDiv">
-                <a href="index.html">
-                    <img id="logo" src="/images/translogo.png">
-                </a>
-            </div>
-            
-            <div id="searchBar">
-                <form id="searchBarForm">
-                    <input id="inputBar" type="search" placeholder="Search..." required>
-                    <input id="submitButton" type="image"
-                    src="/images/search.png" alt="submit" class="fa">
-                  </form>
-            </div>
-            <div id="icons">
-                <a href="/wishlist/wishlist.html">
-                    <img class="navIcons" src="/images/heart.png">
-                </a>
-                <a href="cart">
-                    <img class="navIcons" src="/images/cart.png">
-                </a>
-            </div>
-        </header>
-        <nav>
-            <a href="/index.html">HOME</a>
-            <div class="shopDropdown">
-                <button class="dropbtn">SHOP</button>
-                <div class="shopDropdownContent">
-                  <a href="/shopAll/shopAll.html">Shop All</a>
-                  <a href="/shopAll/shopTops.html">Tops</a>
-                  <a href="/shopAll/shopBottoms.html">Bottoms</a>
-                  <a href="/shopAll/shopDresses.html">Dresses</a>
-                  <a href="/shopAll/shopShoes.html">Shoes</a>
-                  <a href="/shopAll/shopAccessories.html">Accessories</a>
-                  <a href="/shopAll/shopArt.html">Art</a>
-                </div>
-              </div>
-            <a href="/about/about.html">ABOUT</a>
-            <a href="/addProducts/addProducts.html">GALLERY</a>
-            <a href="/reviews/reviews.html">REVIEWS</a>
-            <a href="/makeAccount/account.html">ACCOUNT</a>
-        </nav>
+<header>
+    <div id="div_search">
+        <form id="form_searchBar" onsubmit="searchSubmit(event); return false">
+            <input id="submitButton" type="image"
+            src="/images/search.png" alt="submit">
+            <input id="inputBar" type="search" placeholder="Search..." required>
+            <div id="inputBar_line"></div>
+        </form>
+    </div>
+
+    <div id="logoDiv">
+        <a href="index.html">
+            <img id="logo" src="/images/translogo.png">
+        </a>
+    </div>
+
+    <div id="div_filler"></div>
+    
+    <div class="icon">
+        <a href="/wishlist/wishlist.html">
+            <img class="navIcons" src="/images/heart.png">
+        </a>
+    </div>
+    <div class="icon">
+        <a href="cart">
+            <img class="navIcons" src="/images/cart.png">
+        </a>
+    </div>
+    <div class="icon">
+        <a href="/makeAccount/account.html">
+            <img class="navIcons" src="/images/account.png">
+        </a>
+    </div>
+</header>
+<nav>
+    <a href="index.html">HOME</a>
+    <div class="shopDropdown">
+        <button class="dropbtn">SHOP</button>
+        <div class="shopDropdownContent">
+          <a href="/shopAll/shopAll.html">Shop All</a>
+          <a href="/shopAll/shopTops.html">Tops</a>
+          <a href="/shopAll/shopBottoms.html">Bottoms</a>
+          <a href="/shopAll/shopDresses.html">Dresses</a>
+          <a href="/shopAll/shopShoes.html">Shoes</a>
+          <a href="/shopAll/shopAccessories.html">Accessories</a>
+          <a href="/shopAll/shopArt.html">Art</a>
+        </div>
+      </div>
+    <a href="about/about.html">ABOUT</a>
+    <a href="admin/addProducts.html">GALLERY</a>
+    <a href="/reviews/reviews.html">REVIEWS</a>
+    <a href="/makeAccount/account_redirect.html">ACCOUNT</a>
+</nav>
 <!-- NAV BAR END ********************************************************-->
 
     <!-- The surrounding HTML is left untouched by FirebaseUI.

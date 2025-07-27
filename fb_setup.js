@@ -35,3 +35,17 @@ const firebaseConfig = {
 }
 
 fb_initialise();
+
+/* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+function openHamburger() {
+  var x = document.getElementById("myLinks");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+    console.log('hello');
+    document.body.style.overflow = 'scroll';
+  } else {
+    console.log('goodbye');
+    x.style.display = "block";
+    document.body.style.overflow = 'hidden';
+  }
+}
