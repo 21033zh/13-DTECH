@@ -136,7 +136,7 @@ header {
     animation: inputBar_border 0.7s forwards;
 }
 
-#inputBar:not(:hover) {
+#div_search #inputBar:not(:hover) {
     animation: inputBar_border_out 0.7s forwards;
 }
 
@@ -246,25 +246,19 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     padding: 10px;
 }
 
+#myLinks > img {
+    width: 30px;
+    height: auto;
+    display: block;
+    margin: 10px auto 10px 85%;
+}
+
 #myLinks .a_pageLink {
     display: block;
     color: white;
     padding: 20px;
     text-align: left;
 }
-
-.icon {
-    width: 18px;
-    height: auto;
-    padding: 5px;
-    display: inline;
-}
-
-.icon img {
-    width: 100%;
-    height: auto;
-}
-
 #mobile_div_search {
     padding: 15px;
     height: min-content;
@@ -294,18 +288,14 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     background-color: black;
     border: none;
     outline: none;
-    animation: inputBar_border 0.7s forwards;
 }
 
-#mobile_div_search #inputBar:not(:hover) {
-    animation: inputBar_border_out 0.7s forwards;
-}
 
 #mobile_div_search .line {
     width: 100%;
     background-color: white;
     height: 1px;
-    margin: 25px auto 0px auto;
+    margin: 15px auto 0px auto;
 }
 
 @media only screen and (max-width: 600px) {
@@ -332,12 +322,26 @@ nav a:hover, .shopDropdown:hover .dropbtn {
         display: none;
     }
 
+
+.icon {
+    width: 18px;
+    height: auto;
+    padding: 5px;
+    display: inline;
+}
+
+.icon img {
+    width: 100%;
+    height: auto;
+}
+
+
 #logoDiv {
     display: flex;
     align-items: center;
     justify-content: center;
     height: auto;
-    width: 70%;
+    width: 150px;
     padding: 0px;
     position: relative;
     margin-left: auto;
