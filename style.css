@@ -220,18 +220,30 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- NAV BAR END --------------------------------------*/
 
 /*--- MOBILE NAV BAR --------------------------------------*/
-#hamburger_menu #myLinks {
+#hb_darkOverlay, #search_darkOverlay {
+    width: 100%;
+    height: 100vh;
+    background-color: #000000;
+    opacity: 0.5;
+    z-index: 2;
+    position: absolute;
     display: none;
+}
+
+
+
+#hamburger_menu #myLinks {
     position:absolute;
     background-color: black;
-    z-index: 2;
+    z-index: 3;
     left: 0;
     top: 0;
     width: 60%;
     height: 100vh;
+    padding: 10px;
   }
   
-  #hamburger_menu #hamburger, #a_hamburger {
+#hamburger_menu #hamburger, #a_hamburger {
     width: 18px;
     height: auto;
     display: block;
@@ -242,15 +254,35 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     margin: 0px 10px;
 }
 
-#myLinks {
-    padding: 10px;
-}
-
 #myLinks > img {
     width: 30px;
     height: auto;
     display: block;
     margin: 10px auto 10px 85%;
+}
+
+#myLinks.hamburgerIn {
+    animation: hamburgerSlideIn 0.5s forwards;
+}
+
+#myLinks.hamburgerOut {
+    animation: hamburgerSlideOut 0.5s forwards;
+}
+
+#myLinks.hamburgerNeutral {
+    display: none;
+}
+
+@keyframes hamburgerSlideIn {
+    0% { transform: translateX(-250px); 
+        display: block;}
+    100% { transform: translateX(0); }
+}
+
+@keyframes hamburgerSlideOut {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-250px); 
+            display: none}
 }
 
 #myLinks .a_pageLink {
@@ -260,28 +292,35 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     text-align: left;
 }
 #mobile_div_search {
-    padding: 15px;
     height: min-content;
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    z-index: 3;
 }
 
 #mobile_div_search #form_searchBar {
     display: grid;
-    grid-template-columns: 30px 1fr;
+    grid-template-columns: 1fr 30px;
+    border: solid 1px white;
+    padding: 20px;
+    margin: 10px;
+    height: auto;
 }
 
 #mobile_div_search #submitButton {
     width: 22px
+
 }
 
 #mobile_div_search #inputBar {
     background-color: black;
     border: none;
     border-bottom: 1px solid black;
-    width: 100%;
     color: white;
     font-size: 0.8rem;
     padding: 0px;
-    margin-left: 10px;
+    width: 100%;
 }
 
 #mobile_div_search #inputBar:focus, #div_search #inputBar:hover {
@@ -290,12 +329,32 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     outline: none;
 }
 
+#mobile_div_search.searchIn {
+    animation: searchSlideIn 0.5s forwards;
+}
 
-#mobile_div_search .line {
-    width: 100%;
-    background-color: white;
-    height: 1px;
-    margin: 15px auto 0px auto;
+#mobile_div_search.searchOut {
+    animation: searchSlideOut 0.5s forwards;
+}
+
+#mobile_div_search.searchNeutral {
+    display: none;
+}
+
+@keyframes searchSlideIn {
+    0% { transform: translateY(-80px); 
+        opacity: 0;
+        display: block;}
+    100% { transform: translateY(0); 
+        opacity: 1;}
+}
+
+@keyframes searchSlideOut {
+    0% { transform: translateY(0); 
+        opacity: 1;}
+    100% { transform: translateY(-80px); 
+        opacity: 0;
+            display: none}
 }
 
 @media only screen and (max-width: 600px) {
@@ -304,7 +363,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     }
 
     header {
-        grid-template-columns: 80px 1fr 40px 40px;
+        grid-template-columns: 40px 40px 1fr 40px 40px;
         padding: 5px;
         height: 65px;
         align-items: center;
