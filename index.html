@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head title="Doll Planet">
+    <head>
+        <title>Doll Planet Home</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta charset="UTF-8">
         <!-- firebase start ****************************************-->
@@ -10,6 +11,8 @@
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
+
 
         <!-- firebase end ******************************************-->
         <!-- fonts start ****************************************-->
@@ -20,127 +23,137 @@
 
         <!-- fonts end ****************************************-->
          <script src="/fb_setup.js"></script>
-         <script src="shopAll.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
 
     <body onload="displayFeaturedProducts()">
         <script src="home.js"></script>
+        <script src="nav.js"></script>
 
-    <div id="hb_darkOverlay" onclick="closeHamburger()"></div>
-    <div id="search_darkOverlay" onclick="closeSearch()"></div>
-<!-- NAV BAR  ********************************************************-->
-<header>
-    <div id="hamburger_menu">
-        <a id="a_hamburger" href="javascript:void(0);" onclick="openHamburger()">
-            <img id="hamburger" src="/images/hamburger.png">
-        </a>
-        <div id="myLinks" class="hamburgerNeutral">
-            <img src="/images/x.png" onclick="closeHamburger()">
-            <a class="a_pageLink" href="index.html">HOME</a>
-            <a class="a_pageLink" href="/shopAll/shopAll.html">SHOP</a>
-            <a class="a_pageLink" href="/about/about.html">ABOUT</a>
+            <div id="hb_darkOverlay" onclick="closeHamburger()"></div>
+            <div id="search_darkOverlay" onclick="closeSearch()"></div>
+<!-- HEADER BAR  ********************************************************-->
+        <header>
+        <!--MOBILE-hamburger-menu-->
+            <div id="hamburger_menu">
+                <a id="a_hamburger" href="javascript:void(0);" onclick="openHamburger()">
+                    <img id="hamburger" src="/images/hamburger.png" alt="menu">
+                </a>
+                <div id="myLinks" class="hamburgerNeutral">
+                    <img src="/images/x.png" onclick="closeHamburger()" alt="exit">
+                    <a class="a_pageLink" href="index.html">HOME</a>
+                    <a class="a_pageLink" href="/shopAll/shopAll.html">SHOP</a>
+                    <a class="a_pageLink" href="/about/about.html">ABOUT</a>
+                </div>
+            </div>
+
+        <!--MOBILE-search-icon-->
+            <div id="mobile_searchIcon" class="icon"> 
+                <img src="images/search.png" onclick="openSearch()" alt="search">
+            </div>
+
+        <!--WEB-search-bar-->
+            <div id="div_search">
+                <form id="web_searchForm" class="form_searchBar" 
+                onsubmit="searchSubmit(event); return false">
+                    <input class="submitButton" type="image" id="web_searchSubmit"
+                    src="/images/search.png" alt="submit">
+                    <input class="inputBar" type="text" id="web_searchInput"
+                    placeholder="Search..." required>
+                    <div id="inputBar_line"></div>
+                </form>
+            </div>
+
+        <!--WEB-MOBILE-logo-->
+        <div id="logoDiv">
+            <a href="index.html">
+                <img id="logo" src="/images/translogo.png" alt="Doll Planet">
+            </a>
         </div>
-    </div>
-    <div class="icon"> <img src="images/search.png" onclick="openSearch()"></div>
+        
 
+        <div id="div_filler"></div>
+        
+        <!--WEB-MOBILE-icons-->
+        <div class="icon" id="wishlist">
+            <a href="/wishlist/wishlist.html">
+                <img class="navIcons" src="/images/heart.png" alt="wishlist">
+            </a>
+        </div>
+        <div class="icon" id="cart">
+            <a href="cart">
+                <img class="navIcons" src="/images/cart.png" alt="cart">
+            </a>
+        </div>
+        <div class="icon" id="account">
+            <a href="/makeAccount/account.html">
+                <img class="navIcons" src="/images/account.png" alt="account">
+            </a>
+        </div>
+        </header>
+<!-- HEADER END ********************************************************-->
+<!-- NAV BAR  ********************************************************-->
+        <!--MOBILE-search-bar-->
+            <div id="mobile_div_search" class="searchNeutral">
+                <form id="mobile_searchForm"
+                class="form_searchBar" onsubmit="searchSubmit(event); return false">
+                    <input class="inputBar" id="mb_searchInput" type="text" autofocus required>
+                    <input class="submitButton" id="mb_searchSubmit" type="image"
+                    src="/images/search.png" alt="submit">
+                </form>
+            </div>
 
-    <div id="div_search">
-        <form id="form_searchBar" onsubmit="searchSubmit(event); return false">
-            <input id="submitButton" type="image"
-            src="/images/search.png" alt="submit">
-            <input id="inputBar" type="search" placeholder="Search..." required>
-            <div id="inputBar_line"></div>
-        </form>
-    </div>
-
-  <div id="logoDiv">
-      <a href="index.html">
-          <img id="logo" src="/images/translogo.png">
-      </a>
-  </div>
-  
-
-  <div id="div_filler"></div>
-  
-  <div class="icon" id="wishlist">
-      <a href="/wishlist/wishlist.html">
-          <img class="navIcons" src="/images/heart.png">
-      </a>
-  </div>
-  <div class="icon" id="cart">
-      <a href="cart">
-          <img class="navIcons" src="/images/cart.png">
-      </a>
-  </div>
-  <div class="icon" id="account">
-      <a href="/makeAccount/account.html">
-          <img class="navIcons" src="/images/account.png">
-      </a>
-  </div>
-</header>
-
-<div id="mobile_div_search" class="searchNeutral">
-    <form id="form_searchBar" onsubmit="searchSubmit(event); return false">
-        <input id="inputBar" type="search" autofocus required>
-        <input id="submitButton" type="image"
-        src="/images/search.png" alt="submit">
-    </form>
-</div>
-
-<nav>
-  <a href="index.html">HOME</a>
-  <div class="shopDropdown">
-      <button class="dropbtn">SHOP</button>
-      <div class="shopDropdownContent">
-        <a href="/shopAll/shopAll.html">Shop All</a>
-        <a href="/shopAll/shopTops.html">Tops</a>
-        <a href="/shopAll/shopBottoms.html">Bottoms</a>
-        <a href="/shopAll/shopDresses.html">Dresses</a>
-        <a href="/shopAll/shopShoes.html">Shoes</a>
-        <a href="/shopAll/shopAccessories.html">Accessories</a>
-        <a href="/shopAll/shopArt.html">Art</a>
-      </div>
-    </div>
-  <a href="about/about.html">ABOUT</a>
-  <a href="admin/addProducts.html">GALLERY</a>
-  <a href="/reviews/reviews.html">REVIEWS</a>
-</nav>
+        <nav>
+            <a href="index.html">HOME</a>
+            <div class="shopDropdown">
+                <button class="dropbtn">SHOP</button>
+                <div class="shopDropdownContent">
+                    <a href="/shopAll/shopAll.html">Shop All</a>
+                    <a href="/shopAll/shopTops.html">Tops</a>
+                    <a href="/shopAll/shopBottoms.html">Bottoms</a>
+                    <a href="/shopAll/shopDresses.html">Dresses</a>
+                    <a href="/shopAll/shopShoes.html">Shoes</a>
+                    <a href="/shopAll/shopAccessories.html">Accessories</a>
+                    <a href="/shopAll/shopArt.html">Art</a>
+                </div>
+                </div>
+            <a href="about/about.html">ABOUT</a>
+            <a href="admin/addProducts.html">GALLERY</a>
+            <a href="/reviews/reviews.html">REVIEWS</a>
+        </nav>
 <!-- NAV BAR END ********************************************************-->
 
 <!-- HEADER IMAGE ********************************************************-->
-            <div id="header_img" width="100">
-                <div id="header_img_background">
-                    <img id="header_img_logo" src="/images/translogo.png">
-                </div>
+        <div id="header_img">
+            <div id="header_img_background">
+                <img id="header_img_logo" src="/images/translogo.png" alt="doll planet girls against a tree">
             </div>
-<!--              <p>Welcome to doll planet</p>
-                <a href="/addProducts/addProducts.html">add products</a>
-            </div> -->  
+        </div>
 <!-- HEADER IMAGE END ********************************************************-->
+
 <!-- FEATURED PRODUCTS ********************************************************-->
-            <div id="featured">
-                <h1>FEATURED ITEMS</h1>
-                <a href="/shopAll/shopAll.html">SHOP ALL</a>
-                <div id="featured_products_container"></div>
-            </div>
+        <div id="featured">
+            <h1>FEATURED ITEMS</h1>
+            <a href="/shopAll/shopAll.html">SHOP ALL</a>
+            <div id="featured_products_container"></div>
+        </div>
 <!-- FEATURED PRODUCTS END ********************************************************-->
+
 <!-- ABOUT SECTION ********************************************************-->
-            <div id="about_us">
-                <h1>ABOUT US</h1>
-                <p>Doll Planet is an NZ owned fashion brand committed to sustainability 
-                    and ethical fashion. We specialise in preloved and upcycled clothing, 
-                    as well as handmade accessories and original art prints!
-                </p>
-                <a href="/about/about.html">FIND OUT MORE</a>
-            </div>
-            <div id="about_us_img">
-                <img src="/images/about-image_webp.webp">
-            </div>
+        <div id="about_us">
+            <h1>ABOUT US</h1>
+            <p>Doll Planet is an NZ owned fashion brand committed to sustainability 
+                and ethical fashion. We specialise in preloved and upcycled clothing, 
+                as well as handmade accessories and original art prints!
+            </p>
+            <a href="/about/about.html">FIND OUT MORE</a>
+        </div>
+        <div id="about_us_img">
+            <img src="/images/about-image_webp.webp" alt="doll planet model posing on grass">
+        </div>
 <!-- ABOUT SECTION END ********************************************************-->
-            <div id="footer">
-                <p>footer</p>
-            </div>
-    </div>
+        <div id="footer">
+            <p>footer</p>
+        </div>
     </body>
 </html>

@@ -45,10 +45,9 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
     const product = 
             `<div class="productContainer">
             <div class="productImageContainer">
-                <img class="productImage" src="${mainImage}"
-                 onclick="goToPage(
-                '${allInfo}', 
-                )">
+            <a href="productPage.html?productID=${productID}">
+                <img class="productImage" src="${mainImage}">
+            </a>
                 <img class="addToWishlistButton" src="/images/heart.png" 
                     onclick="addToWishlist(
                     '${productID}',
@@ -57,7 +56,7 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
             </div>
             <button class="addToCartButton">Add to cart</button>
             <p class="productName"  onclick="goToPage(
-                '${allInfo}')">${productName}</p>
+                '${productID}')">${productName}</p>
             <p class="productSize" >size ${productSize}</p>
             <p class="productPrice">$${productPrice}</p>
             </div>`;
@@ -79,11 +78,8 @@ function addToWishlist(productID, productName, mainImage) {
     });
 }
 
-function goToPage(productID, productName, productPrice, productImage) {
+function goToPage(productID) {
     sessionStorage.setItem("productID", productID)
-    sessionStorage.setItem("productName", productName)
-    sessionStorage.setItem("productPrice", productPrice)
-    sessionStorage.setItem("productImage", productImage)
     window.location = "productPage.html"
 }
 

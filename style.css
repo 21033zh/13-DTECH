@@ -20,6 +20,8 @@ a {
 .center {
     text-align: center;
 }
+
+
 /*--- NAV BAR --------------------------------------*/
 /*----LOGO-----*/
 header {
@@ -108,16 +110,16 @@ header {
     height: min-content;
 }
 
-#form_searchBar {
+.form_searchBar {
     display: grid;
     grid-template-columns: 30px 1fr;
 }
 
-#div_search #submitButton {
+#div_search .submitButton {
     width: 22px
 }
 
-#div_search #inputBar {
+#div_search .inputBar {
     background-color: black;
     border: none;
     border-bottom: 1px solid black;
@@ -129,14 +131,14 @@ header {
     margin-left: 10px;
 }
 
-#div_search #inputBar:focus, #div_search #inputBar:hover {
+#div_search .inputBar:focus, #div_search .inputBar:hover {
     background-color: black;
     border: none;
     outline: none;
     animation: inputBar_border 0.7s forwards;
 }
 
-#div_search #inputBar:not(:hover) {
+#div_search .inputBar:not(:hover) {
     animation: inputBar_border_out 0.7s forwards;
 }
 
@@ -233,7 +235,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 
 #hamburger_menu #myLinks {
-    position:absolute;
+    position: fixed;
     background-color: black;
     z-index: 3;
     left: 0;
@@ -291,6 +293,11 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     padding: 20px;
     text-align: left;
 }
+
+#mobile_searchIcon {
+    display: none;
+}
+
 #mobile_div_search {
     height: min-content;
     position: absolute;
@@ -299,7 +306,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     z-index: 3;
 }
 
-#mobile_div_search #form_searchBar {
+#mobile_div_search .form_searchBar {
     display: grid;
     grid-template-columns: 1fr 30px;
     border: solid 1px white;
@@ -308,12 +315,12 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     height: auto;
 }
 
-#mobile_div_search #submitButton {
+#mobile_div_search .submitButton {
     width: 22px
 
 }
 
-#mobile_div_search #inputBar {
+#mobile_div_search .inputBar {
     background-color: black;
     border: none;
     border-bottom: 1px solid black;
@@ -323,7 +330,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     width: 100%;
 }
 
-#mobile_div_search #inputBar:focus, #div_search #inputBar:hover {
+#mobile_div_search .inputBar:focus, #div_search .inputBar:hover {
     background-color: black;
     border: none;
     outline: none;
@@ -418,6 +425,11 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     margin: 0;
     display: block;
   }
+
+  #mobile_searchIcon {
+    display: block;
+    }
+
 }
 
 /*--- MOBILE NAV BAR END --------------------------------------*/
@@ -827,6 +839,70 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 /*--- SHOP PAGE END ----------------------------------------*/
 
+/*--- PRODUCT PAGE ----------------------------------------*/
+#container_productPage {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: 
+    "photos photos photos info info info"
+}
+
+#container_photos {
+    grid-area: photos;
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    grid-template-areas:
+    "list selected";
+    padding: 20px;
+}
+
+#container_info {
+    grid-area: info;
+}
+
+#container_info h1 {
+    font-size: 1rem;
+    padding: 0px;
+}
+
+#container_info p {
+    font-size: 1rem;
+    padding: 0px;
+}
+
+#ul_photos {
+    grid-area: list;
+    padding: 0px;
+    margin: 0px;
+}
+
+#ul_photos {
+    list-style-type: none;
+}
+
+#ul_photos img {
+    width: 100%;
+    height: auto;
+    padding: 0px;
+}
+
+.next, .end {
+    padding: 5px;
+    position: absolute;
+    top: 50%;
+    width: auto;
+}
+
+#div_selectedImage {
+    width: auto;
+    height: auto;
+}
+
+.img_selected {
+    width: 100%;
+}
+/*--- PRODUCT END ----------------------------------------*/
+
 /*--- ACCOUNT PAGE ----------------------------------------*/
 #wishlist_products_container {
     display: grid;
@@ -837,6 +913,10 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 .wishlistImage {
     width: 100%;
     height: auto;
+}
+
+#ul_photos > li img {
+    width: 100%;
 }
 
 /*--- ACCOUNT PAGE END----------------------------------------*/
