@@ -45,7 +45,7 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
     const product = 
             `<div class="productContainer">
             <div class="productImageContainer">
-            <a href="productPage.html?productID=${productID}">
+            <a href="/products/product.html?productID=${productID}">
                 <img class="productImage" src="${mainImage}">
             </a>
                 <img class="addToWishlistButton" src="/images/heart.png" 
@@ -168,7 +168,6 @@ function sortSettings(event) {
      if (sortBy === 'date') {
         if (sortSettings === 'newest') {
             displayProducts();
-            console.log('date new to old')
         } else {
             console.log('date old to new')
         }

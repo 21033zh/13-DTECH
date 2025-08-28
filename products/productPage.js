@@ -1,5 +1,22 @@
 const urlParams = new URLSearchParams(window.location.search);
 const productID = urlParams.get('productID');
+
+const colourMap = {
+  red : "#cf4432",
+  orange : "#cf6e32",
+  yellow : "#ffdf52",
+  green : "#92b05b",
+  blue : "#5796ad",
+  purple : "#ab87ed",
+  pink : "#f099c3",
+  black : "#000000",
+  white : "#ffffff",
+  grey : "#a3a3a3",
+  none: "#ffffff"
+}
+
+const defaultColour = "#ffffff";
+
 var imagesArray = [];
 var slidePlace = 0;
 
@@ -12,11 +29,35 @@ if (productID) {
         var productInfo = snapshot.val();
         var price = productInfo.price; 
         var brand = productInfo.brand;
+        var colour1 = productInfo.colour1;
+        const colour1code = colourMap[colour1] ?? defaultColour
+        var colour2 = productInfo.colour2;
+        const colour2code = colourMap[colour2] ?? defaultColour
+
         imagesArray = productInfo.images;
         var productName = productInfo.productName;
         var size = productInfo.size;
-        var description = 'hello';
+        var description = productInfo.description;
         var flaws = 'none';
+        var shipping = productInfo.shipping;
+
+        var div_colour1 = `<div id="colour1"></div><p>${colour1}</p>`
+        document.getElementById("div_colour").innerHTML += div_colour1;
+        var newdiv_colour1 = document.getElementById("colour1")
+        newdiv_colour1.style.backgroundColor = colour1code;
+        if (colour1 === "white") {
+          console.log("add border");
+          newdiv_colour1.style.border = "1px solid black"
+        }
+
+        var div_colour2 = `<div id="colour2"></div><p>${colour2}</p>`
+        document.getElementById("div_colour").innerHTML += div_colour2;
+        var newdiv_colour2 = document.getElementById("colour2")
+        newdiv_colour2.style.backgroundColor = colour2code;
+        if (colour2 === "white") {
+          console.log("add border");
+          newdiv_colour2.style.border = "1px solid black"
+        }
 
         var ul_photos = document.getElementById("ul_photos");
         console.log(imagesArray.length);
@@ -31,6 +72,9 @@ if (productID) {
 
         var image = `<img class="img_selected" src=${imagesArray[slidePlace]}>`;
         div.innerHTML = image;
+        
+        var img_selectedSlide = document.getElementById("slide0");
+        img_selectedSlide.style.opacity = 0.5;
         
         var title = document.getElementById("title");
         title.innerHTML = productName;
@@ -52,6 +96,9 @@ if (productID) {
 
         var p_flaws= document.getElementById("p_flaws");
         p_flaws.innerHTML += flaws;
+
+        var p_shipping= document.getElementById("p_shipping");
+        p_shipping.innerHTML += '$' + shipping;
 
     });
   } else {

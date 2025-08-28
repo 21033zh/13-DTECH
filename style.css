@@ -17,10 +17,25 @@ a {
     text-align: center;
 }
 
+h1 {
+    margin-left: 5px;
+}
+
 .center {
     text-align: center;
 }
 
+.gap {
+    margin: 5px;
+    display: block;
+    position: relative;
+}
+
+.big_gap {
+    margin: 30px;
+    display: block;
+    position: relative;
+}
 
 /*--- NAV BAR --------------------------------------*/
 /*----LOGO-----*/
@@ -437,21 +452,45 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- FOOTER --------------------------------------*/
 #footer {
     grid-area: footer;
+    background-color:#000000;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "socials about account";
+    padding: 20px;
+}
+
+#footer div {
+    padding: 15px;
+    margin-left: 10%;
+}
+
+#footer h3 {
+    font-size: 1rem;
+}
+
+#footer ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#footer li {
+    padding: 5px 0px;
+}
+
+#footer a, #footer button, #footer p {
+    font-size: 0.8rem;
+    font-weight: 200;
+    background-color: black;
+    border: none;
+    color: white;
+    font-family: "Alegreya Sans";
+    margin: 0px;
 }
 /*--- FOOTER END --------------------------------------*/
 
 /*--- HOME PAGE ----------------------------------------*/
-.home_container {
-    width: 100%;
-    display: grid;
-    grid-template-areas: 
-    "header header header header header header"
-    "nav nav nav nav nav nav"
-    "header_img header_img header_img header_img header_img header_img"
-    "featured featured featured featured featured featured"
-    "about_us about_us about_us_img about_us_img about_us_img about_us_img"
-    "footer footer footer footer footer footer"
-}
 
 /*---HEADER----*/
 #header_img {
@@ -557,10 +596,16 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 
 /*---ABOUT-SECTION----*/
+#container_aboutUs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "text img";
+}
+
 #about_us {
     background-color: #dbd4df;
-    grid-area: about_us;
     padding: 80px 80px 80px 80px;
+    grid-area: text;
 }
 
 #about_us > h1 {
@@ -580,8 +625,8 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 #about_us_img {
     background-color: #dbd4df;
-    grid-area: about_us_img;
     padding: 50px 0px 50px 0px;
+    grid-area: img;
 }
 
 #about_us_img > img {
@@ -594,17 +639,42 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 /*--- HOME PAGE MOBILE ----------------------------------------*/
 @media only screen and (max-width: 600px) {
+    .home_container {
+        grid-template-areas: 
+        "header header header"
+        "nav nav nav"
+        "header_img header_img header_img"
+        "featured featured featured"
+        "about_us about_us about_us"
+        "about_us_img about_us_img about_us_img"
+        "footer footer footer footer footer footer"
+    }
+
     #header_img {
         height: 300px;
         width: auto;
     }
     #header_img_background {
-        background-image: linear-gradient(to bottom, rgb(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0.75) ),
+        background-image: linear-gradient(to bottom, rgb(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.75) ),
         url("/images/mobile_headerImage.png");
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    #header_img_background > p {
+        display: block;
+        color: white;
+        margin: 0px;
     }
 
     #header_img_logo {
         width: 70%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
     }
 
     #featured h1 {
@@ -617,6 +687,10 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
     #featured .info_card {
         height: 100px;
+    }
+
+    #container_aboutUs {
+        grid-template-areas: "text text" "img img";
     }
 
     #about_us {
@@ -672,7 +746,6 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 /*---FILTERS-SECTION----*/
 #filters {
-    
     display: flex;
 }
 #colourDropdown, #sizeDropdown, #sortDropdown {
@@ -700,51 +773,34 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 /*----MOBILE-FILTERS-----*/
 @media only screen and (max-width: 600px) {
-    .mobileFiltersDropdown .filtersDropButton {
-        color: white;
+
+      #filters {
+        display: grid;
+    }
+
+    #colourDropdown, #sizeDropdown, #sortDropdown {
+        background-color: #dbd4df;
         border: none;
-        outline: none;
-        padding: 14px 16px;
-        background-color: inherit;
-      }
-    
-    .mobileFiltersDropdown {
-        display: inline;
-        position: relative;
-        background-color: #000000;
-    }
-    
-    nav a:active, .mobileFiltersDropdown:active .filtersDropButton {
-        color: rgb(161, 161, 161);
-      }
-    
-    .filtersDropdownContent {
-        display: none;
-        position: absolute;
-        background-color: #000000;
-        min-width: 140px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 2;
-        left: 30px;
-      }
-      
-    .filtersDropdownContent a {
-        color: white;
+        color: rgb(0, 0, 0);
         padding: 10px;
+        margin: 0px;
+        font-family: "Alegreya Sans";
+        font-weight: 400;
+        font-size: 0.8rem;
         display: block;
-        text-align: left;
+        width: max-width;
         text-transform: uppercase;
-        background-color: #000000;
-        font-size: 0.6rem;
-    }
-      
-    .shopDropdownContent a:active, .shopDropdownContent a:hover {
-        color:#dbd4df;
-        text-decoration: underline;
     }
     
-    .mobileFiltersDropdown:active  .shopDropdownContent, .mobileFiltersDropdown:hover  .shopDropdownContent {
-        display: block;
+    #colourFilterDiv, #sizeFilterDiv, #sortDiv {
+        display: inline-block;
+        margin: 5px;
+        text-transform: uppercase;
+    }
+    
+    #sortDropdown {
+        background-color: #000000;
+        color: white;
     }
 }
 
@@ -841,6 +897,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 /*--- PRODUCT PAGE ----------------------------------------*/
 #container_productPage {
+    margin: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas: 
@@ -853,27 +910,112 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     grid-template-columns: 20% 1fr;
     grid-template-areas:
     "list selected";
-    padding: 20px;
+    margin: 0px 20px;
+    position: relative;
 }
+
 
 #container_info {
     grid-area: info;
 }
 
 #container_info h1 {
-    font-size: 1rem;
+    font-size: 1.8rem;
     padding: 0px;
+    margin: 3px 0px;
 }
 
 #container_info p {
-    font-size: 1rem;
+    font-size: 0.8rem;
     padding: 0px;
+    margin: 3px 0px;
+    display: inline;
+}
+
+#container_info h6 {
+    font-size: 0.8rem;
+    padding: 0px;
+    margin: 3px 0px;
+    display: inline;
+}
+
+#container_info a {
+    font-size: 0.8rem;
+    padding: 0px;
+    text-decoration: underline;
+    color: black;
+    margin: 3px 0px;
+    display: inline;
+}
+
+#container_info #p_price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: block;
+}
+
+#container_colours {
+    display: flex;
+    gap: 10px;
+}
+
+#div_colour {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#div_colour p {
+    margin: 0px 15px 0px 0px;
+    text-transform: capitalize;
+    display: block;
+}
+
+#div_colour #colour1, #div_colour #colour2 {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: block;
+}
+
+
+.div_productButtonsWeb {
+    width: 100%;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 40px;
+    grid-template-rows: 40px;
+    column-gap: 10px;
+}
+
+.div_productButtonsMobile {
+    display: none;
+}
+
+.div_productButtons button {
+    background-color:#000000;
+    color: white;
+    margin: 0px;
+    border: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.div_productButtons button:hover {
+    background-color:#494949;
+    color: white;
+    cursor:pointer;
+}
+
+.div_productButtons img {
+    width: 100%;
+    display: block;
 }
 
 #ul_photos {
     grid-area: list;
     padding: 0px;
-    margin: 0px;
+    margin: 0px 10px;
 }
 
 #ul_photos {
@@ -886,21 +1028,92 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     padding: 0px;
 }
 
-.next, .end {
-    padding: 5px;
+#container_photos .prev, #container_photos .next {
+    cursor: pointer;
     position: absolute;
     top: 50%;
     width: auto;
+    height: max-content;
+    margin-top: -22px;
+    padding: 14px 3px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border: none;
+    user-select: none;
+}
+
+.prev img, .next img {
+    width: 15px;
+    height: auto;
+    display: block;
+    padding: 8px;
+}
+
+#container_photos .next {
+    right: 0;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
 }
 
 #div_selectedImage {
-    width: auto;
-    height: auto;
+    width: 346px;
+    height: 523.5;
 }
 
 .img_selected {
     width: 100%;
 }
+
+@media only screen and (max-width: 600px) {
+    #container_productPage {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+        "photos photos"
+        "info info"
+    }
+
+    #container_photos {
+        margin: 0px;
+        grid-template-columns: 1fr;
+        grid-template-areas: "selected";
+    }
+
+    #ul_photos {
+        display: none;
+    }
+
+    #slideshow {
+        width: 100%;
+    }
+
+    #div_selectedImage {
+        width: 335px;
+        height: 502.5px;
+    }
+
+    .div_productButtonsWeb {
+        display: none;
+    }
+
+    .div_productButtonsMobile {
+        display: grid;
+        grid-template-columns: 1fr 60px;
+        column-gap: 7px;
+        font-size: 1.5rem;
+        margin: 10px 0px;
+    }
+
+    #button_addToWishlist {
+        padding: 15px;
+    }
+}
+
+
+
 /*--- PRODUCT END ----------------------------------------*/
 
 /*--- ACCOUNT PAGE ----------------------------------------*/
@@ -1296,7 +1509,8 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 
 #form_addProducts  #submit {
-    background-color: rgb(182, 182, 182);
+    background-color: rgb(0, 0, 0);
+    color: white;
     padding: 8px;
     margin: 10px;
     width: 50%;
@@ -1320,3 +1534,14 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 
 /*--- ADMIN END -------------------------------------------------*/
+@media only screen and (max-width: 600px) {
+    .web {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .mobile {
+        display: none;
+    }
+}

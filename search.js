@@ -4,10 +4,10 @@ var allProductsArray = [];
 function searchSubmit(event) {
     console.log('submit');
     event.preventDefault();
-    SEARCH_INPUT = document.getElementById("inputBar").value;
+    SEARCH_INPUT = document.getElementById("web_searchInput").value;
     sessionStorage.setItem("SEARCH_INPUT", SEARCH_INPUT)
     console.log(SEARCH_INPUT);
-    window.location = "search.html";
+    window.location = "/search.html";
 }
 
 function displayProducts() {

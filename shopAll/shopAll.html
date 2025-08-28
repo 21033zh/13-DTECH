@@ -27,8 +27,10 @@
     <body onload="displayProducts()">
         <script src="/shopAll/shopAll.js"></script>
         <script type="text/javascript">document.getElementById('sortDropdown').onchange = sortSettings()</script>
-
+        <script src="/nav.js"></script>
 <!-- HEADER BAR  ********************************************************-->
+<div id="hb_darkOverlay" onclick="closeHamburger()"></div>
+<div id="search_darkOverlay" onclick="closeSearch()"></div>
 <header>
   <!--MOBILE-hamburger-menu-->
       <div id="hamburger_menu">
@@ -40,12 +42,13 @@
               <a class="a_pageLink" href="index.html">HOME</a>
               <a class="a_pageLink" href="/shopAll/shopAll.html">SHOP</a>
               <a class="a_pageLink" href="/about/about.html">ABOUT</a>
+              <a class="a_pageLink" href="/reviews/reviews.html">REVIEWS</a>
           </div>
       </div>
 
   <!--MOBILE-search-icon-->
       <div id="mobile_searchIcon" class="icon"> 
-          <img src="images/search.png" onclick="openSearch()" alt="search">
+          <img src="/images/search.png" onclick="openSearch()" alt="search">
       </div>
 
   <!--WEB-search-bar-->
@@ -118,9 +121,8 @@
       <a href="/reviews/reviews.html">REVIEWS</a>
   </nav>
 <!-- NAV BAR END ********************************************************-->
-
 <!-- CATEGORIES START ***************************************************-->
- <div id="categoriesContainer">
+ <!-- <div id="categoriesContainer">
   <div id="selectedCategory" onclick="displayProducts()">
     <img src="/images/images.png" alt="all">
     <p>All</p>
@@ -149,7 +151,7 @@
     <img src="/images/images.png" alt="prints">
     <p>Prints</p>
   </div>
- </div>
+ </div> -->
 <!-- CATEGORIES END ***************************************************-->
 
 <!-- FILTERS START ***************************************************-->
@@ -171,7 +173,7 @@
       <option value="black">Black</option>
       <option value="white">White</option>
       <option value="multi">Multicolour</option>
-    </select><br>
+    </select>
 </div>
 
 <div id="sizeFilterDiv">
@@ -183,7 +185,7 @@
       <option value="10">Size 10</option>
       <option value="12">Size 12</option>
       <option value="14">Size 14</option>
-  </select><br>
+  </select>
 </div>
 </form>
 
@@ -196,21 +198,9 @@
   </select>
 </form>
 </div>
+
 <!-- FILTERS END ***************************************************-->
-<!-- MOBILE FILTERS START *******************************************-->
-  <div class="mobileFiltersDropdown">
-    <button class="filtersDropButton">SHOP</button>
-    <div class="filtersDropdownContent">
-      <a href="/shopAll/shopAll.html">Shop All</a>
-      <a href="/shopAll/shopTops.html">Tops</a>
-      <a href="/shopAll/shopBottoms.html">Bottoms</a>
-      <a href="/shopAll/shopDresses.html">Dresses</a>
-      <a href="/shopAll/shopShoes.html">Shoes</a>
-      <a href="/shopAll/shopAccessories.html">Accessories</a>
-      <a href="/shopAll/shopArt.html">Art</a>
-    </div>
-  </div>
-<!-- MOBILE FILTERS END *******************************************-->
+
 
         <div id="products_container">
         </div>

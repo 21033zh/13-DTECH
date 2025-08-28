@@ -29,6 +29,7 @@
     <body onload="displayFeaturedProducts()">
         <script src="home.js"></script>
         <script src="nav.js"></script>
+        <script src="search.js"></script>
 
             <div id="hb_darkOverlay" onclick="closeHamburger()"></div>
             <div id="search_darkOverlay" onclick="closeSearch()"></div>
@@ -44,6 +45,7 @@
                     <a class="a_pageLink" href="index.html">HOME</a>
                     <a class="a_pageLink" href="/shopAll/shopAll.html">SHOP</a>
                     <a class="a_pageLink" href="/about/about.html">ABOUT</a>
+                    <a class="a_pageLink" href="/reviews/reviews.html">REVIEWS</a>
                 </div>
             </div>
 
@@ -122,10 +124,11 @@
             <a href="/reviews/reviews.html">REVIEWS</a>
         </nav>
 <!-- NAV BAR END ********************************************************-->
-
+<div id="container_home">
 <!-- HEADER IMAGE ********************************************************-->
         <div id="header_img">
             <div id="header_img_background">
+                <p class="mobile">WELCOME TO</p>
                 <img id="header_img_logo" src="/images/translogo.png" alt="doll planet girls against a tree">
             </div>
         </div>
@@ -140,6 +143,7 @@
 <!-- FEATURED PRODUCTS END ********************************************************-->
 
 <!-- ABOUT SECTION ********************************************************-->
+    <div id="container_aboutUs">
         <div id="about_us">
             <h1>ABOUT US</h1>
             <p>Doll Planet is an NZ owned fashion brand committed to sustainability 
@@ -151,9 +155,37 @@
         <div id="about_us_img">
             <img src="/images/about-image_webp.webp" alt="doll planet model posing on grass">
         </div>
+    </div>
 <!-- ABOUT SECTION END ********************************************************-->
+ <!-- FOOTER SECTION ********************************************************-->
         <div id="footer">
-            <p>footer</p>
+            <div>
+                <h3>Socials</h3>
+                <ul>
+                <li>
+                    <img src="gmail">
+                    <button><p>Gmail</p></button>
+                </li>
+                <li>
+                    <img src="insta">
+                    <button><p>Insta</p></button>
+                </li>
+                </ul>
+            </div>
+            <div>
+                <h3>About Doll Planet</h3>
+                <ul>
+                    <li><a>About us</a></li>
+                    <li><a>Privacy policy</a></li>
+                    <li><a>Sustainability</a></li>
+                    <li><a>Terms and conditions</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Sign up</h3>
+                <a>Make an account</a>
+            </div>
         </div>
+<!-- FOOTER SECTION END ********************************************************-->
     </body>
 </html>

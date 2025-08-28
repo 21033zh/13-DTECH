@@ -23,7 +23,9 @@
         <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <script src="/shopAll/productPage.js"></script>
+        <script src="/products/productPage.js"></script>
+        <script src="/search.js"></script>
+        <script src="/nav.js"></script>
 
         <header>
 <!--MOBILE-hamburger-menu-->
@@ -41,7 +43,7 @@
 
 <!--MOBILE-search-icon-->
 <div id="mobile_searchIcon" class="icon"> 
-    <img src="images/search.png" onclick="openSearch()" alt="search">
+    <img src="/images/search.png" onclick="openSearch()" alt="search">
 </div>
 
 <!--WEB-search-bar-->
@@ -121,23 +123,62 @@
             <div id="container_photos">
                 <ul id="ul_photos">
                 </ul>
-                <div id="div_selectedImage"></div>
-                <button class="next" onclick="prevSlide()">Back</button>
-                <button class="prev" onclick="nextSlide()">Next</button>
+                <div id="slideshow">
+                    <button class="prev" onclick="prevSlide()"><img src="/images/prevArrow.png"></button>
+                    <button class="next" onclick="nextSlide()"><img src="/images/nextArrow.png"></button>
+                    <div id="div_selectedImage"></div>
+                </div>
             </div>
 <!--info-->
             <div id="container_info">
+
                 <h1 id="h1_name"></h1>
                 <p id="p_price">$</p>
+                <div class="big_gap web"></div>
+                <div class="gap mobile"></div>
+
+                <div class="div_productButtons div_productButtonsMobile">
+                    <button id="button_addToCart">Add to cart</button>
+                    <button id="button_addToWishlist">
+                        <img src="/images/heart.png">
+                    </button>
+                </div>
+                <div class="gap"></div>
+                
                 <h6>Brand: </h6>
                 <p id="p_brand"></p>
+                <div class="gap"></div>
+
                 <h6>Size: </h6>
                 <p id="p_size"></p>
-                <div>Colour: </div>
-                <div id="div_colour"></div>
+                <div class="gap"></div>
+
+                <div id="container_colours">
+                    <h6>Colour: </h6>
+                    <div id="div_colour"></div>
+                </div>
+                <div class="big_gap"></div>
+
                 <p id="p_description"></p>
+                <div class="gap"></div>
+
                 <h6>Flaws: </h6>
                 <p id="p_flaws"></p>
+                <div class="big_gap"></div>
+
+                <div class="div_productButtons div_productButtonsWeb">
+                    <button id="button_addToCart">Add to cart</button>
+                    <button id="button_addToWishlist">
+                        <img src="/images/heart.png">
+                    </button>
+                </div>
+                <div class="gap"></div>
+
+                <h6>Shipping:</h6>
+                <p id="p_shipping"></p>
+                <div class="gap"></div>
+
+                <a href="shippingreturnsinfo">Shipping and returns info</a>
             </div>
         </div>
     </body>

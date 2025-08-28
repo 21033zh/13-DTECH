@@ -19,65 +19,102 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100&display=swap" rel="stylesheet">
 
         <!-- fonts end ****************************************-->
-         <script src="fb_setup.js"></script>
-         <script src="search.js"></script>
          <link href="style.css" rel="stylesheet" type="text/css">
     </head>
     <body onload="displayProducts()">
+        <script src="fb_setup.js"></script>
+         <script src="search.js"></script>
+         <script src="nav.js"></script>
+<!-- HEADER BAR  ********************************************************-->
+<header>
+    <!--MOBILE-hamburger-menu-->
+        <div id="hamburger_menu">
+            <a id="a_hamburger" href="javascript:void(0);" onclick="openHamburger()">
+                <img id="hamburger" src="/images/hamburger.png" alt="menu">
+            </a>
+            <div id="myLinks" class="hamburgerNeutral">
+                <img src="/images/x.png" onclick="closeHamburger()" alt="exit">
+                <a class="a_pageLink" href="/index.html">HOME</a>
+                <a class="a_pageLink" href="/shopAll/shopAll.html">SHOP</a>
+                <a class="a_pageLink" href="/about/about.html">ABOUT</a>
+                <a class="a_pageLink" href="/reviews/reviews.html">REVIEWS</a>
+            </div>
+        </div>
+
+    <!--MOBILE-search-icon-->
+        <div id="mobile_searchIcon" class="icon"> 
+            <img src="images/search.png" onclick="openSearch()" alt="search">
+        </div>
+
+    <!--WEB-search-bar-->
+        <div id="div_search">
+            <form id="web_searchForm" class="form_searchBar" 
+            onsubmit="searchSubmit(event); return false">
+                <input class="submitButton" type="image" id="web_searchSubmit"
+                src="/images/search.png" alt="submit">
+                <input class="inputBar" type="text" id="web_searchInput"
+                placeholder="Search..." required>
+                <div id="inputBar_line"></div>
+            </form>
+        </div>
+
+    <!--WEB-MOBILE-logo-->
+    <div id="logoDiv">
+        <a href="index.html">
+            <img id="logo" src="/images/translogo.png" alt="Doll Planet">
+        </a>
+    </div>
+    
+
+    <div id="div_filler"></div>
+    
+    <!--WEB-MOBILE-icons-->
+    <div class="icon" id="wishlist">
+        <a href="/wishlist/wishlist.html">
+            <img class="navIcons" src="/images/heart.png" alt="wishlist">
+        </a>
+    </div>
+    <div class="icon" id="cart">
+        <a href="cart">
+            <img class="navIcons" src="/images/cart.png" alt="cart">
+        </a>
+    </div>
+    <div class="icon" id="account">
+        <a href="/makeAccount/account.html">
+            <img class="navIcons" src="/images/account.png" alt="account">
+        </a>
+    </div>
+    </header>
+<!-- HEADER END ********************************************************-->
 <!-- NAV BAR  ********************************************************-->
-            <header>
-                <div id="div_search">
-                    <form id="form_searchBar">
-                        <input id="submitButton" type="image"
-                        src="/images/search.png" alt="submit">
-                        <input id="inputBar" type="search" placeholder="Search..." required>
-                        <div id="inputBar_line"></div>
-                    </form>
-                </div>
+    <!--MOBILE-search-bar-->
+        <div id="mobile_div_search" class="searchNeutral">
+            <form id="mobile_searchForm"
+            class="form_searchBar" onsubmit="searchSubmit(event); return false">
+                <input class="inputBar" id="mb_searchInput" type="text" autofocus required>
+                <input class="submitButton" id="mb_searchSubmit" type="image"
+                src="/images/search.png" alt="submit">
+            </form>
+        </div>
 
-                <div id="logoDiv">
-                    <a href="index.html">
-                        <img id="logo" src="/images/translogo.png">
-                    </a>
-                </div>
-
-                <div id="div_filler"></div>
-                
-                <div class="icon">
-                    <a href="/wishlist/wishlist.html">
-                        <img class="navIcons" src="/images/heart.png">
-                    </a>
-                </div>
-                <div class="icon">
-                    <a href="cart">
-                        <img class="navIcons" src="/images/cart.png">
-                    </a>
-                </div>
-                <div class="icon">
-                    <a href="/makeAccount/account.html">
-                        <img class="navIcons" src="/images/account.png">
-                    </a>
-                </div>
-            </header>
-            <nav>
-                <a href="index.html">HOME</a>
-                <div class="shopDropdown">
-                    <button class="dropbtn">SHOP</button>
-                    <div class="shopDropdownContent">
-                      <a href="/shopAll/shopAll.html">Shop All</a>
-                      <a href="/shopAll/shopTops.html">Tops</a>
-                      <a href="/shopAll/shopBottoms.html">Bottoms</a>
-                      <a href="/shopAll/shopDresses.html">Dresses</a>
-                      <a href="/shopAll/shopShoes.html">Shoes</a>
-                      <a href="/shopAll/shopAccessories.html">Accessories</a>
-                      <a href="/shopAll/shopArt.html">Art</a>
-                    </div>
-                  </div>
-                <a href="about/about.html">ABOUT</a>
-                <a href="admin/addProducts.html">GALLERY</a>
-                <a href="/reviews/reviews.html">REVIEWS</a>
-                <a href="/makeAccount/account_redirect.html">ACCOUNT</a>
-            </nav>
+    <nav>
+        <a href="index.html">HOME</a>
+        <div class="shopDropdown">
+            <button class="dropbtn">SHOP</button>
+            <div class="shopDropdownContent">
+                <a href="/shopAll/shopAll.html">Shop All</a>
+                <a href="/shopAll/shopTops.html">Tops</a>
+                <a href="/shopAll/shopBottoms.html">Bottoms</a>
+                <a href="/shopAll/shopDresses.html">Dresses</a>
+                <a href="/shopAll/shopShoes.html">Shoes</a>
+                <a href="/shopAll/shopAccessories.html">Accessories</a>
+                <a href="/shopAll/shopArt.html">Art</a>
+            </div>
+            </div>
+        <a href="about/about.html">ABOUT</a>
+        <a href="admin/addProducts.html">GALLERY</a>
+        <a href="/reviews/reviews.html">REVIEWS</a>
+    </nav>
 <!-- NAV BAR END ********************************************************-->
 
 <h1>SEARCH RESULTS FOR: </h1>

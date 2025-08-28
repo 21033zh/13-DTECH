@@ -1,15 +1,14 @@
-
 function createProduct(event) {
     event.preventDefault();
     console.log('createProduct()')
-        productName = document.getElementById("title").value,
-        price = document.getElementById("price").value,
-        size = document.getElementById("size").value,
-        stock = document.getElementById("stock").value,
-        brand = document.getElementById("brand").value,
-        category = document.getElementById("category").value,
-        colour1 = document.getElementById("colour1").value,
-        colour2 = document.getElementById("colour2").value
+    var productName = document.getElementById("title").value;
+    var price = document.getElementById("price").value;
+    var size = document.getElementById("size").value;
+    var stock = document.getElementById("stock").value;
+    var brand = document.getElementById("brand").value;
+    var category = document.getElementById("category").value;
+    var colour1 = document.getElementById("colour1").value;
+    var colour2 = document.getElementById("colour2").value
 
     let newProductRef = firebase.database().ref('products').push();
     newProductRef.set({
@@ -18,7 +17,7 @@ function createProduct(event) {
     });
 
     var productID = newProductRef.key;
-    const file = document.getElementById("main_image").files[0];
+    file = document.getElementById("main_image").files[0];
 
     if (file) {
         console.log('file is true')
@@ -43,7 +42,7 @@ function createProduct(event) {
             });
     }
 
-    const imageArray = document.getElementById("images").files;
+    imageArray = document.getElementById("images").files;
     if (imageArray) {
         console.log('imageArray is true')
         statusDiv = document.getElementById("status2")
@@ -69,5 +68,3 @@ function createProduct(event) {
         };
     };
 }
-//add file type validation
-
