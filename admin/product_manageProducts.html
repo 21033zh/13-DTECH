@@ -11,7 +11,6 @@
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
-        
         <!-- firebase end ******************************************-->
         <!-- fonts start ****************************************-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,10 +23,9 @@
         <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <script src="productPage.js"></script>
+        <script src="product_manageProducts.js"></script>
         <script src="/search.js"></script>
         <script src="/nav.js"></script>
-        <script src="cart.js"></script>
 
         <header>
 <!--MOBILE-hamburger-menu-->
@@ -123,24 +121,41 @@
         <div id="container_productPage">
 <!--photos-->
             <div id="container_photos">
+                <h1>Photos</h1>
+                <div id="div_mainPhoto"></div>
                 <ul id="ul_photos">
                 </ul>
-                <div id="slideshow">
-                    <button class="prev" onclick="prevSlide()"><img src="/images/prevArrow.png"></button>
-                    <button class="next" onclick="nextSlide()"><img src="/images/nextArrow.png"></button>
-                    <div id="div_selectedImage"></div>
-                </div>
             </div>
 <!--info-->
-            <div id="container_info">
 
+        <table id="container_info">
+            <thead>
+            <tr>
+                <th class="th_manageProduct">Name</th>
+                <th class="th_manageProduct">Price</th>
+                <th class="th_manageProduct">Brand</th>
+                <th class="th_manageProduct">Size</th>
+                <th class="th_manageProduct">Colour 1</th>
+                <th class="th_manageProduct">Colour 2</th>
+                <th class="th_manageProduct">Flaws</th>
+                <th class="th_manageProduct">Description</th>
+                <th class="th_manageProduct">Shipping</th>
+            </tr>
+            </thead>
+            <tbody id="body_manageProduct">
+            </tbody>
+
+
+        </table>
+            <div id="container_info">
+                <h1>Product Info</h1>
                 <h1 id="h1_name"></h1>
                 <p id="p_price">$</p>
                 <div class="big_gap web"></div>
                 <div class="gap mobile"></div>
 
                 <div class="div_productButtons div_productButtonsMobile">
-                    <button class="button_addToCart">Add to cart</button>
+                    <button id="button_addToCart">Add to cart</button>
                     <button id="button_addToWishlist">
                         <img src="/images/heart.png">
                     </button>
@@ -169,7 +184,7 @@
                 <div class="big_gap"></div>
 
                 <div class="div_productButtons div_productButtonsWeb">
-                    <button class="button_addToCart">Add to cart</button>
+                    <button id="button_addToCart">Add to cart</button>
                     <button id="button_addToWishlist">
                         <img src="/images/heart.png">
                     </button>
