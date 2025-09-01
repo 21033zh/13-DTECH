@@ -24,8 +24,8 @@
 
 
     </head>
-    <body onload="acc_wl_checkSignIn()">
-        <script src="/makeAccount/account.js"></script>
+    <body onload="acc_reviews_checkSignIn()">
+        <script src="/account/account.js"></script>
 
 <!-- NAV BAR  ********************************************************-->
        <header>
@@ -67,7 +67,7 @@
         <a href="/about/about.html">ABOUT</a>
         <a href="/addProducts/addProducts.html">GALLERY</a>
         <a href="/reviews/reviews.html">REVIEWS</a>
-        <a href="/makeAccount/account.html">ACCOUNT</a>
+        <a href="/account/account.html">ACCOUNT</a>
     </nav>
 <!-- NAV BAR END ********************************************************-->
 
@@ -79,13 +79,15 @@
         </div>
         <p class="p_sidebarItem" onClick="location='account.html'">My details</p>
         <p class="p_sidebarItem" onClick="location='account_orders.html'">My orders</p>
-        <p class="p_sidebarItem" onClick="location='account_reviews.html'">My reviews</p>
-        <p class="p_sidebarItemSelected" onClick="location='account_wishlist.html'">Wishlist</p>
+        <p class="p_sidebarItemSelected" onClick="location='account_reviews.html'">My reviews</p>
+        <p class="p_sidebarItem" onClick="location='account_wishlist.html'">Wishlist</p>
     </div>
 
     <div id="div_info">
-        <h1>MY WISHLIST</h1>
-        <div id="div_accWishlist"></div>
+        <h1>MY REVIEWS</h1>
+        <a id="a_createReview" href="/reviews/createReview.html">CREATE REVIEW</a>
+
+        <div id="acc_reviewsContainer"></div>
     </div>
 </div>
   </body>

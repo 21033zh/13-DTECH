@@ -24,8 +24,8 @@
 
 
     </head>
-    <body onload="acc_reviews_checkSignIn()">
-        <script src="/makeAccount/account.js"></script>
+    <body onload="account_redirect()">
+        <script src="/account/account.js"></script>
 
 <!-- NAV BAR  ********************************************************-->
        <header>
@@ -67,28 +67,8 @@
         <a href="/about/about.html">ABOUT</a>
         <a href="/addProducts/addProducts.html">GALLERY</a>
         <a href="/reviews/reviews.html">REVIEWS</a>
-        <a href="/makeAccount/account.html">ACCOUNT</a>
+        <a href="/account/account.html">ACCOUNT</a>
     </nav>
 <!-- NAV BAR END ********************************************************-->
-
-<div id="div_accountContainer">
-    <div id="div_sidebar">
-        <div id="div_welcome">
-            <p>Welcome, </p>
-            <p id="p_welcomeName"></p>
-        </div>
-        <p class="p_sidebarItem" onClick="location='account.html'">My details</p>
-        <p class="p_sidebarItem" onClick="location='account_orders.html'">My orders</p>
-        <p class="p_sidebarItemSelected" onClick="location='account_reviews.html'">My reviews</p>
-        <p class="p_sidebarItem" onClick="location='account_wishlist.html'">Wishlist</p>
-    </div>
-
-    <div id="div_info">
-        <h1>MY REVIEWS</h1>
-        <a id="a_createReview" href="/reviews/createReview.html">CREATE REVIEW</a>
-
-        <div id="acc_reviewsContainer"></div>
-    </div>
-</div>
   </body>
 </html>

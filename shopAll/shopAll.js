@@ -54,7 +54,7 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
                     '${productName}',
                     '${mainImage}')">
             </div>
-            <button class="addToCartButton">Add to cart</button>
+            <button class="shopPage_button_addToCart" data-product-id="${productID}">Add to cart</button>
             <p class="productName"  onclick="goToPage(
                 '${productID}')">${productName}</p>
             <p class="productSize" >size ${productSize}</p>

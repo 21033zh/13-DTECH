@@ -12,62 +12,58 @@ const stripe = Stripe("sk_test_51RORXOHYjsredqEcrTyx13IHxHH6gqas7n5uhgCZbuTosefw
 // Create Checkout Session for a single product or cart
 // ----------------------
 exports.createCheckoutSession = functions.https.onRequest(async (req, res) => {
-  // Enable CORS
-  res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.set("Access-Control-Allow-Headers", "Content-Type");
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+    if (req.method === "OPTIONS") return res.status(204).send("");
 
-  if (req.method === "OPTIONS") {
-    return res.status(204).send("");
-  }
+    try {
+        const { items } = req.body;
+        if (!items || !Array.isArray(items) || items.length === 0) {
+            return res.status(400).json({ error: "No items provided" });
+        }
 
-  try {
-    const { productId, items } = req.body;
+        const line_items = items.map(item => ({
+            price_data: {
+                currency: "nzd",           // adjust currency
+                product_data: { name: item.name },
+                unit_amount: Math.round(item.price * 100),
+            },
+            quantity: item.quantity || 1,
+        }));
 
-    let line_items;
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            line_items,
+            mode: "payment",
+            success_url: "/purchase/success.html",
+            cancel_url: "/purchase/cart.html",
 
-    if (productId) {
-      // Single product
-      const snapshot = await admin.database().ref(`products/${productId}`).once("value");
-      const product = snapshot.val();
-      if (!product) return res.status(404).send({ error: "Product not found" });
+            shipping_address_collection: {
+                allowed_countries: ["NZ"], // adjust to the countries you ship to
+            },
+            
+              // Shipping options
+            shipping_options: [
+            {
+                shipping_rate_data: {
+                display_name: "Standard Shipping",
+                type: "fixed_amount",
+                fixed_amount: { amount: 700, currency: "nzd" }, // $7.00
+                delivery_estimate: {
+                    minimum: { unit: "business_day", value: 5 },
+                    maximum: { unit: "business_day", value: 7 },
+                },
+                },
+            },
+            ]
+        });
 
-      line_items = [{
-        price_data: {
-          currency: "usd",
-          product_data: { name: product.name },
-          unit_amount: product.price * 100,
-        },
-        quantity: 1,
-      }];
-    } else if (items && Array.isArray(items)) {
-      // Multiple items in cart
-      line_items = items.map(item => ({
-        price_data: {
-          currency: "usd",
-          product_data: { name: item.name },
-          unit_amount: item.price * 100,
-        },
-        quantity: item.quantity || 1,
-      }));
-    } else {
-      return res.status(400).send({ error: "No products provided" });
+        res.json({ url: session.url });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
     }
-
-    // Create Stripe Checkout session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items,
-      mode: "payment",
-      success_url: "http://127.0.0.1:5500/success.html",
-      cancel_url: "http://127.0.0.1:5500/cancel.html",
-    });
-
-    res.json({ url: session.url });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send({ error: err.message });
-  }
 });
 
 exports.createPaymentLink = functions.https.onRequest(async (req, res) => {
@@ -93,15 +89,15 @@ exports.createPaymentLink = functions.https.onRequest(async (req, res) => {
         payment_method_types: ["card"],
         line_items: items.map(item => ({
           price_data: {
-            currency: "usd",
+            currency: "nzd",
             product_data: { name: item.name },
             unit_amount: Math.round(item.price * 100), // price in cents
           },
           quantity: item.quantity || 1,
         })),
         mode: "payment",
-        success_url: "http://127.0.0.1:5500/success.html",
-        cancel_url: "http://127.0.0.1:5500/cancel.html",
+        success_url: "/purchase/success.html",
+        cancel_url: "/purchase/cart.html",
       });
   
       // Return URL

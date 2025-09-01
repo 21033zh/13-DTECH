@@ -841,7 +841,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     opacity: 0.3;
 }
 
-.productContainer .addToCartButton {
+.productContainer .shopPage_button_addToCart {
     background-color: black;
     color: white;
     border: 0px;
@@ -853,7 +853,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     cursor: pointer;
 }
 
-.productContainer .addToCartButton:hover {
+.productContainer .shopPage_button_addToCart:hover {
     background-color: rgb(70, 70, 70);
 }
 
@@ -1154,6 +1154,29 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 
 /*--- ABOUT PAGE END ----------------------------------------*/
+
+/*--- TERMS AND CONDITIONS / PRIVACY PAGE ----------------------------------*/
+#container_tandc {
+    padding: 20px;
+}
+
+#container_tandc div {
+    margin: 0px 0px 40px 0px;
+}
+
+#container_tandc p {
+    font-size: 0.8rem
+}
+
+#container_tandc ul {
+    font-size: 0.8rem
+}
+
+#container_tandc h3 {
+    font-size: 0.9rem;
+    margin: 0px;
+}
+/*--- TERMS AND CONDITIONS / PRIVACY PAGE END ------------------------------*/
 
 /*--- REVIEW PAGE --------------------------------------------*/
 #reviewsHeading {
@@ -1534,6 +1557,53 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 
 /*--- ADMIN END -------------------------------------------------*/
+/*--- CART PAGE  ----------------------------------------------*/
+#container_cart {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "cartItems cartInfo";
+}
+
+#cartItems {
+    grid-area: cartItems;
+}
+
+#cartInfo {
+    grid-area: cartInfo;
+    border: solid 1px black;
+    margin: 20px;
+}
+
+#cartItems, #cartInfo {
+    padding: 20px;
+}
+
+#cartItems .product {
+    border: solid 1px black;
+    background-color:#eaeaea;
+    padding: 20px;
+    margin-bottom: -1px;
+    display: grid;
+    grid-template-columns: 80px 1fr 20px;
+    cursor: pointer;
+}
+
+.product .image, .product .info {
+    padding: 5px;
+}
+
+.product h3 {
+    margin: 5px 0px;
+}
+
+.product p {
+    margin: 5px 0px;
+}
+
+#cartItems img {
+    width: 100%;
+}
+/*--- CART PAGE END  -------------------------------------------*/
 @media only screen and (max-width: 600px) {
     .web {
         display: none;
