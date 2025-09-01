@@ -841,22 +841,6 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     opacity: 0.3;
 }
 
-.productContainer .shopPage_button_addToCart {
-    background-color: black;
-    color: white;
-    border: 0px;
-    text-transform: uppercase;
-    padding: 10px;
-    width: 100%;
-    margin: 0px 0px 3px 0px;
-    display: block;
-    cursor: pointer;
-}
-
-.productContainer .shopPage_button_addToCart:hover {
-    background-color: rgb(70, 70, 70);
-}
-
 .productContainer .productName  {
     font-size: 1.2rem;
     padding: 3px 0px;
@@ -997,8 +981,23 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     color: white;
     margin: 0px;
     border: none;
+    width: 100%;
+    height: 100%;
     text-transform: uppercase;
     font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.div_productButtons .div_addToCart {
+    width: 100%;
+    height: 100%;
+    background-color: #c8c8c8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor:not-allowed;
 }
 
 .div_productButtons button:hover {

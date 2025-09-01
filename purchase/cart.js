@@ -2,18 +2,6 @@
 // CART MANAGEMENT
 // ----------------------
 document.addEventListener("DOMContentLoaded", () => {
-    // Add event listeners to "Add to Cart" buttons on product page
-    const addToCartButtons = document.querySelectorAll(".button_addToCart");
-    addToCartButtons.forEach(button => {
-        button.addEventListener("click", product_getProductID);
-    });
-
-    document.getElementById("products_container").addEventListener("click", (event) => {
-        if (event.target.classList.contains("shopPage_button_addToCart")) {
-          const productID = event.target.dataset.productId;
-          addToCart(productID)
-        }
-    });
 
     // Add event listener to "Checkout" button
     const checkoutBtn = document.getElementById("button_checkout");
@@ -34,14 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
 // ADD PRODUCT TO CART
 // ----------------------
 
-function product_getProductID() {
+function addToCart() {
+    const user = firebase.auth().currentUser;
     const productId = urlParams.get('productID');
-    addToCart(productID)
-    
-}
 
-function addToCart(productId) {
     const productRef = firebase.database().ref(`/products/${productId}/`);
+    const cartRef = firebase.database().ref(`/accounts/${user.uid}/cart`);
+
     productRef.once("value").then(snapshot => {
         var snapshot = snapshot.val()
         var product = {
@@ -53,9 +40,21 @@ function addToCart(productId) {
             quantity: 1
         };
 
-        console.log(product)
+        // Check if the product is in the cart
+        cartRef.once('value')
+        .then(snapshot => {
+        if (snapshot.exists()) {
+            console.log('Product is already in the cart.');
+            console.log(snapshot)
+        } else {
+            console.log('Product is not in the cart.');
+        }
+        })
+        .catch(error => {
+        console.error('Error checking cart:', error);
+        });
 
-    const user = firebase.auth().currentUser;
+        console.log(product)
 
     if (user) {
         console.log('user is logged in')
@@ -71,6 +70,14 @@ function addToCart(productId) {
             cartRef.set({
                 ...product,
                 quantity: newQty
+            })
+            .then(() => {
+                console.log("Cart updated successfully!");
+                const buttonDiv = document.getElementById("container_cartButton");
+                buttonDiv.innerHTML = `<div class="div_addToCart">Added to cart</div>`;
+            })
+            .catch((error) => {
+                alert("Error adding to your cart. Please try again.")
             });
 
         });
@@ -90,11 +97,8 @@ function addToCart(productId) {
 
         localStorage.setItem("cart", JSON.stringify(cart));
     }
-
-    alert(`${product.name} added to cart!`);
     });
 }
-
 // ----------------------
 // CHECKOUT
 // ----------------------

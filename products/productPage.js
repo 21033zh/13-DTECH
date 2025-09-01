@@ -20,10 +20,34 @@ const defaultColour = "#ffffff";
 var imagesArray = [];
 var slidePlace = 0;
 
-
+document.addEventListener('DOMContentLoaded', () => {
 if (productID) {
     // Fetch and display the product from database using productID
-    console.log(productID)
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const cartRef = firebase.database().ref(`/accounts/${user.uid}/cart/${productID}`);
+        var div = document.getElementById("container_cartButton");
+        cartRef.once('value')
+        .then(snapshot => {
+        if (snapshot.exists()) {
+            div.innerHTML = `<div class="div_addToCart">Added to cart</div>`
+        } else {
+            console.log('Product is not in the cart.');
+            div.innerHTML = `<button id="button_addToCart">Add to cart</button>`
+            const addToCartButton = document.getElementById("button_addToCart");
+            addToCartButton.addEventListener("click", addToCart);
+        }
+        }).then(() => {
+          // Add event listeners to "Add to Cart" buttons on product page
+         
+        }).catch(error => {
+        console.error('Error checking cart:', error);
+        });
+
+      } else {
+        console.log('No user is signed in.');
+      }
+    });
     
     firebase.database().ref('/products/' + productID).once('value', function(snapshot) {
         var productInfo = snapshot.val();
@@ -105,6 +129,7 @@ if (productID) {
     // Show error message or redirect
     console.log('product not found')
   }
+});
 
 function nextSlide() {
     console.log('next');

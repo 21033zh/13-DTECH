@@ -5,6 +5,13 @@ var sortBy;
 var productsArray = [];
 var allProductsArray = []
 
+document.getElementById("products_container").addEventListener("click", (event) => {
+    if (event.target.classList.contains("shopPage_button_addToCart")) {
+      const productID = event.target.dataset.productId;
+      addToCart(productID)
+    }
+});
+
 function displayProducts() {
     productsArray = [];
     firebase.database().ref('/products/').once('value', function(snapshot) {
@@ -54,13 +61,15 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
                     '${productName}',
                     '${mainImage}')">
             </div>
-            <button class="shopPage_button_addToCart" data-product-id="${productID}">Add to cart</button>
             <p class="productName"  onclick="goToPage(
                 '${productID}')">${productName}</p>
             <p class="productSize" >size ${productSize}</p>
             <p class="productPrice">$${productPrice}</p>
-            </div>`;
+            <div class="big_gap"></div>
+            </div>`
+            ;
     document.getElementById("products_container").innerHTML += product;
+
 }
 
 function addToWishlist(productID, productName, mainImage) {
