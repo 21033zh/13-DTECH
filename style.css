@@ -32,7 +32,7 @@ h1 {
 }
 
 .big_gap {
-    margin: 30px;
+    margin: 25px;
     display: block;
     position: relative;
 }
@@ -963,17 +963,13 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 
 
-.div_productButtonsWeb {
+.div_productButtons {
     width: 100%;
     text-align: center;
     display: grid;
     grid-template-columns: 1fr 50px;
     grid-template-rows: 50px;
     column-gap: 5px;
-}
-
-.div_productButtonsMobile {
-    display: none;
 }
 
 .div_productButtons button {
@@ -1066,14 +1062,16 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 .img_selected {
     width: 100%;
+    aspect-ratio: 2 / 3; /* 600x400 = 3:2 */
+    object-fit: cover;   /* keeps it looking good */
 }
 
 @media only screen and (max-width: 600px) {
     #container_productPage {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         grid-template-areas: 
-        "photos photos"
-        "info info"
+        "photos"
+        "info"
     }
 
     #container_photos {
@@ -1090,21 +1088,26 @@ nav a:hover, .shopDropdown:hover .dropbtn {
         width: 100%;
     }
 
-    #div_selectedImage {
-        width: 100%;
-        height: 550px;
-    }
-
-    .div_productButtonsWeb {
-        display: none;
-    }
-
-    .div_productButtonsMobile {
+    #container_info {
         display: grid;
-        grid-template-columns: 1fr 60px;
-        column-gap: 7px;
-        font-size: 1.5rem;
-        margin: 10px 0px;
+        grid-template-columns: 1fr;
+        grid-template-areas: "nameAndPrice" "buttons" "info" "shipping";
+    }
+
+    #div_nameAndPrice {
+        grid-area: nameAndPrice;
+    }
+
+    #div_productButtons {
+        grid-area: buttons;
+    }
+
+    #div_info {
+        grid-area: info;
+    }
+
+    #div_shipping {
+        grid-area: shipping;
     }
 
     #button_addToWishlist {
@@ -1423,7 +1426,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 #div_info p {
     font-size: 1rem;
-    margin: 10px 0px;
+    margin: 0px;
 }
 
 /*-ACCOUNT_REVIEWS-*/

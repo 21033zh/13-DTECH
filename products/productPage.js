@@ -194,7 +194,7 @@ if (productID) {
         var div = document.getElementById("div_selectedImage");
 
         var image = `<img class="img_selected" src=${imagesArray[slidePlace]}>`;
-        div.innerHTML = image;
+        div.innerHTML = image; 
         
         var img_selectedSlide = document.getElementById("slide0");
         img_selectedSlide.style.opacity = 0.5;
