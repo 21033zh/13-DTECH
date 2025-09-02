@@ -40,7 +40,6 @@ h1 {
 /*--- NAV BAR --------------------------------------*/
 /*----LOGO-----*/
 header {
-    grid-area: header;
     background-color: black;
     color: white;
     text-align: center;
@@ -58,12 +57,12 @@ header {
 
 @media only screen and (min-width: 600px) {
     #logoDiv {
-        width: 20%;
+        width: 200px;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
         display: block;
-        padding: 20px 0px 0px 0px;
+        padding: 20px 0px 10px 0px;
     }
 
     #logoDiv:hover {
@@ -80,6 +79,16 @@ header {
 
 }
 
+@media only screen and (min-width: 1400px) {
+    #logoDiv:hover {
+        animation: BIGSCREEN_logo-size-in 0.7s forwards;
+    }
+    
+    #logoDiv:not(:hover) {
+        animation: BIGSCREEN_logo-size-out 0.7s forwards;
+    }
+}
+
 @keyframes logo-size-in {
     from {width: 20%;
         height: auto;}
@@ -94,6 +103,20 @@ header {
         height: auto;}
 }
 
+
+@keyframes BIGSCREEN_logo-size-in {
+    from {width: 14%;
+        height: auto;}
+    to {width: 15%; 
+        height: auto;}
+}
+
+@keyframes BIGSCREEN_logo-size-out {
+    from {width: 15%;
+        height: auto;}
+    to {width: 14%; 
+        height: auto;}
+}
 /*----ICONS-----*/
 
 .navIcons {
@@ -146,6 +169,17 @@ header {
     margin-left: 10px;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset !important; /* Change 'white' to your desired background color */
+  -webkit-text-fill-color: #ffffff !important; /* Change to your desired text color */
+  font-family: "Alegreya Sans";
+  background-color: transparent !important; /* Ensure no underlying background color */
+  transition: background-color 5000s ease-in-out 0s; /* Slow transition to override default */
+}
+
 #div_search .inputBar:focus, #div_search .inputBar:hover {
     background-color: black;
     border: none;
@@ -169,7 +203,6 @@ header {
 
 /*-----NAV------*/
 nav {
-    grid-area: nav;
     background-color: black;
     color: white;
     justify-content: center;

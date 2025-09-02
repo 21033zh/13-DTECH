@@ -26,119 +26,13 @@
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
 
-    <body onload="displayFeaturedProducts()">
+    <body onload="displayFeaturedProducts(), navBar()">
         <script src="home.js"></script>
         <script src="nav.js"></script>
         <script src="search.js"></script>
 
-            <div id="hb_darkOverlay" onclick="closeHamburger()"></div>
-            <div id="search_darkOverlay" onclick="closeSearch()"></div>
-<!-- HEADER BAR  ********************************************************-->
-        <header>
-        <!-- MOBILE-hamburger-menu -->
-        <div id="hamburger_menu">
-            <a id="a_hamburger" href="javascript:void(0);" onclick="openHamburger()">
-            <img id="hamburger" src="/images/hamburger.png" alt="menu">
-            </a>
-        
-            <div id="myLinks" class="hamburgerNeutral">
-            <img src="/images/x.png" onclick="closeHamburger()" alt="exit">
-        
-            <a class="a_pageLink" href="index.html">HOME</a>
-        
-            <!-- SHOP DROPDOWN -->
-            <div class="dropdown">
-                <a class="a_pageLink dropdown-toggle" href="javascript:void(0);" onclick="toggleDropdown()">SHOP ▾</a>
-                <div class="dropdown-menu">
-                <a href="/shopAll/shopAll.html">Shop All</a>
-                <a href="/shop/tops.html">Tops</a>
-                <a href="/shop/bottoms.html">Bottoms</a>
-                <a href="/shop/dresses.html">Dresses</a>
-                <a href="/shop/shoes.html">Shoes</a>
-                <a href="/shop/accessories.html">Accessories</a>
-                <a href="/shop/art.html">Art</a>
-                </div>
-            </div>
-  
-      <a class="a_pageLink" href="/about/about.html">ABOUT</a>
-      <a class="a_pageLink" href="/reviews/reviews.html">REVIEWS</a>
-    </div>
-  </div>
+        <div id="container_navBar" height="146"></div>
 
-        <!--MOBILE-search-icon-->
-            <div id="mobile_searchIcon" class="icon"> 
-                <img src="images/search.png" onclick="openSearch()" alt="search">
-            </div>
-
-        <!--WEB-search-bar-->
-            <div id="div_search">
-                <form id="web_searchForm" class="form_searchBar" 
-                onsubmit="searchSubmit(event); return false">
-                    <input class="submitButton" type="image" id="web_searchSubmit"
-                    src="/images/search.png" alt="submit">
-                    <input class="inputBar" type="text" id="web_searchInput"
-                    placeholder="Search..." required>
-                    <div id="inputBar_line"></div>
-                </form>
-            </div>
-
-        <!--WEB-MOBILE-logo-->
-        <div id="logoDiv">
-            <a href="index.html">
-                <img id="logo" src="/images/translogo.png" alt="Doll Planet">
-            </a>
-        </div>
-        
-
-        <div id="div_filler"></div>
-        
-        <!--WEB-MOBILE-icons-->
-        <div class="icon" id="wishlist">
-            <a href="/account/account_wishlist.html">
-                <img class="navIcons" src="/images/heart.png" alt="wishlist">
-            </a>
-        </div>
-        <div class="icon" id="cart">
-            <a href="/purchase/cart.html">
-                <img class="navIcons" src="/images/cart.png" alt="cart">
-            </a>
-        </div>
-        <div class="icon" id="account">
-            <a href="/account/account.html">
-                <img class="navIcons" src="/images/account.png" alt="account">
-            </a>
-        </div>
-        </header>
-<!-- HEADER END ********************************************************-->
-<!-- NAV BAR  ********************************************************-->
-        <!--MOBILE-search-bar-->
-            <div id="mobile_div_search" class="searchNeutral">
-                <form id="mobile_searchForm"
-                class="form_searchBar" onsubmit="searchSubmit(event); return false">
-                    <input class="inputBar" id="mb_searchInput" type="text" autofocus required>
-                    <input class="submitButton" id="mb_searchSubmit" type="image"
-                    src="/images/search.png" alt="submit">
-                </form>
-            </div>
-
-        <nav>
-            <a href="index.html">HOME</a>
-            <div class="shopDropdown">
-                <button class="dropbtn">SHOP</button>
-                <div class="shopDropdownContent">
-                    <a href="/shopAll/shopAll.html">Shop All</a>
-                    <a href="/shopAll/shopTops.html">Tops</a>
-                    <a href="/shopAll/shopBottoms.html">Bottoms</a>
-                    <a href="/shopAll/shopDresses.html">Dresses</a>
-                    <a href="/shopAll/shopShoes.html">Shoes</a>
-                    <a href="/shopAll/shopAccessories.html">Accessories</a>
-                    <a href="/shopAll/shopArt.html">Art</a>
-                </div>
-                </div>
-            <a href="about/about.html">ABOUT</a>
-            <a href="/reviews/reviews.html">REVIEWS</a>
-        </nav>
-<!-- NAV BAR END ********************************************************-->
 <div id="container_home">
 <!-- HEADER IMAGE ********************************************************-->
         <div id="header_img">

@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-function displayProducts() {
+function displayProducts(category) {
     productsArray = [];
     firebase.database().ref('/products/').once('value', function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
@@ -27,27 +27,37 @@ function displayProducts() {
             });
         });
         allProductsArray = [].concat(productsArray);
-        createGrid();
+        createGrid(category);
 });
 }
 
-function createGrid() {
+function createGrid(category) {
     document.getElementById("products_container").innerHTML = '';
     currentIndex = 0; // reset whenever grid is recreated
-    loadMoreProducts();
+    loadMoreProducts(category);
 }
 
-function loadMoreProducts() {
+function loadMoreProducts(category) {
     let endIndex = currentIndex + productsPerPage;
 
     for (let i = currentIndex; i < endIndex && i < productsArray.length; i++) {
-        appendProduct(
-            productsArray[i].value.mainImage,
-            productsArray[i].key,
-            productsArray[i].value.productName,
-            productsArray[i].value.price,
-            productsArray[i].value.size
-        );
+        if (category === 'all') {
+            appendProduct(
+                productsArray[i].value.mainImage,
+                productsArray[i].key,
+                productsArray[i].value.productName,
+                productsArray[i].value.price,
+                productsArray[i].value.size
+            );
+        } else if (category === productsArray[i].value.category) {
+            appendProduct(
+                productsArray[i].value.mainImage,
+                productsArray[i].key,
+                productsArray[i].value.productName,
+                productsArray[i].value.price,
+                productsArray[i].value.size
+            );
+        }
     }
 
     currentIndex = endIndex;

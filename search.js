@@ -1,10 +1,17 @@
 var productsArray = [];
 var allProductsArray = [];
 
-function searchSubmit(event) {
-    console.log('submit');
+function web_searchSubmit(event) {
     event.preventDefault();
-    SEARCH_INPUT = document.getElementById("web_searchInput").value;
+    var SEARCH_INPUT = document.getElementById("web_searchInput").value;
+    sessionStorage.setItem("SEARCH_INPUT", SEARCH_INPUT)
+    console.log(SEARCH_INPUT);
+    window.location = "/search.html";
+}
+
+function mobile_searchSubmit(event) {
+    event.preventDefault();
+    var SEARCH_INPUT = document.getElementById("mobile_searchInput").value;
     sessionStorage.setItem("SEARCH_INPUT", SEARCH_INPUT)
     console.log(SEARCH_INPUT);
     window.location = "/search.html";
