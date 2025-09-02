@@ -15,6 +15,11 @@ function openHamburger() {
     overlay.style.display = 'none'
     overlay.style.position = 'fixed'
   }
+
+  function toggleDropdown() {
+    const dropdown = document.querySelector(".dropdown");
+    dropdown.classList.toggle("open");
+  }
   
   function openSearch() {
     var overlay = document.getElementById("search_darkOverlay");

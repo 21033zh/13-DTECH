@@ -224,6 +224,7 @@ function createWishlistGrid(wishlistArray) {
             var price = productsArray[productID].price;
             var size = productsArray[productID].size;
             appendProduct(
+                productID,
                 mainImage,
                 productName,
                 price,
@@ -235,17 +236,37 @@ function createWishlistGrid(wishlistArray) {
     
 }
 
-function appendProduct(mainImage, productName, productPrice, productSize) {
+function appendProduct(productID, mainImage, productName, productPrice, productSize) {
     const product = 
            `<div class="productContainer">
             <div class="productImageContainer">
                 <img class="productImage" src="${mainImage}"
                  onclick="goToPage()">
             </div>
-            <button class="addToCartButton">Add to cart</button>
+            <button onclick="account_removeFromWishlist('${productID}')">Remove</button>
             <p class="productName"  onclick="goToPage()">${productName}</p>
             <p class="productSize" >size ${productSize}</p>
             <p class="productPrice">$${productPrice}</p>
             </div>`;
     document.getElementById("div_accWishlist").innerHTML += product;
 }
+
+/**-----------------------------------------------------------------
+ * productPage_removeFromWishlist
+ * removes product from the wishlist
+ ------------------------------------------------------------------*/
+ function account_removeFromWishlist(productID) {
+    console.log('productPage_removeFromWishlist')
+        const user = firebase.auth().currentUser
+        var productRef = firebase.database().ref(`/accounts/${user.uid}/wishlist/${productID}`);
+    // remove productID from wishlist
+        productRef.remove()
+    // update wishlist button
+            .then(function() {
+            location.reload();
+            })
+            .catch(function(error) {
+                console.log('failure', error);
+                alert(`There was an error removing from the wishlist. Please try again.`);
+            });
+    }

@@ -5,17 +5,21 @@ var sortBy;
 var productsArray = [];
 var allProductsArray = []
 
-document.getElementById("products_container").addEventListener("click", (event) => {
-    if (event.target.classList.contains("shopPage_button_addToCart")) {
-      const productID = event.target.dataset.productId;
-      addToCart(productID)
-    }
-});
+let productsPerPage = 12;
+let currentIndex = 0;
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("products_container").addEventListener("click", (event) => {
+      if (event.target.classList.contains("shopPage_button_addToCart")) {
+        const productID = event.target.dataset.productId;
+        addToCart(productID);
+      }
+    });
+  });
 
 function displayProducts() {
     productsArray = [];
     firebase.database().ref('/products/').once('value', function(snapshot) {
-        console.log(productsArray);
         snapshot.forEach(function(childSnapshot) {
             productsArray.push({
                 key: childSnapshot.key,
@@ -28,9 +32,15 @@ function displayProducts() {
 }
 
 function createGrid() {
-    console.log(productsArray)
     document.getElementById("products_container").innerHTML = '';
-    for (i = 0; i < productsArray.length; i++) {
+    currentIndex = 0; // reset whenever grid is recreated
+    loadMoreProducts();
+}
+
+function loadMoreProducts() {
+    let endIndex = currentIndex + productsPerPage;
+
+    for (let i = currentIndex; i < endIndex && i < productsArray.length; i++) {
         appendProduct(
             productsArray[i].value.mainImage,
             productsArray[i].key,
@@ -38,7 +48,17 @@ function createGrid() {
             productsArray[i].value.price,
             productsArray[i].value.size
         );
-    };
+    }
+
+    currentIndex = endIndex;
+
+    // Show or hide the button depending on if there are more products
+    const loadMoreBtn = document.getElementById("loadMoreBtn");
+    if (currentIndex >= productsArray.length) {
+        loadMoreBtn.style.display = "none";
+    } else {
+        loadMoreBtn.style.display = "block";
+    }
 }
 
 function appendProduct(mainImage, productID, productName, productPrice, productSize) {
@@ -121,13 +141,8 @@ function filterSettings(event) {
     document.getElementById("products_container").innerHTML = '';
     colourFilter = document.getElementById("colourDropdown").value;
     sizeFilter = document.getElementById("sizeDropdown").value;
-    console.log('colour: ' + colourFilter);
-    console.log('size: ' + sizeFilter);
     var oldProductsArray = [].concat(allProductsArray);
     productsArray = []
-
-    console.log("Current filters:", colourFilter, sizeFilter);
-    console.log(oldProductsArray)
 
     oldProductsArray.forEach(function(child){
         if ((colourFilter === 'all' || 
@@ -139,7 +154,6 @@ function filterSettings(event) {
                     key: child.key,
                     value: child.value
                 });
-                console.log(productsArray)
         } else {
             console.log('not filtered')
         }
@@ -147,10 +161,9 @@ function filterSettings(event) {
 
     if (sortBy === 'date') {
         if (sortSettings === 'newest') {
-            displayProducts();
-            console.log('date new to old')
+            sortHighest();
         } else {
-            console.log('date old to new')
+            sortOldest()
         }
     } else if (sortBy === 'price') {
         if (sortSettings === 'lowPrice') {
@@ -163,7 +176,7 @@ function filterSettings(event) {
     }
 }
 
-function sortSettings(event) {
+function handleSortSettings(event) {
     event.preventDefault();
     document.getElementById("products_container").innerHTML = '';
     sortSettings = document.getElementById("sortDropdown").value;
@@ -176,9 +189,9 @@ function sortSettings(event) {
 
      if (sortBy === 'date') {
         if (sortSettings === 'newest') {
-            displayProducts();
+            sortNewest();
         } else {
-            console.log('date old to new')
+            sortOldest();
         }
     } else if (sortBy === 'price') {
         if (sortSettings === 'lowPrice') {
@@ -189,16 +202,23 @@ function sortSettings(event) {
     }
 }
 
+function sortOldest() {
+    productsArray.sort((a, b) => 
+        a.value.date - b.value.date
+    ); 
+}
+
+function sortNewest() {
+    productsArray.sort((a, b) => 
+        b.value.date - a.value.date
+    ); 
+}
+
 function sortLowPrice() {
-    console.log('sort price low to high')
-        productsArray.sort(function(a, b) {
-            return b.value.price - a.value.price;
-        });
-        productsArray.reverse();
-        productsArray.forEach(function(child){
-            console.log(child.key, child.value)
-        }
-        );
+    productsArray.sort(function(a, b) {
+        return b.value.price - a.value.price;
+    });
+    productsArray.reverse();
     createGrid();
 }
 
@@ -207,10 +227,6 @@ function sortHighPrice() {
     productsArray.sort(function(a, b) {
         return b.value.price - a.value.price;
     });
-    productsArray.forEach(function(child){
-        console.log(child.key, child.value)
-    }
-    );
     createGrid();
 }
 

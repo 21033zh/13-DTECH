@@ -35,19 +35,35 @@
             <div id="search_darkOverlay" onclick="closeSearch()"></div>
 <!-- HEADER BAR  ********************************************************-->
         <header>
-        <!--MOBILE-hamburger-menu-->
-            <div id="hamburger_menu">
-                <a id="a_hamburger" href="javascript:void(0);" onclick="openHamburger()">
-                    <img id="hamburger" src="/images/hamburger.png" alt="menu">
-                </a>
-                <div id="myLinks" class="hamburgerNeutral">
-                    <img src="/images/x.png" onclick="closeHamburger()" alt="exit">
-                    <a class="a_pageLink" href="index.html">HOME</a>
-                    <a class="a_pageLink" href="/shopAll/shopAll.html">SHOP</a>
-                    <a class="a_pageLink" href="/about/about.html">ABOUT</a>
-                    <a class="a_pageLink" href="/reviews/reviews.html">REVIEWS</a>
+        <!-- MOBILE-hamburger-menu -->
+        <div id="hamburger_menu">
+            <a id="a_hamburger" href="javascript:void(0);" onclick="openHamburger()">
+            <img id="hamburger" src="/images/hamburger.png" alt="menu">
+            </a>
+        
+            <div id="myLinks" class="hamburgerNeutral">
+            <img src="/images/x.png" onclick="closeHamburger()" alt="exit">
+        
+            <a class="a_pageLink" href="index.html">HOME</a>
+        
+            <!-- SHOP DROPDOWN -->
+            <div class="dropdown">
+                <a class="a_pageLink dropdown-toggle" href="javascript:void(0);" onclick="toggleDropdown()">SHOP ▾</a>
+                <div class="dropdown-menu">
+                <a href="/shopAll/shopAll.html">Shop All</a>
+                <a href="/shop/tops.html">Tops</a>
+                <a href="/shop/bottoms.html">Bottoms</a>
+                <a href="/shop/dresses.html">Dresses</a>
+                <a href="/shop/shoes.html">Shoes</a>
+                <a href="/shop/accessories.html">Accessories</a>
+                <a href="/shop/art.html">Art</a>
                 </div>
             </div>
+  
+      <a class="a_pageLink" href="/about/about.html">ABOUT</a>
+      <a class="a_pageLink" href="/reviews/reviews.html">REVIEWS</a>
+    </div>
+  </div>
 
         <!--MOBILE-search-icon-->
             <div id="mobile_searchIcon" class="icon"> 
@@ -120,7 +136,6 @@
                 </div>
                 </div>
             <a href="about/about.html">ABOUT</a>
-            <a href="admin/addProducts.html">GALLERY</a>
             <a href="/reviews/reviews.html">REVIEWS</a>
         </nav>
 <!-- NAV BAR END ********************************************************-->

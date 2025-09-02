@@ -247,8 +247,6 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     display: none;
 }
 
-
-
 #hamburger_menu #myLinks {
     position: fixed;
     background-color: black;
@@ -258,7 +256,38 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     width: 60%;
     height: 100vh;
     padding: 10px;
+    flex-direction: column;
   }
+
+#hamburger_menu .dropdown {
+    position: relative;
+}
+
+#hamburger_menu .dropdown-menu {
+    display: none;
+    flex-direction: column;
+    padding-left: 15px; /* indent submenu */
+}
+  
+#hamburger_menu .dropdown-menu a {
+    padding: 8px 0;
+    font-size: 0.95em;
+    color: white;
+    text-align: left;
+    margin-left: 20px;
+}
+  
+  /* Show submenu when active */
+#hamburger_menu .dropdown.open .dropdown-menu {
+    display: flex;
+}
+  
+  /* Optional styling for dropdown toggle arrow */
+#hamburger_menu .dropdown-toggle {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
   
 #hamburger_menu #hamburger, #a_hamburger {
     width: 18px;
@@ -547,17 +576,19 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 #featured_products_container {
     display: grid;
-    align-items: center;
+    align-items: start;
     grid-auto-flow: column;
     grid-auto-columns: 20%; /* play with this to change height of the children, 50% will fill half */
     grid-template-columns: unset; /* do not set template columns and rows */
     grid-template-rows: unset;
-    overflow: scroll;
+    height: 100%;
+    overflow-x: scroll;
+    overflow-y:hidden;
 }
 
 .featured_product {
     width: 90%;
-    height: auto;
+    height: 100%;
     margin: 10px;
     cursor: pointer;
 }
@@ -568,7 +599,8 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 .featured_product .featured_image {
     width: 100%;
-    height: auto;
+    aspect-ratio: 2 / 3; /* 600x400 = 3:2 */
+    object-fit: cover;   /* keeps it looking good */
     margin: 0px;
     display: block;
 }
@@ -581,6 +613,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     padding: 10px;
     margin: 0px;
     display: block;
+    height: 100%;
 }
 
 .info_card  p {
@@ -616,8 +649,8 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 #about_us > a {
     background-color:#000000;
     color: #dbd4df;
-    padding: 10px;
-    margin-top: 30px;
+    padding: 10px 20px;
+    margin: 30px auto 0px auto;
     text-align: center;
     display: block;
     width: 40%;
@@ -771,11 +804,25 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     margin-left: auto;
     margin-right: 20px;
 }
+
+#loadMoreBtn {
+    background-color:#000000;
+    color: #ffffff;
+    padding: 20px 40px;
+    margin: 50px auto 50px auto;
+    text-align: center;
+    text-transform:uppercase;
+    display: block;
+    width: 200px;
+    cursor: pointer;
+    border: none;
+}
 /*----MOBILE-FILTERS-----*/
 @media only screen and (max-width: 600px) {
 
       #filters {
         display: grid;
+        grid-template-columns: 1fr 1fr;
     }
 
     #colourDropdown, #sizeDropdown, #sortDropdown {
@@ -822,11 +869,12 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 
 .productImageContainer .productImage {
+    display: block;
     width: 100%;
-    height: auto;
+    aspect-ratio: 2 / 3; /* 600x400 = 3:2 */
+    object-fit: cover;   /* keeps it looking good */
     margin: 0px;
     padding: 0px;
-    display: block;
 }
 
 .productImageContainer .addToWishlistButton {
