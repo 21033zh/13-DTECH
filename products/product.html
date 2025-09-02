@@ -23,7 +23,7 @@
         <script src="/fb_setup.js"></script>
         <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body>
+    <body onload="loadProductDetails()">
         <script src="productPage.js"></script>
         <script src="/search.js"></script>
         <script src="/nav.js"></script>
@@ -141,7 +141,7 @@
 
                 <div class="div_productButtons div_productButtonsMobile">
                     <div id="container_mobileCartButton"></div>
-                    <button id="button_addToWishlist">
+                    <button id="button_mobileAddToWishlist">
                         <img src="/images/heart.png">
                     </button>
                 </div>
@@ -170,9 +170,7 @@
 
                 <div class="div_productButtons div_productButtonsWeb">
                     <div id="container_cartButton"></div>
-                    <button id="button_addToWishlist">
-                        <img src="/images/heart.png">
-                    </button>
+                    <div id="container_wishlistButton"></div>
                 </div>
                 <div class="gap"></div>
 

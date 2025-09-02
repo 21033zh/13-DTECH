@@ -2,7 +2,6 @@
 // CART MANAGEMENT
 // ----------------------
 document.addEventListener("DOMContentLoaded", () => {
-
     // Add event listener to "Checkout" button
     const checkoutBtn = document.getElementById("button_checkout");
     if (checkoutBtn) {

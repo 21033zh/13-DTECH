@@ -20,30 +20,128 @@ const defaultColour = "#ffffff";
 var imagesArray = [];
 var slidePlace = 0;
 
-document.addEventListener('DOMContentLoaded', () => {
+/**-----------------------------------------------------------------
+ * productPage_addToWishlist
+ * adds product to the wishlist
+ ------------------------------------------------------------------*/
+function productPage_addToWishlist(productName, mainImage) {
+  console.log('productPage_addToWishlist')
+// check if user is signed in
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      alert("Please sign in to add to wishlist.");
+      return;
+    }
+
+// Ensure these variables exist in scope
+    if (!productID || !productName || !mainImage) {
+      return console.error("Product info missing");
+    }
+
+// add product info to the database
+    firebase.database().ref("/accounts/" + user.uid + "/wishlist/" + productID).update({
+      productName,
+      mainImage
+    }).then(() => {
+      createWishlistRemoveButton();
+    }).catch(err => {
+      console.error("Error adding to wishlist:", err);
+    });
+}
+
+/**-----------------------------------------------------------------
+ * productPage_removeFromWishlist
+ * removes product from the wishlist
+ ------------------------------------------------------------------*/
+function productPage_removeFromWishlist() {
+  console.log('productPage_removeFromWishlist')
+    const user = firebase.auth().currentUser;
+
+    var productRef = firebase.database().ref(`/accounts/${user.uid}/wishlist/${productID}`);
+
+// remove productID from wishlist
+    productRef.remove()
+// update wishlist button
+        .then(function() {
+          createWishlistAddButton();
+        })
+        .catch(function(error) {
+            console.log('failure', error);
+            alert(`There was an error removing from the wishlist. Please try again.`);
+        });
+}
+
+/**-----------------------------------------------------------------
+ * createWishlistAddButton
+ * adds wishlist button (to add products) to the HTML page
+ ------------------------------------------------------------------*/
+function createWishlistAddButton() {
+  console.log('createWishlistAddButton')
+  var wishlistContainer = document.getElementById("container_wishlistButton");
+  firebase.database().ref('/products/' + productID).once('value', function(snapshot) {
+    var product = snapshot.val()
+    wishlistContainer.innerHTML = 
+            `<button onclick="productPage_addToWishlist('${product.productName}', '${product.mainImage}')" 
+              id="button_addToWishlist">
+              <img src="/images/heart.png">
+            </button>`
+  });
+}
+
+/**-----------------------------------------------------------------
+ * createWishlistRemoveButton
+ * adds wishlist button (to remove products) to the HTML page
+ ------------------------------------------------------------------*/
+function createWishlistRemoveButton() {
+  console.log('createWishlistRemoveButton')
+  var wishlistContainer = document.getElementById("container_wishlistButton");
+  wishlistContainer.innerHTML = 
+            `<button onclick="productPage_removeFromWishlist()"
+              id="button_addToWishlist">
+              <img src="/images/x.png">
+            </button>`     
+}
+/**-----------------------------------------------------------------
+ * loadProductDetails
+ * populates the HTML page with the product details, 
+ * and wishlist + cart buttons
+ ------------------------------------------------------------------*/
+function loadProductDetails() {
 if (productID) {
     // Fetch and display the product from database using productID
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
+// if user is signed in
+      if (user) { 
+        const wishlistRef = firebase.database().ref(`/accounts/${user.uid}/wishlist/${productID}`);
+
+        wishlistRef.once("value").then(snapshot => {
+          var wl_product = snapshot.val()
+
+          if (wl_product === null) {
+            createWishlistAddButton()
+          } else {
+            createWishlistRemoveButton()
+          }
+        });
+
+
         const cartRef = firebase.database().ref(`/accounts/${user.uid}/cart/${productID}`);
         var div = document.getElementById("container_cartButton");
         cartRef.once('value')
         .then(snapshot => {
+// if productID exists in the cart, add unclickable cart button
         if (snapshot.exists()) {
             div.innerHTML = `<div class="div_addToCart">Added to cart</div>`
+// if productID does not exist in the cart, add cart button
         } else {
             console.log('Product is not in the cart.');
             div.innerHTML = `<button id="button_addToCart">Add to cart</button>`
             const addToCartButton = document.getElementById("button_addToCart");
             addToCartButton.addEventListener("click", addToCart);
         }
-        }).then(() => {
-          // Add event listeners to "Add to Cart" buttons on product page
-         
         }).catch(error => {
         console.error('Error checking cart:', error);
         });
-
       } else {
         console.log('No user is signed in.');
       }
@@ -59,6 +157,7 @@ if (productID) {
         const colour2code = colourMap[colour2] ?? defaultColour
 
         imagesArray = productInfo.images;
+        var mainImage = productInfo.mainImage;
         var productName = productInfo.productName;
         var size = productInfo.size;
         var description = productInfo.description;
@@ -129,7 +228,7 @@ if (productID) {
     // Show error message or redirect
     console.log('product not found')
   }
-});
+}
 
 function nextSlide() {
     console.log('next');
