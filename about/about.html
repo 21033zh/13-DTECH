@@ -22,45 +22,12 @@
          <script src="/fb_setup.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body>
-<!-- NAV BAR  ********************************************************-->
-            <header>
-                <div id="logoDiv">
-                    <a href="index.html">
-                        <img id="logo" src="/images/logo.png">
-                    </a>
-                </div>
-                <div id="searchBar">
-                    <form>
-                        <input id="inputBar" type="search" placeholder="Search..." required>
-                        <input id="submitButton" type="image" src="/images/search.png" alt="submit" class="fa">
-                      </form>
-                </div>
-                    <a href="/wishlist/wishlist.html">
-                        <img class="navIcons" src="/images/heart.png">
-                    </a>
-                    <a href="cart">
-                        <img class="navIcons" src="/images/cart.png">
-                    </a>
-            </header>
-            <nav>
-                <a href="/index.html">HOME</a>
-                <div class="shopDropdown">
-                    <button class="dropbtn">SHOP</button>
-                    <div class="shopDropdownContent">
-                      <a href="/shopAll/shopAll.html">Shop All</a>
-                      <a href="/shopAll/shopTops.html">Tops</a>
-                      <a href="/shopAll/shopBottoms.html">Bottoms</a>
-                      <a href="/shopAll/shopDresses.html">Dresses</a>
-                      <a href="/shopAll/shopShoes.html">Shoes</a>
-                      <a href="/shopAll/shopAccessories.html">Accessories</a>
-                      <a href="/shopAll/shopArt.html">Art</a>
-                    </div>
-                  </div>
-                  <a href="about/about.html">ABOUT</a>
-                <a href="/addProducts/addProducts.html">GALLERY</a>
-            </nav>
-<!-- NAV BAR END ********************************************************-->
+    <body onload>
+        <script src="/nav.js"></script>
+        <script src="/search/search.js"></script>
+        
+        <div id="container_navBar" height="146"></div>
+
         <main id="main_about">
             <h1>ABOUT US</h1>
             <h2>WHO ARE WE?</h2>
@@ -69,8 +36,9 @@
                 vintage and eccentric womens clothing and accessories. We priorotise 
                 sustainability and quality, because we believe that fashion should be acessibile 
                 and affordable for everyone, without harming the enviorment in the process.</p>
-            <div id="teamDiv">
+
             <h2>MEET THE TEAM</h2>
+            <div id="teamDiv">
                 <div id="zuriDiv">
                     <img src="/images/aboutUs_zurii.jpg">
                     <p>Hi i'm zuri!</p>

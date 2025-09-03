@@ -1,12 +1,14 @@
-var productsArray = [];
-var allProductsArray = [];
+var search_productsArray = [];
+var search_allProductsArray = [];
+
+console.log('page load')
 
 function web_searchSubmit(event) {
     event.preventDefault();
     var SEARCH_INPUT = document.getElementById("web_searchInput").value;
     sessionStorage.setItem("SEARCH_INPUT", SEARCH_INPUT)
     console.log(SEARCH_INPUT);
-    window.location = "/search.html";
+    window.location = "/search/search.html";
 }
 
 function mobile_searchSubmit(event) {
@@ -17,7 +19,8 @@ function mobile_searchSubmit(event) {
     window.location = "/search.html";
 }
 
-function displayProducts() {
+function search_displayProducts() {
+    console.log('deafwsfkjw')
     var SEARCH_INPUT = sessionStorage.getItem("SEARCH_INPUT");
     const searchWords = SEARCH_INPUT.split(" ");
     console.log(SEARCH_INPUT);
@@ -25,81 +28,80 @@ function displayProducts() {
 
     firebase.database().ref('/products/').once('value', function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
-            var productInfo = childSnapshot.val();
+            var search_productInfo = childSnapshot.val();
             var searched = 0;
 
             for (let i = 0; i < searchWords.length; i++) {
                 const word = searchWords[i].toLowerCase();
                 if (
-                    productInfo.productName.toLowerCase().includes(word) ||
-                    productInfo.brand.toLowerCase().includes(word) ||
-                    productInfo.colour1.toLowerCase().includes(word)
+                    search_productInfo.productName.toLowerCase().includes(word) ||
+                    search_productInfo.brand.toLowerCase().includes(word) ||
+                    search_productInfo.colour1.toLowerCase().includes(word)
                 ) {
                     searched += 2;
-                } else if (productInfo.colour2.toLowerCase().includes(word)) {
+                } else if (search_productInfo.colour2.toLowerCase().includes(word)) {
                     searched += 1;
                 }
             }
 
             if (searched > 0) {
-                productsArray.push({
+                search_productsArray.push({
                     key: childSnapshot.key,
-                    value: productInfo,
+                    value: search_productInfo,
                     relevance: searched
                 });
             }
         });
 
         // Sort by relevance (descending)
-        productsArray.sort((a, b) => b.relevance - a.relevance);
+        search_productsArray.sort((a, b) => b.relevance - a.relevance);
 
-        allProductsArray = [].concat(productsArray); // optional copy
-        createGrid(productsArray);
+        search_allProductsArray = [].concat(search_productsArray); // optional copy
+        search_createGrid(search_productsArray);
     });
 }
 
-function createGrid(productsArray) {
-    console.log(productsArray);
-    document.getElementById("products_container").innerHTML = '';
-    for (let i = 0; i < productsArray.length; i++) {
-        appendProduct(
-            productsArray[i].value.mainImage,
-            productsArray[i].key,
-            productsArray[i].value.productName,
-            productsArray[i].value.price,
-            productsArray[i].value.size
+function search_createGrid(search_productsArray) {
+    document.getElementById("search_products_container").innerHTML = '';
+    for (let i = 0; i < search_productsArray.length; i++) {
+        search_appendProduct(
+            search_productsArray[i].value.mainImage,
+            search_productsArray[i].key,
+            search_productsArray[i].value.productName,
+            search_productsArray[i].value.price,
+            search_productsArray[i].value.size
         );
     }
 }
     
-function appendProduct(mainImage, productID, productName, productPrice, productSize) {
-    let allInfo = [
-        mainImage,
-        productID,
-        productName,
-        productPrice,
-        productSize
+function search_appendProduct( search_mainImage, search_productID,  search_productName, 
+     search_productPrice,  search_productSize) {
+    let search_allInfo = [
+        search_mainImage,
+        search_productID,
+        search_productName,
+        search_productPrice,
+        search_productSize
     ]
-    const product = 
+    const search_product = 
             `<div class="productContainer">
             <div class="productImageContainer">
-                <img class="productImage" src="${mainImage}"
+                <img class="productImage" src="${search_mainImage}"
                     onclick="goToPage(
-                '${allInfo}', 
+                '${search_allInfo}', 
                 )">
                 <img class="addToWishlistButton" src="/images/heart.png" 
                     onclick="addToWishlist(
-                    '${productID}',
-                    '${productName}',
-                    '${mainImage}')">
+                    '${search_productID}',
+                    '${search_productName}',
+                    '${search_mainImage}')">
             </div>
-            <button class="addToCartButton">Add to cart</button>
             <p class="productName"  onclick="goToPage(
-                '${allInfo}')">${productName}</p>
-            <p class="productSize" >size ${productSize}</p>
-            <p class="productPrice">$${productPrice}</p>
+                '${search_allInfo}')">${search_productName}</p>
+            <p class="productSize" >size ${search_productSize}</p>
+            <p class="productPrice">$${search_productPrice}</p>
             </div>`;
-    document.getElementById("products_container").innerHTML += product;
+    document.getElementById("search_products_container").innerHTML += search_product;
 }
     
 function addToWishlist(productID, productName, mainImage) {
@@ -136,14 +138,14 @@ function displayProductPage() {
     
 function filterCategory(filter) {
     document.getElementById("products_container").innerHTML = '';
-        for (i = 0; i < productsArray.length; i++) {
+        for (i = 0; i < search_productsArray.length; i++) {
             if (productsArray[i].value.category === filter) {
                 appendProduct(
-                    productsArray[i].value.mainImage,
-                    productsArray[i].key,
-                    productsArray[i].value.productName,
-                    productsArray[i].value.price,
-                    productsArray[i].value.size
+                    search_productsArray[i].value.mainImage,
+                    search_productsArray[i].key,
+                    search_productsArray[i].value.productName,
+                    search_productsArray[i].value.price,
+                    search_productsArray[i].value.size
                 );    
         };
 }
@@ -157,7 +159,7 @@ function filterSettings(event) {
     console.log('colour: ' + colourFilter);
     console.log('size: ' + sizeFilter);
     var oldProductsArray = [].concat(allProductsArray);
-    productsArray = []
+    search_productsArray = []
     var sortSettings = document.getElementById("sortDropdown").value;
 
     if (sortSettings === 'newest' || sortSettings === 'oldest') {
@@ -175,7 +177,7 @@ function filterSettings(event) {
             child.value.colour2 === colourFilter) && 
             (sizeFilter === 'all' || 
             child.value.size === sizeFilter)) {
-                productsArray.push({
+                search_productsArray.push({
                     key: child.key,
                     value: child.value
                 });
@@ -226,11 +228,11 @@ function sortSettings(event) {
     
 function sortLowPrice() {
     console.log('sort price low to high')
-        productsArray.sort(function(a, b) {
+        search_productsArray.sort(function(a, b) {
             return b.value.price - a.value.price;
         });
-        productsArray.reverse();
-        productsArray.forEach(function(child){
+        search_productsArray.reverse();
+        search_productsArray.forEach(function(child){
             console.log(child.key, child.value)
         }
         );
@@ -239,10 +241,10 @@ function sortLowPrice() {
     
 function sortHighPrice() {
     console.log('sort price high to low')
-    productsArray.sort(function(a, b) {
+    search_productsArray.sort(function(a, b) {
         return b.value.price - a.value.price;
     });
-    productsArray.forEach(function(child){
+    search_productsArray.forEach(function(child){
         console.log(child.key, child.value)
     }
     );

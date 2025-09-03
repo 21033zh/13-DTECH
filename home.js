@@ -1,5 +1,9 @@
+document.addEventListener("DOMContentLoaded", () => {
+    displayFeaturedProducts('all');
+});
 
 function displayFeaturedProducts() {
+    console.log('featured display')
     firebase.database().ref('/products/').once('value', function(snapshot) {
         var productsArray = [];
         snapshot.forEach(function(childSnapshot) {

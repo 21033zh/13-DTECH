@@ -1,4 +1,10 @@
+window.onload = function() {
+  console.log('nav page load')
+  navBar()
+};
+
 function navBar() {
+  console.log('navBar')
   var div = document.getElementById("container_navBar");
   div.innerHTML = `
   <div id="hb_darkOverlay" onclick="closeHamburger()"></div>

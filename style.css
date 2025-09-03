@@ -550,6 +550,20 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     font-family: "Alegreya Sans";
     margin: 0px;
 }
+
+@media only screen and (max-width: 600px) {
+    #footer {
+       display: block;
+    }
+
+    #footer div{
+        margin: 20px;
+     }
+
+     #footer h3 {
+        margin: 0px 0px 10px 0px;
+     }
+}
 /*--- FOOTER END --------------------------------------*/
 
 /*--- HOME PAGE ----------------------------------------*/
@@ -1219,15 +1233,27 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- ACCOUNT PAGE END----------------------------------------*/
 
 /*--- ABOUT PAGE --------------------------------------------*/
+#main_about {
+    padding: 20px;
+}
 #teamDiv {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 50% 50%;
+    grid-template-areas: "grace zuri"
 }
 
 #zuriDiv, #graceDiv {
     position: relative;
     margin: 15px;
+}
+
+#graceDiv {
+    grid-area: grace;
+}
+
+#zuriDiv {
+    grid-area: zuri;
 }
 
 #zuriDiv img, #zuriDiv p, #graceDiv img, #graceDiv p {
@@ -1687,6 +1713,31 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 #cartItems img {
     width: 100%;
 }
+
+/*----- SEARCH PAGE ------------------------------------------*/
+/*---PRODUCTS-SECTION----*/
+#search_products_container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+@media only screen and (max-width: 600px) {
+    #products_container {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .productImageContainer .addToWishlistButton {
+        width: 17%;
+    }
+
+    #categoriesContainer {
+        display: none;
+    }
+}
+
 /*--- CART PAGE END  -------------------------------------------*/
 @media only screen and (max-width: 600px) {
     .web {

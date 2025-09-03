@@ -8,16 +8,21 @@ var allProductsArray = []
 let productsPerPage = 12;
 let currentIndex = 0;
 
+console.log('page load');
+
 document.addEventListener("DOMContentLoaded", () => {
+    displayProducts('all');
+
     document.getElementById("products_container").addEventListener("click", (event) => {
       if (event.target.classList.contains("shopPage_button_addToCart")) {
         const productID = event.target.dataset.productId;
         addToCart(productID);
       }
     });
-  });
+});
 
 function displayProducts(category) {
+    console.log('displayProducts')
     productsArray = [];
     firebase.database().ref('/products/').once('value', function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
