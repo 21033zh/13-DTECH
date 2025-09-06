@@ -24,10 +24,17 @@
 
 
     </head>
-    <body onload="checkSignIn()">
+    <body>
         <script src="account.js"></script>
         <script src="/search/search.js"></script>
         <script src="/nav.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                welcomeName()
+                fillOrdersTable();
+            });
+        </script>
 
         <div id="container_navBar" height="146"></div>
 
@@ -35,22 +42,43 @@
     <div id="div_sidebar">
         <div id="div_welcome">
             <p>Welcome,</p>
+            <p id="p_welcomeName"></p>
         </div>
-        <p class="p_sidebarItem" onClick="location='account.html'">My details</p>
-        <p class="p_sidebarItemSelected" onClick="location='account_orders.html'">My orders</p>
-        <p class="p_sidebarItem" onClick="location='account_reviews.html'">My reviews</p>
-        <p class="p_sidebarItem" onClick="location='account_wishlist.html'">Wishlist</p>
+
+        <div class="web">
+            <p class="p_sidebarItem"  onClick="location='account.html'">My details</p>
+            <p class="p_sidebarItemSelected" onClick="location='account_orders.html'">My orders</p>
+            <p class="p_sidebarItem" onClick="location='account_reviews.html'">My reviews</p>
+            <p class="p_sidebarItem" onClick="location='account_wishlist.html'">Wishlist</p>
+        </div>
+
+        <div class="mobile">
+            <select id="account_menu" onchange="location = this.value;">
+                <option value="account_orders.html">My orders</option>
+                <option value="account.html">My details</option>
+                <option value="account_reviews.html">My reviews</option>
+                <option value="account_wishlist.html">Wishlist</option>
+              </select>
+        </div>
     </div>
 
     <div id="div_info">
-
+        <table id="tb_ordersTable">
+            <thead>
+              <tr>
+                <th class="th_ordersTable">Product</th>
+                <th class="th_ordersTable"></th>
+                <th class="th_ordersTable">Quantity</th>
+                <th class="th_ordersTable">Price</th>
+                <th class="th_ordersTable"></th>
+              </tr>
+            </thead>
+            <tbody id="body_ordersTable">
+            </tbody>
+        </table>
     </div>
 </div>
 
-
-
-    <h1>Account</h1>
-    <button onclick="signOut()">sign out</button>
-    <a href="/wishlist/wishlist.html">wishlist</a>
+    <div id="container_footer"></div>
   </body>
 </html>

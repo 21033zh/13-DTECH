@@ -1,7 +1,7 @@
 var colourFilter;
 var sizeFilter;
-var sortSettings;
-var sortBy;
+var sortBy = 'date';       // or 'price'
+var sortSettings = 'newest'; // or 'lowPrice', 'highPrice', etc.
 var productsArray = [];
 var allProductsArray = []
 
@@ -11,8 +11,6 @@ let currentIndex = 0;
 console.log('page load');
 
 document.addEventListener("DOMContentLoaded", () => {
-    displayProducts('all');
-
     document.getElementById("products_container").addEventListener("click", (event) => {
       if (event.target.classList.contains("shopPage_button_addToCart")) {
         const productID = event.target.dataset.productId;
@@ -20,16 +18,33 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 });
+  
+
+document.getElementById("closePopup").addEventListener("click", () => {
+    console.log('x button pressed')
+    document.getElementById("wishlistPopup").classList.add("hidden");
+});
+
+// Optional: close popup if user clicks outside it
+document.getElementById("wishlistPopup").addEventListener("click", (e) => {
+    if (e.target.id === "wishlistPopup") {
+        e.target.classList.add("hidden");
+    }
+});
 
 function displayProducts(category) {
     console.log('displayProducts')
     productsArray = [];
     firebase.database().ref('/products/').once('value', function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
-            productsArray.push({
-                key: childSnapshot.key,
-                value: childSnapshot.val()
-            });
+            var productInfo = childSnapshot.val();
+            var stock = productInfo.stock;
+            if (stock > 0) {
+                productsArray.push({
+                    key: childSnapshot.key,
+                    value: childSnapshot.val()
+                });
+            }
         });
         allProductsArray = [].concat(productsArray);
         createGrid(category);
@@ -37,6 +52,7 @@ function displayProducts(category) {
 }
 
 function createGrid(category) {
+    console.log('createGrid ', category)
     document.getElementById("products_container").innerHTML = '';
     currentIndex = 0; // reset whenever grid is recreated
     loadMoreProducts(category);
@@ -90,14 +106,11 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
             <a href="/products/product.html?productID=${productID}">
                 <img class="productImage" src="${mainImage}">
             </a>
-                <img class="addToWishlistButton" src="/images/heart.png" 
-                    onclick="addToWishlist(
-                    '${productID}',
-                    '${productName}',
-                    '${mainImage}')">
+                <img class="addToWishlistButton" src="/images/heart.png" onclick="wishlistPressed(
+                '${productID}', '${productName}', '${mainImage}')">
             </div>
-            <p class="productName"  onclick="goToPage(
-                '${productID}')">${productName}</p>
+            <p class="productName" href="/products/product.html?productID=${productID}">
+            ${productName}</p>
             <p class="productSize" >size ${productSize}</p>
             <p class="productPrice">$${productPrice}</p>
             <div class="big_gap"></div>
@@ -107,7 +120,8 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
 
 }
 
-function addToWishlist(productID, productName, mainImage) {
+
+function wishlistPressed(productID, productName, mainImage) {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             console.log("User is signed in:", user);
@@ -116,8 +130,7 @@ function addToWishlist(productID, productName, mainImage) {
                 mainImage
             });
         } else {
-            // User is signed out.
-            alert("make an account");
+            document.getElementById("wishlistPopup").classList.remove("hidden");
         }
     });
 }
@@ -136,28 +149,16 @@ function displayProductPage() {
     priceDiv.innerHTML += productPrice;
 }
 
-function filterCategory(filter) {
-    document.getElementById("products_container").innerHTML = '';
-        for (i = 0; i < productsArray.length; i++) {
-            if (productsArray[i].value.category === filter) {
-                appendProduct(
-                    productsArray[i].value.mainImage,
-                    productsArray[i].key,
-                    productsArray[i].value.productName,
-                    productsArray[i].value.price,
-                    productsArray[i].value.size
-                );    
-        };
-}
-}
-
-function filterSettings(event) {
+function filterSettings(event, category) {
+    console.log('filterSettings', category)
     event.preventDefault();
     document.getElementById("products_container").innerHTML = '';
     colourFilter = document.getElementById("colourDropdown").value;
     sizeFilter = document.getElementById("sizeDropdown").value;
     var oldProductsArray = [].concat(allProductsArray);
     productsArray = []
+
+    console.log(colourFilter)
 
     oldProductsArray.forEach(function(child){
         if ((colourFilter === 'all' || 
@@ -174,24 +175,28 @@ function filterSettings(event) {
         }
     });
 
+    console.log(sortBy);
+
+    console.log("sortBy:", sortBy, "sortSettings:", sortSettings);
+
     if (sortBy === 'date') {
         if (sortSettings === 'newest') {
-            sortHighest();
+            sortNewest(category);
         } else {
-            sortOldest()
+            sortOldest(category);
         }
     } else if (sortBy === 'price') {
         if (sortSettings === 'lowPrice') {
-            sortLowPrice();
+            sortLowPrice(category);
         } else {
-            sortHighPrice();
+            sortHighPrice(category);
         }
     } else {
-        createGrid();
+        createGrid(category);
     }
 }
 
-function handleSortSettings(event) {
+function handleSortSettings(event, category) {
     event.preventDefault();
     document.getElementById("products_container").innerHTML = '';
     sortSettings = document.getElementById("sortDropdown").value;
@@ -204,45 +209,47 @@ function handleSortSettings(event) {
 
      if (sortBy === 'date') {
         if (sortSettings === 'newest') {
-            sortNewest();
+            sortNewest(category);
         } else {
-            sortOldest();
+            sortOldest(category);
         }
     } else if (sortBy === 'price') {
         if (sortSettings === 'lowPrice') {
-            sortLowPrice();
+            sortLowPrice(category);
         } else {
-            sortHighPrice();
+            sortHighPrice(category);
         }
     }
 }
 
-function sortOldest() {
+function sortOldest(category) {
     productsArray.sort((a, b) => 
         a.value.date - b.value.date
     ); 
+    createGrid(category);
 }
 
-function sortNewest() {
+function sortNewest(category) {
     productsArray.sort((a, b) => 
         b.value.date - a.value.date
     ); 
+    createGrid(category);
 }
 
-function sortLowPrice() {
+function sortLowPrice(category) {
     productsArray.sort(function(a, b) {
         return b.value.price - a.value.price;
     });
     productsArray.reverse();
-    createGrid();
+    createGrid(category);
 }
 
-function sortHighPrice() {
+function sortHighPrice(category) {
     console.log('sort price high to low')
     productsArray.sort(function(a, b) {
         return b.value.price - a.value.price;
     });
-    createGrid();
+    createGrid(category);
 }
 
 function fb_error(error) {

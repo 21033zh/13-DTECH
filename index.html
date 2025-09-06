@@ -8,11 +8,10 @@
         <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
         <!-- Add Firebase products that you want to use -->
-        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
 
+        <link rel="preload" as="font" href="/path-to/font.woff2" type="font/woff2" crossorigin>
 
         <!-- firebase end ******************************************-->
         <!-- fonts start ****************************************-->
@@ -26,20 +25,25 @@
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
 
-    <body onload="displayFeaturedProducts()">
+    <body>
         <script src="home.js"></script>
         <script src="nav.js"></script>
         <script src="/search/search.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                displayFeaturedProducts()
+            });
+        </script>
 
         <div id="container_navBar" height="146"></div>
 
 <div id="container_home">
 <!-- HEADER IMAGE ********************************************************-->
-        <div id="header_img">
-            <div id="header_img_background">
-                <p class="mobile">WELCOME TO</p>
-                <img id="header_img_logo" src="/images/translogo.png" alt="doll planet girls against a tree">
-            </div>
+        <div id="container_headerImg">
+            <img id="header_img" class="web" src="/images/header-image.webp">
+            <img id="header_img_mobile" class="mobile" src="/images/mobile_headerImage.png">
+            <img id="header_img_logo" src="/images/translogo.png" alt="doll planet girls against a tree">
         </div>
 <!-- HEADER IMAGE END ********************************************************-->
 
@@ -66,35 +70,6 @@
         </div>
     </div>
 <!-- ABOUT SECTION END ********************************************************-->
- <!-- FOOTER SECTION ********************************************************-->
-        <div id="footer">
-            <div>
-                <h3>Socials</h3>
-                <ul>
-                <li>
-                    <img src="gmail">
-                    <button><p>Gmail</p></button>
-                </li>
-                <li>
-                    <img src="insta">
-                    <button><p>Insta</p></button>
-                </li>
-                </ul>
-            </div>
-            <div>
-                <h3>About Doll Planet</h3>
-                <ul>
-                    <li><a>About us</a></li>
-                    <li><a>Privacy policy</a></li>
-                    <li><a>Sustainability</a></li>
-                    <li><a>Terms and conditions</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3>Sign up</h3>
-                <a href="account/account_redirect.html">Make an account</a>
-            </div>
-        </div>
-<!-- FOOTER SECTION END ********************************************************-->
+    <div id="container_footer"></div>
     </body>
 </html>

@@ -24,9 +24,17 @@
 
 
     </head>
-    <body onload="account_redirect()">
+    <body>
         <script src="/account/account.js"></script>
 
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                account_redirect()
+            });
+        </script>
+
         <div id="container_navBar" height="146"></div>
+
+        <div id="container_footer"></div>
   </body>
 </html>

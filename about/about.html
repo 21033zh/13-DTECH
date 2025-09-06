@@ -3,15 +3,7 @@
     <head title="Doll Planet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
-        <!-- firebase start ****************************************-->
-        <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
-        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
-        <!-- Add Firebase products that you want to use -->
-        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
 
-        <!-- firebase end ******************************************-->
         <!-- fonts start ****************************************-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,13 +11,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100&display=swap" rel="stylesheet">
 
         <!-- fonts end ****************************************-->
-         <script src="/fb_setup.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
     <body onload>
         <script src="/nav.js"></script>
         <script src="/search/search.js"></script>
-        
+
         <div id="container_navBar" height="146"></div>
 
         <main id="main_about">
@@ -36,15 +27,25 @@
                 vintage and eccentric womens clothing and accessories. We priorotise 
                 sustainability and quality, because we believe that fashion should be acessibile 
                 and affordable for everyone, without harming the enviorment in the process.</p>
+            <img src="/images/aboutUs_stall.jpg">
 
             <h2>MEET THE TEAM</h2>
             <div id="teamDiv">
                 <div id="zuriDiv">
-                    <img src="/images/aboutUs_zurii.jpg">
-                    <p>Hi i'm zuri!</p>
+                    <img src="/images/aboutUs_zuri.jpg">
+                    <h2>Zuri</h2>
+                    <p>Hi, Im Zuri! Im obsessed with fashion, art, my dog Lula, 
+                        and my cat too. I spend my spare time growing my collection
+                         of vintage dresses, playing the Sims 4, and customising
+                          Blythe dolls. I think that its so important to make fashion 
+                          accessible and fun while also being kind to the environment
+                           - which is why Grace and I started Doll Planet! Every piece 
+                           in Doll Planet has a story, and I cant wait for you to make
+                            them a part of yours.</p>
                 </div>
                 <div id="graceDiv">
-                    <img src="/images/aboutUs_gracee.jpg">
+                    <img src="/images/aboutUs_grace.jpg">
+                    <h2>Grace</h2>
                     <p>Im Grace, a seventeen year old bundle of joy. I met Zuri 
                         in 2020 through mutual friends, and I have leeched onto her 
                         since. We have a shared interests in art, fashion, film, and 
@@ -55,5 +56,8 @@
             </div>
             <h2>FAQS</h2>
     </main>
+
+    <div id="container_footer"></div>
+
     </body>
 </html>

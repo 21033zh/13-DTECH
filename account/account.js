@@ -3,12 +3,10 @@ function signOut() {
     console.log('signed out')
 }
 
-/**-------------------------------------------------------------------
- * 
- * account.html
- * 
- --------------------------------------------------------------------*/
+console.log('account pageeee')
+
 function account_redirect() {
+    console.log('populate')
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             window.location="account.html";
@@ -18,7 +16,18 @@ function account_redirect() {
     });
 }
 
+function welcomeName() {
+    var name = sessionStorage.getItem("firstName");
+    document.getElementById("p_welcomeName").innerHTML = name;
+}
+/**-------------------------------------------------------------------
+ * 
+ * account.html
+ * 
+ --------------------------------------------------------------------*/
+
 function populateAccountInfo() {
+    console.log('populate')
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             var uid = user.uid;
@@ -110,8 +119,6 @@ function acc_reviews_checkSignIn() {
         if (user) {
             // User is signed in.
             console.log('user logged in');
-            var name = sessionStorage.getItem("firstName");
-            document.getElementById("p_welcomeName").innerHTML = name;
             displayUserReviews(user.uid)
         } else {
             // User is signed out.
@@ -188,8 +195,6 @@ function deleteReview(uid) {
             // User is signed in.
             console.log('user logged in');
             displayWishlist(user.uid)
-            var name = sessionStorage.getItem("firstName");
-            document.getElementById("p_welcomeName").innerHTML = name;
         } else {
             // User is signed out.
             console.log("user signed out")
@@ -270,3 +275,132 @@ function appendProduct(productID, mainImage, productName, productPrice, productS
                 alert(`There was an error removing from the wishlist. Please try again.`);
             });
     }
+
+/**-------------------------------------------------------------------
+ * 
+ * account_orders.html
+ * 
+ --------------------------------------------------------------------*/
+ function fillOrdersTable() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            const body_ordersTable = document.getElementById("body_ordersTable");
+            body_ordersTable.innerHTML = '';
+
+            const ordersArray = [];
+            const ordersRef = firebase.database().ref(`/accounts/${user.uid}/orders`);
+            ordersRef.once('value', function(snapshot){
+                snapshot.forEach(childSnapshot => {
+                    ordersArray.push({
+                        key: childSnapshot.key,
+                        value: childSnapshot.val()
+                    });
+                });
+        
+             for (let i = 0; i < ordersArray.length; i++) {
+                    const order = ordersArray[i];
+
+                    var orderObject = {
+                        orderNum: order.key,
+                        productName: order.value.productName,
+                        price: order.value.price,
+                        date: order.value.date,
+                        quantity: order.value.quantity,
+                        street: order.value.address.street,
+                        suburb: order.value.address.suburb,
+                        city: order.value.address.city,
+                        postcode: order.value.address.postcode,
+                        mainImage: order.value.mainImage
+                      };
+
+                    console.log(orderObject)
+
+        
+                    const row = `
+                        <tr> 
+                            <td><img src="${orderObject.mainImage}"></td> 
+                            <td>ORDER NUMBER: ${orderObject.orderNum}</br>${orderObject.productName}</td> 
+                            <td>QUANTITY: ${orderObject.quantity}</td> 
+                            <td>PRICE: $${orderObject.price}</td> 
+                            <td><button class="button_orderInfo" onclick="redirect('details', '${orderObject.orderNum}')">SEE MORE</button>
+                            <button class="button_orderInfo" onclick="redirect('review')">REVIEW</button></td>
+                        </tr>
+                    `;
+        
+                    body_ordersTable.innerHTML += row;
+                }
+            }).catch(fb_error);
+            
+        } else {
+            // User is signed out.
+            console.log("user signed out")
+            window.location="makeAccount.html"
+        }
+    });
+ }
+
+ function redirect(page, orderNum) {
+    if (page === 'details') {
+        window.location.href = `orderDetails.html?orderNum=${orderNum}`;
+    } else {
+        window.location.href = "/reviews/createReview.html";
+    }
+ }
+
+  function fillOrderDetails() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderNum = urlParams.get('orderNum');
+            console.log()
+
+            const accountRef = firebase.database().ref(`/accounts/${user.uid}/`);
+
+            accountRef.once('value', function(snapshot){
+                var accountInfo = snapshot.val();
+                var order = accountInfo.orders[orderNum];
+
+                const productName = order.productName;
+                const price = order.price;
+                const date = order.date;
+                const quantity = order.quantity;
+                const description = order.description;
+                const flaws = order.flaws;
+                const size = order.size;
+                const brand = order.brand;
+                const mainImage = order.mainImage;
+
+                const firstName = accountInfo.firstName;
+                const lastName = accountInfo.lastName;
+                const email = accountInfo.email;
+
+                const street = order.address.street;
+                const suburb = order.address.suburb;
+                const city = order.address.city;
+                const country = order.address.country;
+                const postcode = order.address.postcode;
+
+                document.getElementById("p_orderNum").innerHTML = orderNum;
+
+                document.getElementById("p_userName").innerHTML = firstName + ' ' + lastName;
+                document.getElementById("p_userEmail").innerHTML = email;
+
+                document.getElementById("p_orderDate").innerHTML = date;
+
+                document.getElementById("p_userStreet").innerHTML = street;
+                document.getElementById("p_userSuburb").innerHTML = suburb;
+                document.getElementById("p_userCity").innerHTML = city;
+                document.getElementById("p_userCountry").innerHTML = country;
+                document.getElementById("p_userPostcode").innerHTML = postcode;
+                document.getElementById("p_userSuburb").innerHTML = suburb;
+
+                document.getElementById("div_mainImage").innerHTML = 
+                `<img src=${mainImage} alt="photo of product">`;
+
+            });
+
+        } else {
+            window.location="makeAccount.html"
+        }
+    })
+  }

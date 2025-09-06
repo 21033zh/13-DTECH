@@ -31,7 +31,7 @@
 
         <script>
           document.addEventListener("DOMContentLoaded", () => {
-              displayProducts('tops');
+              displayProducts('shoes');
           });
       </script>
 
@@ -71,10 +71,10 @@
 
 <!-- FILTERS START ***************************************************-->
 
-<h1>SHOP TOPS</h1>
+<h1>SHOP SHOES</h1>
 
 <div id="filters">
-<form id="shopForm" onchange="filterSettings(event, 'tops'); return false">
+<form id="shopForm" onchange="filterSettings(event, 'shoes'); return false">
 <div id="colourFilterDiv">
     <select id="colourDropdown" name="colour">
       <option value="all">All colours</option>
@@ -104,7 +104,7 @@
 </div>
 </form>
 
-<form id="sortDiv" onchange="handleSortSettings(event, 'tops'); return false">
+<form id="sortDiv" onchange="handleSortSettings(event, 'shoes'); return false">
   <select id="sortDropdown" name="sortDropdown">
     <option value="newest">Sort by newest</option>
     <option value="oldest">Sory by oldest</option>
@@ -117,7 +117,7 @@
 <!-- FILTERS END ***************************************************-->
         <div id="products_container"></div>
 
-        <button id="loadMoreBtn" onclick="loadMoreProducts('tops')">Load More</button>
+        <button id="loadMoreBtn" onclick="loadMoreProducts('shoes')">Load More</button>
 
         <div id="container_footer"></div>
     </body>

@@ -37,6 +37,36 @@ h1 {
     position: relative;
 }
 
+button {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.popupMessage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 25px 40px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    z-index: 1000;
+    animation: fadeInOut 2s ease forwards;
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
 /*--- NAV BAR --------------------------------------*/
 /*----LOGO-----*/
 header {
@@ -569,21 +599,27 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- HOME PAGE ----------------------------------------*/
 
 /*---HEADER----*/
-#header_img {
+#container_headerImg {
     grid-area: header_img;
     width: 100%;
-    height: 700px;
+    height: 700px; /* fixed height */
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
-#header_img_background {
-    background-image: linear-gradient(to bottom, rgb(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0.75) ),
-    url("/images/header-image.webp");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+#container_headerImg #header_img {
+    width: 100%;
     height: 100%;
-    position: relative;
-    z-index: 1;
+    object-fit: cover;          /* crops the sides if needed */
+    object-position: center;    /* always center the image */
+}
+
+#container_headerImg #header_img_mobile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;          /* crops the sides if needed */
+    object-position: center;    /* always center the image */
 }
 
 #header_img_logo {
@@ -592,7 +628,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     left: 0;
     bottom: 0;
     z-index: 2;
-    padding: 15px 0px;
+    padding: 15px 0;
 }
 
 /*---FEATURED-PRODUCTS----*/
@@ -631,6 +667,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     height: 100%;
     overflow-x: scroll;
     overflow-y:hidden;
+    min-height: 400px;
 }
 
 .featured_product {
@@ -743,10 +780,19 @@ nav a:hover, .shopDropdown:hover .dropbtn {
         flex-direction: column;
     }
 
-    #header_img_background > p {
+    #container_headerImg {
+        width: 100%;
+        height: 350px; /* fixed height */
+        text-align: center;
+    }
+
+    #container_headerImg > p {
         display: block;
+        position: absolute;
+        margin: auto;
+        width: 50%;
+        z-index: 2;
         color: white;
-        margin: 0px;
     }
 
     #header_img_logo {
@@ -754,7 +800,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
         display: block;
         margin-left: auto;
         margin-right: auto;
-        position: relative;
+        position: absolute;
     }
 
     #featured h1 {
@@ -789,6 +835,46 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- HOME PAGE MOBILE END ------------------------------------*/
 
 /*--- SHOP PAGE ----------------------------------------*/
+/* Popup overlay */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5); /* dark background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  /* Hidden state */
+  .hidden {
+    display: none;
+  }
+  
+  /* Popup box */
+  .popup-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+    width: 80%;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  }
+  
+  /* Close button */
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
 /*---CATEGORIES-SECTION----*/
 #categoriesContainer {
     display: grid;
@@ -975,6 +1061,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- SHOP PAGE END ----------------------------------------*/
 
 /*--- PRODUCT PAGE ----------------------------------------*/
+
 #container_productPage {
     margin: 20px;
     display: grid;
@@ -1236,16 +1323,26 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 #main_about {
     padding: 20px;
 }
+
 #teamDiv {
     width: 100%;
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-template-areas: "grace zuri"
+    grid-template-areas: "grace zuri";
+    text-align: center;
 }
 
 #zuriDiv, #graceDiv {
     position: relative;
-    margin: 15px;
+    margin: 10px 10%;
+    padding: 20px;
+    background-color:#ffffff;
+    box-shadow: 5px 5px 5px rgb(115, 115, 115);
+    border: solid 1px black;
+}
+
+#teamDiv img {
+    border: solid 1px black;
 }
 
 #graceDiv {
@@ -1256,11 +1353,29 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     grid-area: zuri;
 }
 
-#zuriDiv img, #zuriDiv p, #graceDiv img, #graceDiv p {
+#teamDiv img, #teamDiv p, #teamDiv h2 {
     display: block;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
+}
+
+@media only screen and (max-width: 600px) {
+    #teamDiv {
+        grid-template-columns: 100%;
+        grid-template-areas: "grace" "zuri";
+    }
+
+    #zuriDiv, #graceDiv {
+        margin: 10px;
+    }
+
+    #teamDiv img, #teamDiv p, #teamDiv h2 {
+        display: block;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 /*--- ABOUT PAGE END ----------------------------------------*/
@@ -1461,28 +1576,129 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 
 /*--- ACCOUNT PAGE  ----------------------------------------------*/
+/*---- ORDERS -------------------------*/
+#tb_ordersTable {
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: left;
+}
+
+#body_ordersTable {
+    margin-top: 20px;
+}
+
+#body_ordersTable img {
+    height: 80px;
+}
+
+#body_ordersTable tr {
+    height: 100px;
+    background-color:rgb(222, 222, 222);
+}
+
+#body_ordersTable td {
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+/*----- ORDER DETAILS -----------------*/
+#container_orderDetails {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-areas: 
+    "header header"
+    "orderedBy deliveryDetails"
+    "dateOrdered deliveryDetails"
+    "productDetails productDetails" ;
+    grid-gap: 10px;
+}
+
+#container_orderDetails div {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+#container_orderDetails p {
+    font-size: 0.8rem;
+    padding: 8px;
+    margin: 0px;
+}
+
+#container_orderDetails h4 {
+    font-weight: bold;
+    font-size: 0.8rem;
+    padding: 8px;
+    margin: 0px;
+}
+
+#container_orderDetails #header {
+    grid-area: header;
+}
+
+#container_orderDetails #orderedBy {
+    grid-area: orderedBy;
+}
+
+#container_orderDetails #dateOrdered {
+    grid-area: dateOrdered;
+}
+
+#container_orderDetails #deliveryDetails {
+    grid-area: deliveryDetails;
+}
+
+#container_orderDetails #productDetails {
+    grid-area: productDetails;
+}
+
+#container_orderDetails #productDetails div {
+    border: none;
+}
+
+#container_orderDetails #div_mainImage {
+    width : auto;
+    height: auto;
+    border: none;
+}
+
+#container_orderDetails img {
+    width : 100%
+}
+
+#container_orderDetails #grid_productDetails {
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+/*----- ORDERS END ------------------*/
 
 #div_accountContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "sideBar info info";
 }
 
 #div_accountContainer > #div_sidebar {
-    grid-column: 1;
+    grid-area: sideBar;
     padding: 10px 0px 10px 10px;
 }
+
+
 
 #div_welcome {
     font-size: 1.2rem;
     font-weight: 500;
-    padding: 30px 20px;
-    margin: 0px;
+    margin: 30px 0px;
+    width: 100%;
 }
 
 #div_welcome p {
     margin: 0px;
     display: inline;
 }
+
 #div_accountContainer .p_sidebarItemSelected {
     background-color: rgb(235, 235, 235);
     padding: 10px;
@@ -1505,7 +1721,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 
 #div_accountContainer > #div_info {
-    grid-column: 2 / span 2;
+    grid-area: info;
     height: auto;
     margin: 10px 10px 10px 0px;
     padding: 20px;
@@ -1515,6 +1731,16 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 #div_myDetails {
     margin-left: 20px;
+}
+
+#div_info #btn_signOut {
+    background-color:#c5c5c5;
+    text-transform: capitalize;
+    border: 1px solid rgb(0, 0, 0);
+    padding: 10px 25px;
+    color: rgb(0, 0, 0);
+    margin: 0px;
+
 }
 
 #div_info h1 {
@@ -1529,11 +1755,6 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 .div_userInfo {
     margin: 25px 0px;
     display: block;
-}
-
-#div_info p {
-    font-size: 1rem;
-    margin: 0px;
 }
 
 /*-ACCOUNT_REVIEWS-*/
@@ -1617,8 +1838,70 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     width: 100%
 }
 
+@media only screen and (max-width: 600px) {
+    #div_accountContainer > #div_sidebar {
+        padding: 15px;
+    }
+
+    #account_menu {
+        width: 100%;
+        padding: 18px 10px;
+        text-transform:uppercase;
+        font-weight: bold;
+        border: 1px solid #ccc;
+        background-color: rgb(235, 235, 235);
+        font-size: 16px;
+        color: #333;
+        cursor: pointer;
+        appearance: none; 
+        background-image: url("data:image/svg+xml;utf8,<svg fill='%23333' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 16px;
+        padding-right: 30px;
+    }
+
+    #account_menu option {
+    padding: 10px;
+    font-size: 16px;
+    }
+
+    #div_accountContainer {
+        grid-template-columns: 100%;
+        grid-template-rows: auto auto;
+        grid-template-areas: "sideBar" "info";
+    }
+
+    #div_accountContainer #div_info {
+        margin: 15px;
+    }
+
+    #acc_reviewsContainer {
+        column-count: 1;
+    }
+
+    #div_accWishlist {
+        grid-template-columns: 100%;
+    }
+
+    #div_welcome {
+        padding: 10px 0px 20px 0px;
+    }
+
+    #container_orderDetails {
+        grid-template-rows: auto auto auto auto auto;
+        grid-template-areas: 
+        "header header"
+        "orderedBy orderedBy"
+        "dateOrdered dateOrdered"
+        "deliveryDetails deliveryDetails"
+        "productDetails productDetails" ;
+    }
+}
 /*--- ACCOUNT PAGE END  ------------------------------------------*/
 /*--- ADMIN -----------------------------------------------------*/
+
+
 /*--- add products ----------------------------*/
 #form_addProducts {
     padding: 20px 60px 20px 60px;

@@ -21,13 +21,18 @@
 
         <!-- fonts end ****************************************-->
          <script src="/fb_setup.js"></script>
-         <script src="cart.js"></script>
-         <script src="/nav.js"></script>
-         <script src="/search/search.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
 
     </head>
-<body onload="loadCart()">
+<body>
+    <script src="cart.js"></script>
+    <script src="/nav.js"></script>
+    <script src="/search/search.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadCart()
+        });
+    </script>
 
     <div id="container_navBar"></div>
 
@@ -45,6 +50,9 @@
         </div>
 <!-- CART INFO END ********************************************************-->
     </div>
+
+    <div id="container_footer"></div>
+    
 </body>
 </html>
 

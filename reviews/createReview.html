@@ -24,10 +24,16 @@
          
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body onload="displayProducts()">
+    <body>
         <script src="/nav.js"></script>
         <script src="/search/search.js"></script>
         <script src="createReview.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                displayProducts();
+            });
+        </script>
 
     <div id="container_navBar" height="146"></div>
 <!-- HEADER ********************************************************-->
@@ -49,9 +55,7 @@
 
 
 <!-- REVIEWS END ********************************************************-->
-
-            <div id="footer">
-                <p>footer</p>
-            </div>
+ 
+            <div id="container_footer"></div>
     </body>
 </html>

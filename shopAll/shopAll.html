@@ -29,6 +29,12 @@
         <script src="/nav.js"></script>
         <script src="/search/search.js"></script>
 
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+              displayProducts('all');
+          });
+      </script>
+
         <div id="container_navBar" height="146"></div>
 <!-- CATEGORIES START ***************************************************-->
  <!-- <div id="categoriesContainer">
@@ -68,7 +74,7 @@
 <h1>SHOP ALL</h1>
 
 <div id="filters">
-<form id="shopForm" onchange="filterSettings(event); return false">
+<form id="shopForm" onchange="filterSettings(event, 'all'); return false">
 <div id="colourFilterDiv">
     <select id="colourDropdown" name="colour">
       <option value="all">All colours</option>
@@ -98,7 +104,7 @@
 </div>
 </form>
 
-<form id="sortDiv" onchange="handleSortSettings(event); return false">
+<form id="sortDiv" onchange="handleSortSettings(event, 'all'); return false">
   <select id="sortDropdown" name="sortDropdown">
     <option value="newest">Sort by newest</option>
     <option value="oldest">Sory by oldest</option>
@@ -112,5 +118,17 @@
         <div id="products_container"></div>
 
         <button id="loadMoreBtn" onclick="loadMoreProducts('all')">Load More</button>
+
+        <div id="container_footer"></div>
+
+                <!-- Wishlist Popup -->
+        <div id="wishlistPopup" class="popup hidden">
+          <div class="popup-content">
+            <span id="closePopup" class="close">&times;</span>
+            <h2>Log in to add to your wishlist.</h2>
+            <a href="/account/makeAccount.html">LOG IN</a>
+          </div>
+        </div>
+
     </body>
 </html>

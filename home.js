@@ -1,9 +1,10 @@
-document.addEventListener("DOMContentLoaded", () => {
-    displayFeaturedProducts('all');
-});
 
 function displayFeaturedProducts() {
     console.log('featured display')
+    firebase.database().ref('/').once('value', function(snapshot) {
+        console.log(snapshot.val())
+    });
+
     firebase.database().ref('/products/').once('value', function(snapshot) {
         var productsArray = [];
         snapshot.forEach(function(childSnapshot) {

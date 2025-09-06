@@ -32,7 +32,7 @@
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 welcomeName()
-                acc_wl_checkSignIn()
+                fillOrderDetails();
             });
         </script>
 
@@ -41,31 +41,79 @@
 <div id="div_accountContainer">
     <div id="div_sidebar">
         <div id="div_welcome">
-            <p>Welcome, </p>
+            <p>Welcome,</p>
             <p id="p_welcomeName"></p>
         </div>
         <div class="web">
             <p class="p_sidebarItem" onClick="location='account.html'">My details</p>
-            <p class="p_sidebarItem" onClick="location='account_orders.html'">My orders</p>
+            <p class="p_sidebarItemSelected" onClick="location='account_orders.html'">My orders</p>
             <p class="p_sidebarItem" onClick="location='account_reviews.html'">My reviews</p>
-            <p class="p_sidebarItemSelected" onClick="location='account_wishlist.html'">Wishlist</p>
+            <p class="p_sidebarItem" onClick="location='account_wishlist.html'">Wishlist</p>
         </div>
 
         <div class="mobile">
             <select id="account_menu" onchange="location = this.value;">
-                <option value="account_wishlist.html">Wishlist</option>
-                <option value="account.html">My details</option>
                 <option value="account_orders.html">My orders</option>
+                <option value="account.html">My details</option>
                 <option value="account_reviews.html">My reviews</option>
+                <option value="account_wishlist.html">Wishlist</option>
               </select>
         </div>
     </div>
 
     <div id="div_info">
-        <h1>MY WISHLIST</h1>
-        <div id="div_accWishlist"></div>
+        <a href="account_orders.html">BACK</a>
+        <div id="container_orderDetails">
+
+            <div id="header">
+                <h4>ORDER NUMBER:</h4>
+                <p id="p_orderNum"></p>
+                <button>LEAVE A REVIEW</button>
+                <button>REPORT AN ISSUE</button>
+            </div>
+
+            <div id="orderedBy">
+                <h4>ORDERED BY:</h4>
+                <p id="p_userName"></p>
+                <p id="p_userEmail"></p>
+            </div>
+
+            <div id="dateOrdered">
+                <h4>DATE ORDERED:</h4>
+                <p id="p_orderDate"></p>
+            </div>
+
+            <div id="deliveryDetails">
+                <h4>DELIVERY DETAILS:</h4>
+                <p id="p_userStreet"></p>
+                <p id="p_userSuburb"></p>
+                <p id="p_userCity"></p>
+                <p id="p_userPostcode"></p>
+                <p id="p_userCountry"></p>
+            </div>
+
+            <div id="productDetails">
+                <h4>PRODUCT DETAILS</h4>
+                <div id="grid_productDetails">
+                    <div id="div_mainImage"></div>
+                    <div>
+                        <p id="p_productName"></p>
+                        <p>SIZE:</p>
+                        <p id="p_productSize"></p>
+                        <p>BRAND:</p>
+                        <p id="p_productBrand"></p>
+                        <p>FLAWS:</p>
+                        <p id="p_productFlaws"></p>
+                        <p id="p_productDescription"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
     </div>
 </div>
-<div id="container_footer"></div>
+        
+    <div id="container_footer"></div>
   </body>
 </html>

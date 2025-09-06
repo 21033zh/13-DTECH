@@ -27,9 +27,9 @@
         <script src="/nav.js"></script>
 
         <script>
-            window.onload = function() {
-              search_displayProducts();
-            };
+            document.addEventListener("DOMContentLoaded", () => {
+                search_displayProducts()
+            });
         </script>
 
         <div id="container_navBar" height="146"></div>
@@ -78,7 +78,8 @@
         </div>
 <!-- FILTERS END ***************************************************-->
 
-        <div id="search_products_container">
-        </div>
+        <div id="search_products_container"></div>
+
+        <div id="container_footer"></div>
     </body>
 </html>

@@ -136,11 +136,11 @@ function displayProductPage() {
     priceDiv.innerHTML += productPrice;
 }
     
-function filterCategory(filter) {
+function search_filterCategory(filter) {
     document.getElementById("products_container").innerHTML = '';
         for (i = 0; i < search_productsArray.length; i++) {
             if (productsArray[i].value.category === filter) {
-                appendProduct(
+                search_appendProduct(
                     search_productsArray[i].value.mainImage,
                     search_productsArray[i].key,
                     search_productsArray[i].value.productName,
@@ -151,31 +151,31 @@ function filterCategory(filter) {
 }
 }
     
-function filterSettings(event) {
+function search_filterSettings(event) {
     event.preventDefault();
-    document.getElementById("products_container").innerHTML = '';
-    colourFilter = document.getElementById("colourDropdown").value;
-    sizeFilter = document.getElementById("sizeDropdown").value;
-    console.log('colour: ' + colourFilter);
-    console.log('size: ' + sizeFilter);
-    var oldProductsArray = [].concat(allProductsArray);
+    document.getElementById("search_products_container").innerHTML = '';
+    search_colourFilter = document.getElementById("colourDropdown").value;
+    search_sizeFilter = document.getElementById("sizeDropdown").value;
+    var search_oldProductsArray = [].concat(allProductsArray);
     search_productsArray = []
-    var sortSettings = document.getElementById("sortDropdown").value;
+    var search_sortSettings = document.getElementById("sortDropdown").value;
 
-    if (sortSettings === 'newest' || sortSettings === 'oldest') {
+    var sortBy;
+
+    if (search_sortSettings === 'newest' || search_sortSettings === 'oldest') {
         sortBy = 'date'
-    } else if (sortSettings === 'relevence') {
+    } else if (search_sortSettings === 'relevence') {
         sortBy = 'relevence'
     }
 
     console.log("Current filters:", colourFilter, sizeFilter);
     console.log(oldProductsArray)
 
-    oldProductsArray.forEach(function(child){
-        if ((colourFilter === 'all' || 
-            child.value.colour1 === colourFilter || 
-            child.value.colour2 === colourFilter) && 
-            (sizeFilter === 'all' || 
+    search_oldProductsArray.forEach(function(child){
+        if ((search_colourFilter === 'all' || 
+            child.value.colour1 === search_colourFilter || 
+            child.value.colour2 === search_colourFilter) && 
+            (search_sizeFilter === 'all' || 
             child.value.size === sizeFilter)) {
                 search_productsArray.push({
                     key: child.key,
@@ -188,22 +188,23 @@ function filterSettings(event) {
     });
 
     if (sortBy === 'price') {
-        if (sortSettings === 'lowPrice') {
-            sortLowPrice();
+        if (search_sortSettings === 'lowPrice') {
+            search_sortLowPrice();
         } else {
-            sortHighPrice();
+            search_sortHighPrice();
         }
-    } else if (sortBy === 'relvence') {
-        displayProducts();
+    } else if (search_sortBy === 'relvence') {
+        search_displayProducts();
     } else {
-        createGrid();
+        search_createGrid();
     }
 }
     
-function sortSettings(event) {
+function search_sortSettings(event) {
     event.preventDefault();
-    document.getElementById("products_container").innerHTML = '';
-    sortSettings = document.getElementById("sortDropdown").value;
+    document.getElementById("search_products_container").innerHTML = '';
+    var sortSettings = document.getElementById("search_sortDropdown").value;
+    var sortBy;
 
     if (sortSettings === 'newest' || sortSettings === 'oldest') {
         sortBy = 'date'
@@ -212,21 +213,21 @@ function sortSettings(event) {
     }
         if (sortBy === 'date') {
         if (sortSettings === 'newest') {
-            displayProducts();
+            search_displayProducts();
             console.log('date new to old')
         } else {
             console.log('date old to new')
         }
     } else if (sortBy === 'price') {
         if (sortSettings === 'lowPrice') {
-            sortLowPrice();
+            search_sortLowPrice();
         } else {
-            sortHighPrice();
+            search_sortHighPrice();
         }
     }
 }
     
-function sortLowPrice() {
+function search_sortLowPrice() {
     console.log('sort price low to high')
         search_productsArray.sort(function(a, b) {
             return b.value.price - a.value.price;
@@ -236,10 +237,10 @@ function sortLowPrice() {
             console.log(child.key, child.value)
         }
         );
-    createGrid();
+        search_createGrid();
 }
     
-function sortHighPrice() {
+function search_sortHighPrice() {
     console.log('sort price high to low')
     search_productsArray.sort(function(a, b) {
         return b.value.price - a.value.price;
@@ -248,7 +249,7 @@ function sortHighPrice() {
         console.log(child.key, child.value)
     }
     );
-    createGrid();
+    search_createGrid();
 }
 
 function fb_error(error) {

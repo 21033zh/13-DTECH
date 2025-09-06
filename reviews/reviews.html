@@ -22,10 +22,16 @@
          <script src="/fb_setup.js"></script>
          <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body onload="displayReviews()">
+    <body>
         <script src="/nav.js"></script>
         <script src="/search/search.js"></script>
         <script src="reviews.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                displayReviews();
+            });
+        </script>
 
         <div id="container_navBar" height="146"></div>
 <!-- HEADER ********************************************************-->
@@ -50,9 +56,7 @@
 <div id="reviewsContainer"></div>
 
 <!-- REVIEWS END ********************************************************-->
-
-            <div id="footer">
-                <p>footer</p>
-            </div>
+    <div id="container_footer"></div>
+    
     </body>
 </html>

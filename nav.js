@@ -1,6 +1,7 @@
 window.onload = function() {
   console.log('nav page load')
   navBar()
+  footer()
 };
 
 function navBar() {
@@ -20,19 +21,19 @@ function navBar() {
   <div id="myLinks" class="hamburgerNeutral">
   <img src="/images/x.png" onclick="closeHamburger()" alt="exit">
 
-  <a class="a_pageLink" href="index.html">HOME</a>
+  <a class="a_pageLink" href="/index.html">HOME</a>
 
   <!-- SHOP DROPDOWN -->
   <div class="dropdown">
       <a class="a_pageLink dropdown-toggle" href="javascript:void(0);" onclick="toggleDropdown()">SHOP ▾</a>
       <div class="dropdown-menu">
       <a href="/shopAll/shopAll.html">Shop All</a>
-      <a href="/shop/tops.html">Tops</a>
-      <a href="/shop/bottoms.html">Bottoms</a>
-      <a href="/shop/dresses.html">Dresses</a>
-      <a href="/shop/shoes.html">Shoes</a>
-      <a href="/shop/accessories.html">Accessories</a>
-      <a href="/shop/art.html">Art</a>
+      <a href="/shopAll/tops.html">Tops</a>
+      <a href="/shopAll/bottoms.html">Bottoms</a>
+      <a href="/shopAll/dresses.html">Dresses</a>
+      <a href="/shopAll/shoes.html">Shoes</a>
+      <a href="/shopAll/accessories.html">Accessories</a>
+      <a href="/shopAll/art.html">Art</a>
       </div>
   </div>
 
@@ -43,7 +44,7 @@ function navBar() {
 
 <!--MOBILE-search-icon-->
   <div id="mobile_searchIcon" class="icon"> 
-      <img src="/images/search.png" onclick="openSearch()" alt="search">
+      <amp-img src="/images/search.png" onclick="openSearch()" alt="search">
   </div>
 
 <!--WEB-search-bar-->
@@ -79,7 +80,7 @@ function navBar() {
   </a>
 </div>
 <div class="icon" id="account">
-  <a href="/account/account.html">
+  <a href="/account/account_redirect.html">
       <img class="navIcons" src="/images/account.png" alt="account">
   </a>
 </div>
@@ -101,12 +102,12 @@ function navBar() {
       <button class="dropbtn">SHOP</button>
       <div class="shopDropdownContent">
           <a href="/shopAll/shopAll.html">Shop All</a>
-          <a href="/shopAll/shopTops.html">Tops</a>
-          <a href="/shopAll/shopBottoms.html">Bottoms</a>
-          <a href="/shopAll/shopDresses.html">Dresses</a>
-          <a href="/shopAll/shopShoes.html">Shoes</a>
-          <a href="/shopAll/shopAccessories.html">Accessories</a>
-          <a href="/shopAll/shopArt.html">Art</a>
+          <a href="/shopAll/tops.html">Tops</a>
+          <a href="/shopAll/bottoms.html">Bottoms</a>
+          <a href="/shopAll/dresses.html">Dresses</a>
+          <a href="/shopAll/shoes.html">Shoes</a>
+          <a href="/shopAll/accessories.html">Accessories</a>
+          <a href="/shopAll/art.html">Art</a>
       </div>
       </div>
   <a href="/about/about.html">ABOUT</a>
@@ -114,6 +115,41 @@ function navBar() {
 </nav>
 <!-- NAV BAR END ********************************************************-->
   `
+}
+
+function footer() {
+  console.log('footer')
+  var div = document.getElementById("container_footer");
+  div.innerHTML = `
+<!-- FOOTER SECTION ********************************************************-->
+        <div id="footer">
+            <div>
+                <h3>Socials</h3>
+                <ul>
+                <li>
+                    <img src="gmail">
+                    <button><p>Gmail</p></button>
+                </li>
+                <li>
+                    <img src="insta">
+                    <button><p>Insta</p></button>
+                </li>
+                </ul>
+            </div>
+            <div>
+                <h3>About Doll Planet</h3>
+                <ul>
+                    <li><a href="/about/about.html">About us</a></li>
+                    <li><a href="/about/privacypolicy.html">Privacy policy</a></li>
+                    <li><a href="/about/termsandconditions.html">Terms and conditions</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Sign up</h3>
+                <a href="/account/account_redirect.html">Make an account</a>
+            </div>
+        </div>
+<!-- FOOTER SECTION END ********************************************************-->`
 }
 
 

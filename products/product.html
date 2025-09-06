@@ -23,11 +23,17 @@
         <script src="/fb_setup.js"></script>
         <link href="/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body onload="loadProductDetails()">
+    <body>
         <script src="productPage.js"></script>
         <script src="/search/search.js"></script>
         <script src="/nav.js"></script>
         <script src="/purchase/cart.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                loadProductDetails()
+            });
+        </script>
 
         <div id="container_navBar" height="146"></div>
 
@@ -85,12 +91,15 @@
                 <div id="div_shipping">
                     <div class="big_gap web"></div>
                     <h6>Shipping:</h6>
-                    <p id="p_shipping"></p>
+                    <p>$7</p>
                     <div class="gap"></div>
-                    <a href="shippingreturnsinfo">Shipping and returns info</a>
+                    <a href="/about/termsandconditions.html">Shipping and returns info</a>
                 </div>
 
             </div>
         </div>
+
+        <div id="container_footer"></div>
+
     </body>
 </html>
