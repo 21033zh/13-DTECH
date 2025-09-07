@@ -8,6 +8,12 @@ admin.initializeApp();
 // Use Stripe secret key directly (or via functions.config())
 const stripe = Stripe("sk_test_51RORXOHYjsredqEcrTyx13IHxHH6gqas7n5uhgCZbuTosefw3o3fA11VPABhUivlT3ZbGBLoK9dbb0dmHOowbZWl0046xPUlkk");
 
+// Needed for Stripe webhook signature check
+functions.https.onRequest((req, res) => {
+  req.rawBody = req.rawBody || '';
+  res.end();
+});
+
 // ----------------------
 // Create Checkout Session for a single product or cart
 // ----------------------
@@ -36,8 +42,9 @@ exports.createCheckoutSession = functions.https.onRequest(async (req, res) => {
             payment_method_types: ["card"],
             line_items,
             mode: "payment",
-            success_url: "/purchase/success.html",
-            cancel_url: "/purchase/cart.html",
+            success_url: "http://127.0.0.1:5500/purchase/success.html",
+            cancel_url: "http://127.0.0.1:5500/purchase/cart.html", 
+            metadata: { userId: req.body.userId }, // 👈 attach here
 
             shipping_address_collection: {
                 allowed_countries: ["NZ"], // adjust to the countries you ship to
@@ -96,8 +103,9 @@ exports.createPaymentLink = functions.https.onRequest(async (req, res) => {
           quantity: item.quantity || 1,
         })),
         mode: "payment",
-        success_url: "/purchase/success.html",
-        cancel_url: "/purchase/cart.html",
+        success_url: "http://127.0.0.1:5500/purchase/success.html",
+        cancel_url: "http://127.0.0.1:5500/purchase/cart.html",
+        metadata: { userId: req.body.userId } // 👈 attach here
       });
   
       // Return URL
@@ -108,3 +116,58 @@ exports.createPaymentLink = functions.https.onRequest(async (req, res) => {
     }
   });
   
+
+  // ----------------------
+// Handle Stripe Webhooks
+// ----------------------
+exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
+  let event;
+  try {
+    const sig = req.headers['stripe-signature'];
+
+    if (!req.rawBody) {
+      console.error("⚠️ req.rawBody is empty! Stripe signature will fail.");
+      return res.status(400).send("Raw body required");
+    }
+
+    event = stripe.webhooks.constructEvent(req.rawBody, sig, "whsec_GIMvXSPEenLJSmA8FE67G1rvAogcuABK");
+    console.log("✅ Stripe signature verified");
+    console.log("Event type:", event.type);
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object
+
+      // LOG session to debug
+      console.log("Session object:", session);
+      console.log("User ID from metadata:", session.metadata?.userId);
+
+      // Fetch line items
+      const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+      console.log("Line items:", lineItems.data);
+
+      // Prepare order data
+      const orderData = {
+        userId: session.metadata?.userId || "guest",
+        amount_total: session.amount_total,
+        currency: session.currency,
+        status: "paid",
+        createdAt: new Date().toISOString(),
+        shipping: session.shipping_details || null,
+        line_items: lineItems.data,
+      };
+
+      // Then write to your main paths
+      await admin.database().ref(`/orders/${session.id}`).set(orderData);
+      if (orderData.userId !== "guest") {
+        await admin.database().ref(`/accounts/${orderData.userId}/orders/${session.id}`).set(orderData);
+      }
+
+      console.log(`✅ Order ${session.id} stored in Firebase.`);
+    }
+
+    res.json({ received: true });
+  } catch (err) {
+    console.error("⚠️ Webhook signature verification failed:", err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+});

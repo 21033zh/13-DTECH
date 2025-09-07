@@ -99,26 +99,20 @@ function addToCart() {
     }
     });
 }
+
 // ----------------------
 // CHECKOUT
 // ----------------------
 async function startCheckout() {
-    let items = [];
     const user = firebase.auth().currentUser;
-
-    if (user) {
-        console.log('user logged in')
-        // Get cart from Firebase
-        const snapshot = await firebase.database().ref(`/accounts/${user.uid}/cart`).once("value");
-        const cart = snapshot.val() || {};
-        items = Object.values(cart);
-        console.log(items)
-    } else {
-        // Get cart from localStorage
-        console.log('user not logged in')
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        items = cart;
+    if (!user) {
+        alert("You must be signed in to checkout.");
+        return;
     }
+
+    const snapshot = await firebase.database().ref(`/accounts/${user.uid}/cart`).once("value");
+    const cart = snapshot.val() || {};
+    const items = Object.values(cart);
 
     if (items.length === 0) {
         alert("Your cart is empty.");
@@ -126,12 +120,12 @@ async function startCheckout() {
     }
 
     try {
-        console.log("Starting checkout...");
-
+        console.log(user.uid);
         const response = await fetch("https://createpaymentlink-cpk5xp36za-uc.a.run.app", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
+                userId: user.uid,  // 👈 MUST SEND
                 items: items.map(item => ({
                     name: item.name,
                     price: item.price,
@@ -143,17 +137,17 @@ async function startCheckout() {
         const data = await response.json();
 
         if (data.url) {
-            // Redirect user to Stripe Checkout
             window.location.href = data.url;
         } else {
-            alert("Failed to create checkout session.");
             console.error(data);
+            alert("Failed to create checkout session.");
         }
     } catch (err) {
-        console.error("Error starting checkout:", err);
+        console.error(err);
         alert("Something went wrong while starting checkout.");
     }
 }
+
 
 // ----------------------
 // MERGE GUEST CART → USER CART

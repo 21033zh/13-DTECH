@@ -153,6 +153,7 @@ function createGrid(reviewsArray, uid) {
             console.log('review');
             var stars = reviewsArray[i].value.stars;
             appendReview(
+                reviewsArray[i].key,
                 reviewsArray[i].value.image0,
                 reviewsArray[i].value.textReview,
                 stars,
@@ -162,14 +163,14 @@ function createGrid(reviewsArray, uid) {
     };
 }
 
-function appendReview(image, text, stars, num, uid) {
+function appendReview(productID, image, text, stars, num, uid) {
     console.log('append review')
     const review = 
             `<div class="acc_reviewDiv">
                 <img class="acc_productImage acc_reviewImage" src="${image}")">
                 <p id="acc_${num}stars"></p>
                 <p class="acc_text" >${text}</p>
-                <button class="acc_button" onclick="deleteReview('${uid}')">DELETE</button>
+                <button class="acc_button" onclick="deleteReview('${productID}')">DELETE</button>
             </div>`;
     document.getElementById("acc_reviewsContainer").innerHTML += review;
     for (s = 0; s < stars; s++ ) {
@@ -179,8 +180,18 @@ function appendReview(image, text, stars, num, uid) {
     }  
 }
 
-function deleteReview(uid) {
-    console.log('uid: ', uid)
+function deleteReview(productID) {
+    var reviewRef = firebase.database().ref(`/reviews/${productID}`);
+    // remove productID from wishlist
+    reviewRef.remove()
+// update wishlist button
+        .then(function() {
+        location.reload();
+        })
+        .catch(function(error) {
+            console.log('failure', error);
+            alert(`There was an error deleting your review. Please try again.`);
+        });
 }
 
 /**-------------------------------------------------------------------
