@@ -174,38 +174,43 @@ function displayProductDetails(cartRef, user) {
     var flaws = 'none';
     var stock = Number(productInfo.stock);
 
-    var container_cartButton = document.getElementById("container_cartButton");
-
     // ----------------------------
     // Handle cart button
     // ----------------------------
+    var container_cartButton = document.getElementById("container_cartButton");
+   
     if (stock > 0) {
-      cartRef.once('value').then(snapshot => {
-        if (snapshot.exists() && stock <= 1) {
-          container_cartButton.innerHTML = `<div class="div_addToCart">IN CART</div>`;
-        } else {
-          console.log('stock higher than 0');
-          container_cartButton.innerHTML = `<button id="button_addToCart">ADD TO CART</button>`;
-          const addToCartButton = document.getElementById("button_addToCart");
+      if (user) { 
+        cartRef.once('value').then(snapshot => {
+          if (snapshot.exists()) {
+            container_cartButton.innerHTML = `<div class="div_addToCart">IN CART</div>`;
+          } else {
+            console.log('stock higher than 0');
+            container_cartButton.innerHTML = `<button id="button_addToCart">ADD TO CART</button>`;
+            const addToCartButton = document.getElementById("button_addToCart");
+  
+            addToCartButton.addEventListener("click", () => {
+                // user signed in → normal addToCart
+                cartRef.once('value').then(snapshot => {
+                  if (!snapshot.exists()) {
+                    addToCart();
+                  } else {
+                    showPopup("Error - already in cart")
+                  }
+                });
+            });
+  
+          }
+        })
+      } else {
+        container_cartButton.innerHTML = `<button id="button_addToCart">ADD TO CART</button>`;
+        const addToCartButton = document.getElementById("button_addToCart");
 
-          addToCartButton.addEventListener("click", () => {
-            if (user) {
-              // user signed in → normal addToCart
-              cartRef.once('value').then(snapshot => {
-                if (!snapshot.exists()) {
-                  addToCart();
-                } else {
-                  console.log('not happening bud')
-                }
-              });
-            } else {
-              // user NOT signed in → show popup
-              showPopup("Log in to add to cart");
-            }
-          });
-
-        }
-      })
+        addToCartButton.addEventListener("click", () => {
+            // user NOT signed in, so show popup
+            showPopup("Log in to add to cart");
+        });
+      }
     } else {
       container_cartButton.innerHTML = `<div class="div_addToCart">OUT OF STOCK</div>`;
     }
