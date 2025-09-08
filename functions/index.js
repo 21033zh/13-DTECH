@@ -8,12 +8,6 @@ admin.initializeApp();
 // Use Stripe secret key directly (or via functions.config())
 const stripe = Stripe("sk_test_51RORXOHYjsredqEcrTyx13IHxHH6gqas7n5uhgCZbuTosefw3o3fA11VPABhUivlT3ZbGBLoK9dbb0dmHOowbZWl0046xPUlkk");
 
-// Needed for Stripe webhook signature check
-functions.https.onRequest((req, res) => {
-  req.rawBody = req.rawBody || '';
-  res.end();
-});
-
 // ----------------------
 // Create Checkout Session for a single product or cart
 // ----------------------
@@ -29,41 +23,53 @@ exports.createCheckoutSession = functions.https.onRequest(async (req, res) => {
             return res.status(400).json({ error: "No items provided" });
         }
 
-        const line_items = items.map(item => ({
-            price_data: {
-                currency: "nzd",           // adjust currency
-                product_data: { name: item.name },
-                unit_amount: Math.round(item.price * 100),
-            },
-            quantity: item.quantity || 1,
-        }));
-
         const session = await stripe.checkout.sessions.create({
-            payment_method_types: ["card"],
-            line_items,
-            mode: "payment",
-            success_url: "http://127.0.0.1:5500/purchase/success.html",
-            cancel_url: "http://127.0.0.1:5500/purchase/cart.html", 
-            metadata: { userId: req.body.userId }, // 👈 attach here
-
-            shipping_address_collection: {
-                allowed_countries: ["NZ"], // adjust to the countries you ship to
+          payment_method_types: ["card"],
+          line_items: items.map(item => ({
+            price_data: {
+              currency: "nzd",
+              product_data: {
+                name: item.name,
+                metadata: {
+                  productID: item.id,
+                  size: item.size,
+                  mainImage: item.mainImage,
+                  reviewStatus: 'false'
+                }
+              },
+              unit_amount: Math.round(item.price * 100),
             },
-            
-              // Shipping options
-            shipping_options: [
+            customer_email: req.body.email,
+            quantity: item.quantity || 1,
+            productID: item.id,
+            size: item.size,
+            name: item.name,
+            mainImage: item.mainImage,
+          })),
+          mode: "payment",
+          success_url: "http://127.0.0.1:5500/purchase/success.html",
+          cancel_url: "http://127.0.0.1:5500/purchase/cart.html",
+          metadata: { userId: req.body.userId },
+        
+          // Require shipping address
+          shipping_address_collection: {
+            allowed_countries: ["NZ"], // adjust countries you ship to
+          },
+        
+          // Optional: shipping options like fixed cost
+          shipping_options: [
             {
-                shipping_rate_data: {
+              shipping_rate_data: {
                 display_name: "Standard Shipping",
                 type: "fixed_amount",
                 fixed_amount: { amount: 700, currency: "nzd" }, // $7.00
                 delivery_estimate: {
-                    minimum: { unit: "business_day", value: 5 },
-                    maximum: { unit: "business_day", value: 7 },
+                  minimum: { unit: "business_day", value: 5 },
+                  maximum: { unit: "business_day", value: 7 },
                 },
-                },
+              },
             },
-            ]
+          ],
         });
 
         res.json({ url: session.url });
@@ -97,17 +103,44 @@ exports.createPaymentLink = functions.https.onRequest(async (req, res) => {
         line_items: items.map(item => ({
           price_data: {
             currency: "nzd",
-            product_data: { name: item.name },
-            unit_amount: Math.round(item.price * 100), // price in cents
+            product_data: {
+              name: item.name,
+              metadata: {
+                productID: item.id,
+                size: item.size,
+                mainImage: item.mainImage,
+                reviewStatus: 'false'
+              }
+            },
+            unit_amount: Math.round(item.price * 100),
           },
           quantity: item.quantity || 1,
         })),
         mode: "payment",
         success_url: "http://127.0.0.1:5500/purchase/success.html",
         cancel_url: "http://127.0.0.1:5500/purchase/cart.html",
-        metadata: { userId: req.body.userId } // 👈 attach here
+        metadata: { userId: req.body.userId }, // 👈 session-wide metadata
+      
+        // Require shipping address
+        shipping_address_collection: {
+          allowed_countries: ["NZ"],
+        },
+      
+        shipping_options: [
+          {
+            shipping_rate_data: {
+              display_name: "Standard Shipping",
+              type: "fixed_amount",
+              fixed_amount: { amount: 700, currency: "nzd" },
+              delivery_estimate: {
+                minimum: { unit: "business_day", value: 5 },
+                maximum: { unit: "business_day", value: 7 },
+              },
+            },
+          },
+        ],
       });
-  
+      
       // Return URL
       return res.status(200).json({ url: session.url });
     } catch (err) {
@@ -131,30 +164,74 @@ exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
     }
 
     event = stripe.webhooks.constructEvent(req.rawBody, sig, "whsec_GIMvXSPEenLJSmA8FE67G1rvAogcuABK");
-    console.log("✅ Stripe signature verified");
+    console.log("Stripe signature verified");
+
     console.log("Event type:", event.type);
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object
+
+      console.log("Shipping: ", session.customer_details.address);
 
       // LOG session to debug
       console.log("Session object:", session);
       console.log("User ID from metadata:", session.metadata?.userId);
 
       // Fetch line items
-      const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+      const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
+        expand: ["data.price.product"],
+      });
+      const orderNumber = `ORD-${Date.now().toString().slice(-6)}-${Math.floor(1000 + Math.random() * 9000)}`;
       console.log("Line items:", lineItems.data);
+
+      // Map line items into a clean structure
+      const orderItems = lineItems.data.map(item => ({
+        ...item,
+        description: item.description,
+        reviewStatus: 'false',
+        quantity: item.quantity,
+        unit_amount: item.price.unit_amount,
+        currency: item.price.currency,
+        productID: item.price.product?.metadata?.productID || null,
+        size: item.price.product?.metadata?.size || null,
+        mainImage: item.price.product?.metadata?.mainImage || null,
+      }));
+
+       // --- Decrement stock for each product ---
+      for (const item of orderItems) {
+        if (!item.productID) continue; // skip if no productID
+        
+        const stockRef = admin.database().ref(`products/${item.productID}/stock`);
+
+        await stockRef.transaction(currentStock => {
+          if (currentStock === null) {
+            console.warn(`⚠️ Stock not found for productID: ${item.productID}`);
+            return 0; // or leave unchanged
+          }
+
+          const newStock = currentStock - item.quantity;
+          if (newStock < 0) {
+            console.warn(`⚠️ Stock would go negative for productID: ${item.productID}`);
+            return 0; // Prevent overselling
+          }
+
+          return newStock;
+        });
+      }
 
       // Prepare order data
       const orderData = {
+        orderNumber,
         userId: session.metadata?.userId || "guest",
         amount_total: session.amount_total,
         currency: session.currency,
         status: "paid",
         createdAt: new Date().toISOString(),
-        shipping: session.shipping_details || null,
-        line_items: lineItems.data,
+        shipping: session.customer_details.address || 'UNDEFINED',
+        line_items: orderItems,
       };
+
+      const userId = session.metadata?.userId;
 
       // Then write to your main paths
       await admin.database().ref(`/orders/${session.id}`).set(orderData);
@@ -162,7 +239,7 @@ exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
         await admin.database().ref(`/accounts/${orderData.userId}/orders/${session.id}`).set(orderData);
       }
 
-      console.log(`✅ Order ${session.id} stored in Firebase.`);
+      console.log(`Order ${session.id} stored in Firebase.`);
     }
 
     res.json({ received: true });

@@ -32,7 +32,7 @@
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 welcomeName()
-                fillOrdersTable();
+                displayOrders();
             });
         </script>
 
@@ -62,21 +62,7 @@
         </div>
     </div>
 
-    <div id="div_info">
-        <table id="tb_ordersTable">
-            <thead>
-              <tr>
-                <th class="th_ordersTable">Product</th>
-                <th class="th_ordersTable"></th>
-                <th class="th_ordersTable">Quantity</th>
-                <th class="th_ordersTable">Price</th>
-                <th class="th_ordersTable"></th>
-              </tr>
-            </thead>
-            <tbody id="body_ordersTable">
-            </tbody>
-        </table>
-    </div>
+    <div id="div_info"></div>
 </div>
 
     <div id="container_footer"></div>

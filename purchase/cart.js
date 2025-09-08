@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ----------------------
 
 function addToCart() {
+    console.log('button pressed')
     const user = firebase.auth().currentUser;
     const productId = urlParams.get('productID');
 
@@ -33,7 +34,7 @@ function addToCart() {
         var snapshot = snapshot.val()
         var product = {
             id: productId,
-            name: snapshot.productName,
+            productName: snapshot.productName,
             price: snapshot.price,
             mainImage: snapshot.mainImage,
             size: snapshot.size,
@@ -120,7 +121,7 @@ async function startCheckout() {
     }
 
     try {
-        console.log(user.uid);
+        console.log(items);
         const response = await fetch("https://createpaymentlink-cpk5xp36za-uc.a.run.app", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -129,6 +130,9 @@ async function startCheckout() {
                 items: items.map(item => ({
                     name: item.name,
                     price: item.price,
+                    id: item.id,
+                    size: item.size,
+                    mainImage: item.mainImage,
                     quantity: item.quantity
                 }))
             })

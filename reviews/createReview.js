@@ -53,66 +53,108 @@ function checkReview(event, productID) {
     
 }
 
-function displayProducts() {
+function fillOrderDetails() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            let uid = user.uid;
-            console.log('user logged in')
-            productsArray = [];
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderKey = urlParams.get('orderKey');
 
-            var productsReviewContainer = document.getElementById("div_purchases");
-            productsReviewContainer.style.display = "block";
-            var createReviewForm = document.getElementById("createReviewForm")
-            createReviewForm.style.display = "none"
+            const accountRef = firebase.database().ref(`/accounts/${user.uid}/`);
 
-            firebase.database().ref('/accounts/' + uid + '/wishlist/').once('value', function(snapshot) {
-                console.log(productsArray);
-                snapshot.forEach(function(childSnapshot) {
-                    console.log('key: ', childSnapshot.key)
-                productsArray.push({
-                    key: childSnapshot.key,
-                    value: childSnapshot.val()
-                });
-                });
-                if (productsArray.length === 0) {
-                    document.getElementById("div_purchasesList").innerHTML = 
-                    'No products to review';
-                } else {
-                    createProductsGrid(productsArray);
-                }
+            accountRef.once('value', function(snapshot){
+                var accountInfo = snapshot.val();
+                var order = accountInfo.orders[orderKey]
+                console.log(order)
+
+ /*               const productName = order.productName;
+                const price = order.price;
+                const date = order.date;
+                const quantity = order.quantity;
+                const description = order.description;
+                const flaws = order.flaws;
+                const size = order.size;
+                const brand = order.brand;
+                const mainImage = order.mainImage; */
+
+                const orderNum = order.orderNumber;
+                var dateTimestamp = order.createdAt;
+                var dateArray = dateTimestamp.split('T');
+                date = dateArray[0]
+
+                const firstName = accountInfo.firstName;
+                const lastName = accountInfo.lastName;
+                const email = accountInfo.email;
+
+                const line1 = order.shipping.line1;
+                const line2 = order.shipping.line2;
+                const city = order.shipping.city;
+                const country = order.shipping.country;
+                const postcode = order.shipping.postal_code;
+
+                document.getElementById("p_orderNum").innerHTML = orderNum;
+
+                document.getElementById("p_userName").innerHTML = firstName + ' ' + lastName;
+                document.getElementById("p_userEmail").innerHTML = email;
+
+                document.getElementById("p_orderDate").innerHTML = date;
+
+                document.getElementById("p_userStreet").innerHTML = line1;
+                document.getElementById("p_userSuburb").innerHTML = line2;
+                document.getElementById("p_userCity").innerHTML = city;
+                document.getElementById("p_userCountry").innerHTML = country;
+                document.getElementById("p_userPostcode").innerHTML = postcode;
+
+                var line_items = order.line_items;
+                console.log(line_items)
+
+                for (o = 0; o < line_items.length; o++) {
+                    var item = line_items[o];
+                    console.log(item);
+        
+                    var orderObject = {
+                        productName: item.description,
+                        productID: item.productID,
+                        price: item.price,
+                        date: item.createdAt,
+                        size: item.size,
+                        quantity: item.quantity,
+                        mainImage: item.mainImage
+                      };
+        
+                    let body = document.getElementById(`grid_productDetails`);
+                    body.innerHTML += `
+                    <div class="productDetails">
+                    <h4>PRODUCT DETAILS</h4>
+                    <div class="container_productDetails">
+                        <div class="div_mainImage">
+                        <img src="${orderObject.mainImage}"></div>
+                        <div>
+                            <p class="p_productName">${orderObject.productName}</p>
+                            <p>QUANTITY: ${orderObject.quantity}</p>
+                            <p>SIZE: ${orderObject.size}</p>
+                        </div>
+                        <button onclick="redirect('review', ${orderObject.productID})">REVIEW</button>
+                    </div>
+                </div>`
+                };
             });
-            } else {
-                // User is signed out.
-                alert("make an account");
-            }
-    });
-}
 
-function createProductsGrid(productsArray) {
-    console.log(productsArray)
-    document.getElementById("div_purchasesList").innerHTML = '';
-    for (i = 0; i < productsArray.length; i++) {
-        appendProduct(
-            productsArray[i].value.mainImage,
-            productsArray[i].key,
-            productsArray[i].value.productName,
-        );
-    };
-}
+        } else {
+            window.location="makeAccount.html"
+        }
+    })
+  }
 
-function appendProduct(mainImage, key, productName) {
-    const product = 
-            `<div class="productContainer">
-            <div class="productImageContainer">
-                <img class="productImage" src="${mainImage}"
-                 onclick="chooseProduct(
-                '${key}', 
-                )">
-            </div>
-            <p class="productName"  onclick="chooseProduct(
-                '${key}')">${productName}</p>
-            </div>`;
-    document.getElementById("div_purchasesList").innerHTML += product;
+function createReview_load() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderKey = urlParams.get('orderKey');
+        } else {
+            console.log('nono');
+        }
+    })
+
 }
 
 function chooseProduct(productID) {
@@ -122,31 +164,7 @@ function chooseProduct(productID) {
     var createReviewForm = document.getElementById("createReviewForm")
     createReviewForm.style.display = "block"
     createReviewForm.innerHTML = 
-        `<form id="form_createReview" onsubmit="checkReview(event, '${productID}'); return false">
-        <button onclick="displayProducts()">Back</button>
-            <label for="textReview">Your review:</label><br>
-            <textarea id="textReview" name="textReview" 
-            rows="3" maxlength="150"></textarea><br>
-
-            <label for="stars">Stars:</label>
-            <select id="stars" name="stars">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            </select><br>
-
-            <div id="div_image">
-            <label for="image">Images:</label><br>
-            <input type="file" id="images" name="main_image" accept="image/png, image/jpeg" 
-            onchange="displaySelectedImages()" multiple />
-            <div id="div_previewImages"></div>
-            </div>
-
-            <input type="submit" value="Submit">
-            <p id="status"></p>
-        </form>`;
+        ``;
     });
 }
 

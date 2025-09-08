@@ -180,23 +180,32 @@ function displayProductDetails(cartRef, user) {
     // Handle cart button
     // ----------------------------
     if (stock > 0) {
-      container_cartButton.innerHTML = `<button id="button_addToCart">ADD TO CART</button>`;
-      const addToCartButton = document.getElementById("button_addToCart");
+      cartRef.once('value').then(snapshot => {
+        if (snapshot.exists() && stock <= 1) {
+          container_cartButton.innerHTML = `<div class="div_addToCart">IN CART</div>`;
+        } else {
+          console.log('stock higher than 0');
+          container_cartButton.innerHTML = `<button id="button_addToCart">ADD TO CART</button>`;
+          const addToCartButton = document.getElementById("button_addToCart");
 
-      addToCartButton.addEventListener("click", () => {
-        if (user && cartRef) {
-          // user signed in → normal addToCart
-          cartRef.once('value').then(snapshot => {
-            if (!snapshot.exists()) {
-              addToCart();
+          addToCartButton.addEventListener("click", () => {
+            if (user) {
+              // user signed in → normal addToCart
+              cartRef.once('value').then(snapshot => {
+                if (!snapshot.exists()) {
+                  addToCart();
+                } else {
+                  console.log('not happening bud')
+                }
+              });
+            } else {
+              // user NOT signed in → show popup
+              showPopup("Log in to add to cart");
             }
           });
-        } else {
-          // user NOT signed in → show popup
-          showPopup("Log in to add to cart");
-        }
-      });
 
+        }
+      })
     } else {
       container_cartButton.innerHTML = `<div class="div_addToCart">OUT OF STOCK</div>`;
     }

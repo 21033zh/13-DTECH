@@ -15,6 +15,7 @@ body {
 a {
     text-decoration: none;
     text-align: center;
+    color: black;
 }
 
 h1 {
@@ -1478,9 +1479,7 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 /*--- REVIEW PAGE END --------------------------------------------*/
 
 /*--- CREATE REVIEW PAGE -----------------------------------------*/
-
-
-#div_formContainer {
+#div_formContainer, #product_preview {
     padding: 10px;
     margin: 20px;
     background-color: #dbd4df;
@@ -1490,16 +1489,8 @@ nav a:hover, .shopDropdown:hover .dropbtn {
     margin: 20px 10px;
 }
 
-#div_purchasesList {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-}
-#div_purchases > div{
-    width: 100%
-}
-
-#div_purchases img {
-    width: 100%;
+#form_createReview {
+    padding: 20px;
 }
 
 #form_createReview button {
@@ -1577,29 +1568,47 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 
 /*--- ACCOUNT PAGE  ----------------------------------------------*/
 /*---- ORDERS -------------------------*/
-#tb_ordersTable {
-    border-collapse: collapse;
-    font-size: 0.8rem;
-    width: 100%;
-    text-align: left;
+.container_order  {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
-#body_ordersTable {
-    margin-top: 20px;
+.container_order .heading {
+    display: grid;
+    grid-template-columns: 70% 30%;
 }
 
-#body_ordersTable img {
-    height: 80px;
-}
-
-#body_ordersTable tr {
-    height: 100px;
-    background-color:rgb(222, 222, 222);
-}
-
-#body_ordersTable td {
+.container_order .heading p {
+    border: 1px solid black;
+    border-radius: 5px;
     padding: 10px;
-    margin-bottom: 5px;
+    margin: 10px;
+}
+
+.container_order .heading button {
+    margin: 10px;
+}
+
+.container_order .body {
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 100px 1fr 150px;
+}
+
+.container_order img {
+    width: 80%;
+    margin: auto auto auto 0;
+}
+.container_order .body button {
+    height: 50px;
+    background-color: #dbd4df;
+    border: 1px solid black;
+    border-radius: 2px;
+    color: black;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 /*----- ORDER DETAILS -----------------*/
@@ -1668,8 +1677,31 @@ nav a:hover, .shopDropdown:hover .dropbtn {
 }
 
 #container_orderDetails #grid_productDetails {
+    grid-area: productDetails;
+}
+
+#container_orderDetails .productDetails {
+    border: 1px solid rgb(204, 204, 204);
+    box-shadow: 2px 2px 10px black;
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+#container_orderDetails .container_productDetails {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 20% 60% 20%;
+    border: none;
+}
+
+#container_orderDetails .container_productDetails div {
+    border: none;
+}
+
+
+#container_orderDetails button {
+    margin: auto;
+    padding: 10px 20px;
 }
 
 /*----- ORDERS END ------------------*/
@@ -1897,6 +1929,20 @@ nav a:hover, .shopDropdown:hover .dropbtn {
         "deliveryDetails deliveryDetails"
         "productDetails productDetails" ;
     }
+
+
+    #container_orderDetails .container_productDetails {
+        display: grid;
+        grid-template-columns: 40% 60%;
+        grid-template-rows: auto auto;
+        border: none;
+    }
+
+    #container_orderDetails .container_productDetails button {
+        grid-column: 1/ span 2;
+        margin: auto 0px auto 0px;
+    }
+
 }
 /*--- ACCOUNT PAGE END  ------------------------------------------*/
 /*--- ADMIN -----------------------------------------------------*/

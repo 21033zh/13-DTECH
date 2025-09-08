@@ -292,126 +292,174 @@ function appendProduct(productID, mainImage, productName, productPrice, productS
  * account_orders.html
  * 
  --------------------------------------------------------------------*/
- function fillOrdersTable() {
+ function displayOrders() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            const body_ordersTable = document.getElementById("body_ordersTable");
-            body_ordersTable.innerHTML = '';
-
-            const ordersArray = [];
-            const ordersRef = firebase.database().ref(`/accounts/${user.uid}/orders`);
-            ordersRef.once('value', function(snapshot){
-                snapshot.forEach(childSnapshot => {
+            console.log('displayProducts')
+            var ordersArray = [];
+            const ordersRef = firebase.database().ref(`accounts/${user.uid}/orders/`)
+            ordersRef.once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
                     ordersArray.push({
                         key: childSnapshot.key,
                         value: childSnapshot.val()
                     });
                 });
-        
-             for (let i = 0; i < ordersArray.length; i++) {
-                    const order = ordersArray[i];
-
-                    var orderObject = {
-                        orderNum: order.key,
-                        productName: order.value.productName,
-                        price: order.value.price,
-                        date: order.value.date,
-                        quantity: order.value.quantity,
-                        street: order.value.address.street,
-                        suburb: order.value.address.suburb,
-                        city: order.value.address.city,
-                        postcode: order.value.address.postcode,
-                        mainImage: order.value.mainImage
-                      };
-
-                    console.log(orderObject)
-
-        
-                    const row = `
-                        <tr> 
-                            <td><img src="${orderObject.mainImage}"></td> 
-                            <td>ORDER NUMBER: ${orderObject.orderNum}</br>${orderObject.productName}</td> 
-                            <td>QUANTITY: ${orderObject.quantity}</td> 
-                            <td>PRICE: $${orderObject.price}</td> 
-                            <td><button class="button_orderInfo" onclick="redirect('details', '${orderObject.orderNum}')">SEE MORE</button>
-                            <button class="button_orderInfo" onclick="redirect('review')">REVIEW</button></td>
-                        </tr>
-                    `;
-        
-                    body_ordersTable.innerHTML += row;
-                }
-            }).catch(fb_error);
-            
+                createOrdersGrid(ordersArray);
+            });
         } else {
-            // User is signed out.
-            console.log("user signed out")
             window.location="makeAccount.html"
         }
     });
- }
+}
 
- function redirect(page, orderNum) {
+
+function createOrdersGrid(ordersArray) {
+    for (i = 0; i < ordersArray.length; i++) {
+        var orderNum = ordersArray[i].value.orderNumber;
+        var orderKey = ordersArray[i].key;
+
+        var line_items = ordersArray[i].value.line_items;
+
+        console.log(line_items);
+
+        let div = document.getElementById("div_info");
+        div.innerHTML += `
+        <div class="container_order" id="order${i}">
+            <div class="heading" id="${i}_heading">
+                <p>ORDER NUMBER: ${orderNum}</p>
+                <button onclick="redirect('details', '${orderKey}')">SEE MORE</button>
+            </div>
+            <div class="body" id="${i}_body"></div>
+        </div>`
+
+        for (o = 0; o < line_items.length; o++) {
+            var item = line_items[o];
+
+            var orderObject = {
+                orderNum,
+                productName: item.description,
+                productID: item.productID,
+                price: item.price,
+                date: item.createdAt,
+                size: item.size,
+                quantity: item.quantity,
+                mainImage: item.mainImage
+              };
+
+            let body = document.getElementById(`${i}_body`);
+            body.innerHTML += `
+            <img src="${orderObject.mainImage}">
+            <div class="info">
+                <p>${orderObject.productName}</p>
+                <p>QUANTITY: ${orderObject.quantity}</p>
+                <p>SIZE: ${orderObject.size}</p>
+            </div>
+            <button onclick="redirect('review', '${orderObject.orderKey}')">REVIEW</button>`
+
+        };
+    };
+}
+
+
+ function redirect(page, orderKey) {
     if (page === 'details') {
-        window.location.href = `orderDetails.html?orderNum=${orderNum}`;
+        window.location.href = `orderDetails.html?orderKey=${orderKey}`;
+    } else if (page === 'review') {
+        window.location.href = `/reviews/createReview.html?orderKey=${orderKey}`;
     } else {
-        window.location.href = "/reviews/createReview.html";
+        console.log('Error');
     }
  }
 
-  function fillOrderDetails() {
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const orderNum = urlParams.get('orderNum');
-            console.log()
+function fillOrderDetails() {
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderKey = urlParams.get('orderKey');
 
-            const accountRef = firebase.database().ref(`/accounts/${user.uid}/`);
+        const accountRef = firebase.database().ref(`/accounts/${user.uid}/`);
 
-            accountRef.once('value', function(snapshot){
-                var accountInfo = snapshot.val();
-                var order = accountInfo.orders[orderNum];
+        accountRef.once('value', function(snapshot){
+            var accountInfo = snapshot.val();
+            var order = accountInfo.orders[orderKey]
+            console.log(order)
 
-                const productName = order.productName;
-                const price = order.price;
-                const date = order.date;
-                const quantity = order.quantity;
-                const description = order.description;
-                const flaws = order.flaws;
-                const size = order.size;
-                const brand = order.brand;
-                const mainImage = order.mainImage;
+/*               const productName = order.productName;
+            const price = order.price;
+            const date = order.date;
+            const quantity = order.quantity;
+            const description = order.description;
+            const flaws = order.flaws;
+            const size = order.size;
+            const brand = order.brand;
+            const mainImage = order.mainImage; */
 
-                const firstName = accountInfo.firstName;
-                const lastName = accountInfo.lastName;
-                const email = accountInfo.email;
+            const orderNum = order.orderNumber;
+            var dateTimestamp = order.createdAt;
+            var dateArray = dateTimestamp.split('T');
+            date = dateArray[0]
 
-                const street = order.address.street;
-                const suburb = order.address.suburb;
-                const city = order.address.city;
-                const country = order.address.country;
-                const postcode = order.address.postcode;
+            const firstName = accountInfo.firstName;
+            const lastName = accountInfo.lastName;
+            const email = accountInfo.email;
 
-                document.getElementById("p_orderNum").innerHTML = orderNum;
+            const line1 = order.shipping.line1;
+            const line2 = order.shipping.line2;
+            const city = order.shipping.city;
+            const country = order.shipping.country;
+            const postcode = order.shipping.postal_code;
 
-                document.getElementById("p_userName").innerHTML = firstName + ' ' + lastName;
-                document.getElementById("p_userEmail").innerHTML = email;
+            document.getElementById("p_orderNum").innerHTML = orderNum;
 
-                document.getElementById("p_orderDate").innerHTML = date;
+            document.getElementById("p_userName").innerHTML = firstName + ' ' + lastName;
+            document.getElementById("p_userEmail").innerHTML = email;
 
-                document.getElementById("p_userStreet").innerHTML = street;
-                document.getElementById("p_userSuburb").innerHTML = suburb;
-                document.getElementById("p_userCity").innerHTML = city;
-                document.getElementById("p_userCountry").innerHTML = country;
-                document.getElementById("p_userPostcode").innerHTML = postcode;
-                document.getElementById("p_userSuburb").innerHTML = suburb;
+            document.getElementById("p_orderDate").innerHTML = date;
 
-                document.getElementById("div_mainImage").innerHTML = 
-                `<img src=${mainImage} alt="photo of product">`;
+            document.getElementById("p_userStreet").innerHTML = line1;
+            document.getElementById("p_userSuburb").innerHTML = line2;
+            document.getElementById("p_userCity").innerHTML = city;
+            document.getElementById("p_userCountry").innerHTML = country;
+            document.getElementById("p_userPostcode").innerHTML = postcode;
 
-            });
+            var line_items = order.line_items;
+            console.log(line_items)
 
-        } else {
-            window.location="makeAccount.html"
-        }
-    })
-  }
+            for (o = 0; o < line_items.length; o++) {
+                var item = line_items[o];
+                console.log(item);
+    
+                var orderObject = {
+                    productName: item.description,
+                    productID: item.productID,
+                    price: item.price,
+                    date: item.createdAt,
+                    size: item.size,
+                    quantity: item.quantity,
+                    mainImage: item.mainImage
+                    };
+    
+                let body = document.getElementById(`grid_productDetails`);
+                body.innerHTML += `
+                <div class="productDetails">
+                <h4>PRODUCT DETAILS</h4>
+                <div class="container_productDetails">
+                    <div class="div_mainImage">
+                    <img src="${orderObject.mainImage}"></div>
+                    <div>
+                        <p class="p_productName">${orderObject.productName}</p>
+                        <p>QUANTITY: ${orderObject.quantity}</p>
+                        <p>SIZE: ${orderObject.size}</p>
+                    </div>
+                    <button onclick="redirect('review','${orderKey}')">REVIEW</button>
+                </div>
+            </div>`
+            };
+        });
+
+    } else {
+        window.location="makeAccount.html"
+    }
+})
+}

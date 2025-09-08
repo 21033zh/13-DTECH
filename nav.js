@@ -99,7 +99,7 @@ function navBar() {
 <nav>
   <a href="/index.html">HOME</a>
   <div class="shopDropdown">
-      <button class="dropbtn">SHOP</button>
+     <button class="dropbtn" onclick="window.location='/shopAll/shopAll.html'">SHOP</button>
       <div class="shopDropdownContent">
           <a href="/shopAll/shopAll.html">Shop All</a>
           <a href="/shopAll/tops.html">Tops</a>
