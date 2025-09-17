@@ -38,44 +38,45 @@
         <div id="div_searchedFor"></div>
 
         <div id="filters">
-        <form id="shopForm" onchange="filterSettings(event); return false">
-        <div id="colourFilterDiv">
-            <select id="colourDropdown" name="colour">
-            <option value="all">All colours</option>
-            <option value="red">Red</option>
-            <option value="orange">Orange</option>
-            <option value="yellow">Yellow</option>
-            <option value="pink">Pink</option>
-            <option value="green">Green</option>
-            <option value="blue">Blue</option>
-            <option value="purple">Purple</option>
-            <option value="black">Black</option>
-            <option value="white">White</option>
-            <option value="multi">Multicolour</option>
-            </select><br>
-        </div>
-
-        <div id="sizeFilterDiv">
-            <select id="sizeDropdown" name="size">
-            <option value="all">All sizes</option>
-            <option value="4">Size 4</option>
-            <option value="6">Size 6</option>
-            <option value="8">Size 8</option>
-            <option value="10">Size 10</option>
-            <option value="12">Size 12</option>
-            <option value="14">Size 14</option>
-        </select><br>
-        </div>
-        </form>
-
-        <form id="sortDiv" onchange="sortSettings(event); return false">
-        <select id="sortDropdown" name="sortDropdown">
-            <option value="newest">Sort by relevence</option>
-            <option value="lowPrice">Sort by lowest price</option>
-            <option value="highPrice">Sort by highest price</option>
-        </select>
-        </form>
-        </div>
+            <form id="shopForm" onchange="search_filterSettings(event, 'all'); return false">
+            <div id="colourFilterDiv">
+                <select id="search_colourDropdown" name="colour">
+                  <option value="all">All colours</option>
+                  <option value="red">Red</option>
+                  <option value="orange">Orange</option>
+                  <option value="yellow">Yellow</option>
+                  <option value="pink">Pink</option>
+                  <option value="green">Green</option>
+                  <option value="blue">Blue</option>
+                  <option value="purple">Purple</option>
+                  <option value="black">Black</option>
+                  <option value="white">White</option>
+                  <option value="multi">Multicolour</option>
+                </select>
+            </div>
+            
+            <div id="sizeFilterDiv">
+                <select id="search_sizeDropdown" name="size">
+                  <option value="all">All sizes</option>
+                  <option value="4">Size 4</option>
+                  <option value="6">Size 6</option>
+                  <option value="8">Size 8</option>
+                  <option value="10">Size 10</option>
+                  <option value="12">Size 12</option>
+                  <option value="14">Size 14</option>
+              </select>
+            </div>
+            </form>
+            
+            <form id="sortDiv" onchange="search_handleSortSettings(event, 'all'); return false">
+              <select id="search_sortDropdown" name="sortDropdown">
+                <option value="newest">Sort by newest</option>
+                <option value="oldest">Sory by oldest</option>
+                <option value="lowPrice">Sort by lowest price</option>
+                <option value="highPrice">Sort by highest price</option>
+              </select>
+            </form>
+            </div>
 <!-- FILTERS END ***************************************************-->
 
         <div id="search_products_container"></div>

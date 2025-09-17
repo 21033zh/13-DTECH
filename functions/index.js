@@ -47,8 +47,8 @@ exports.createCheckoutSession = functions.https.onRequest(async (req, res) => {
             mainImage: item.mainImage,
           })),
           mode: "payment",
-          success_url: "http://127.0.0.1:5500/purchase/success.html",
-          cancel_url: "http://127.0.0.1:5500/purchase/cart.html",
+          success_url: "https://dollplanet-947ae.web.app/purchase/success.html",
+          cancel_url: "https://dollplanet-947ae.web.app/purchase/cart.html",
           metadata: { userId: req.body.userId },
         
           // Require shipping address
@@ -92,7 +92,7 @@ exports.createPaymentLink = functions.https.onRequest(async (req, res) => {
   
     try {
       // Parse JSON safely
-      const { items } = JSON.parse(req.rawBody || req.body);
+      const { items } = req.body;
       if (!items || !Array.isArray(items) || items.length === 0) {
         return res.status(400).send({ error: "Invalid or empty items array" });
       }

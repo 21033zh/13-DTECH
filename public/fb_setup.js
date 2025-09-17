@@ -20,7 +20,7 @@ const firebaseConfig = {
     authDomain: "dollplanet-947ae.firebaseapp.com",
     databaseURL: "https://dollplanet-947ae-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "dollplanet-947ae",
-    storageBucket: "dollplanet-947ae.appspot.com",
+    storageBucket: "dollplanet-947ae.firebasestorage.app",
     messagingSenderId: "1065600108437",
     appId: "1:1065600108437:web:8321564e5befcc93b6189c",
     measurementId: "G-2YKH4VTNY4"

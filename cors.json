@@ -1,0 +1,11 @@
+[
+    {
+      "origin": [
+        "http://localhost:5000",
+        "https://dollplanet-947ae.web.app"
+      ],
+      "method": ["GET", "POST", "PUT", "DELETE", "HEAD"],
+      "maxAgeSeconds": 3600,
+      "responseHeader": ["Content-Type", "Authorization"]
+    }
+  ]

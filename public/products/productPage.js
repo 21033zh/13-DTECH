@@ -25,7 +25,7 @@ var slidePlace = 0;
  * productPage_addToWishlist
  * adds product to the wishlist
  ------------------------------------------------------------------*/
-function productPage_addToWishlist(productName, mainImage) {
+function productPage_addToWishlist() {
   console.log('productPage_addToWishlist')
 // check if user is signed in
     const user = firebase.auth().currentUser;
@@ -35,14 +35,12 @@ function productPage_addToWishlist(productName, mainImage) {
     }
 
 // Ensure these variables exist in scope
-    if (!productID || !productName || !mainImage) {
+    if (!productID) {
       return console.error("Product info missing");
     }
 
 // add product info to the database
     firebase.database().ref("/accounts/" + user.uid + "/wishlist/" + productID).update({
-      productName,
-      mainImage
     }).then(() => {
       createWishlistRemoveButton();
     }).catch(err => {
@@ -167,7 +165,7 @@ function displayProductDetails(cartRef, user) {
     const colour1code = colourMap[colour1] ?? defaultColour;
     var colour2 = productInfo.colour2;
     const colour2code = colourMap[colour2] ?? defaultColour;
-    imagesArray = productInfo.images;
+    imagesObject = productInfo.images;
     var productName = productInfo.productName;
     var size = productInfo.size;
     var description = productInfo.description;
@@ -236,7 +234,11 @@ function displayProductDetails(cartRef, user) {
     // ----------------------------
     var ul_photos = document.getElementById("ul_photos");
     ul_photos.innerHTML = ""; 
+
+    imagesArray = Object.values(imagesObject);
+   
     for (let i = 0; i < imagesArray.length; i++) {
+      console.log('hi')
       let photo = `<li><img id="slide${i}" src="${imagesArray[i]}"></li>`;
       ul_photos.innerHTML += photo;
     }
@@ -284,6 +286,8 @@ function nextSlide() {
     var slideNum = 'slide' + slidePlace;
     var img_selectedSlide = document.getElementById(slideNum);
     img_selectedSlide.style.opacity = 1;
+
+    console.log(imagesArray)
 
     if (slidePlace === imagesArray.length-1) {
       slidePlace = 0;

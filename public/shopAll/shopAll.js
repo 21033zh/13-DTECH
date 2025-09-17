@@ -38,13 +38,10 @@ function displayProducts(category) {
     firebase.database().ref('/products/').once('value', function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
             var productInfo = childSnapshot.val();
-            var stock = productInfo.stock;
-            if (stock > 0) {
-                productsArray.push({
-                    key: childSnapshot.key,
-                    value: childSnapshot.val()
-                });
-            }
+            productsArray.push({
+                key: childSnapshot.key,
+                value: childSnapshot.val()
+            });
         });
         allProductsArray = [].concat(productsArray);
         createGrid(category);
@@ -68,7 +65,8 @@ function loadMoreProducts(category) {
                 productsArray[i].key,
                 productsArray[i].value.productName,
                 productsArray[i].value.price,
-                productsArray[i].value.size
+                productsArray[i].value.size,
+                productsArray[i].value.stock
             );
         } else if (category === productsArray[i].value.category) {
             appendProduct(
@@ -76,7 +74,8 @@ function loadMoreProducts(category) {
                 productsArray[i].key,
                 productsArray[i].value.productName,
                 productsArray[i].value.price,
-                productsArray[i].value.size
+                productsArray[i].value.size,
+                productsArray[i].value.stock
             );
         }
     }
@@ -92,14 +91,22 @@ function loadMoreProducts(category) {
     }
 }
 
-function appendProduct(mainImage, productID, productName, productPrice, productSize) {
+function appendProduct(mainImage, productID, productName, productPrice, productSize, productStock) {
     let allInfo = [
         mainImage,
         productID,
         productName,
         productPrice,
-        productSize
+        productSize,
+        productStock
     ]
+
+    if (productStock < 1 ) {
+        productPrice = 'OUT OF STOCK'
+    } else {
+        productPrice = '$' + productPrice;
+    }
+
     const product = 
             `<div class="productContainer">
             <div class="productImageContainer">
@@ -112,7 +119,7 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
             <p class="productName" href="/products/product.html?productID=${productID}">
             ${productName}</p>
             <p class="productSize" >size ${productSize}</p>
-            <p class="productPrice">$${productPrice}</p>
+            <p class="productPrice">${productPrice}</p>
             <div class="big_gap"></div>
             </div>`
             ;

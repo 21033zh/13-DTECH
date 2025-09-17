@@ -17,6 +17,11 @@ function account_redirect() {
 }
 
 function welcomeName() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (!user) {
+            window.location="makeAccount.html";
+        }
+    });
     var name = sessionStorage.getItem("firstName");
     document.getElementById("p_welcomeName").innerHTML = name;
 }
@@ -149,7 +154,7 @@ function createGrid(reviewsArray, uid) {
         console.log('key: ' + reviewsArray[i].key)
         console.log('uid: ' + uid)
 
-        if (reviewsArray[i].value.user === uid) {
+        if (reviewsArray[i].value.uid === uid) {
             console.log('review');
             var stars = reviewsArray[i].value.stars;
             appendReview(
@@ -165,13 +170,23 @@ function createGrid(reviewsArray, uid) {
 
 function appendReview(productID, image, text, stars, num, uid) {
     console.log('append review')
-    const review = 
-            `<div class="acc_reviewDiv">
-                <img class="acc_productImage acc_reviewImage" src="${image}")">
-                <p id="acc_${num}stars"></p>
-                <p class="acc_text" >${text}</p>
-                <button class="acc_button" onclick="deleteReview('${productID}')">DELETE</button>
-            </div>`;
+    if (image) {
+        var review = 
+        `<div class="acc_reviewDiv">
+            <img class="acc_productImage acc_reviewImage" src="${image}")">
+            <p id="acc_${num}stars"></p>
+            <p class="acc_text" >${text}</p>
+            <button class="acc_button" onclick="deleteReview('${productID}')">DELETE</button>
+        </div>`;
+    } else {
+        var review = 
+        `<div class="acc_reviewDiv">
+            <p id="acc_${num}stars"></p>
+            <p class="acc_text" >${text}</p>
+            <button class="acc_button" onclick="deleteReview('${productID}')">DELETE</button>
+        </div>`;
+    }
+   
     document.getElementById("acc_reviewsContainer").innerHTML += review;
     for (s = 0; s < stars; s++ ) {
         const starRow = 
@@ -196,7 +211,7 @@ function deleteReview(productID) {
 
 /**-------------------------------------------------------------------
  * 
- * account_reviews.html
+ * account_wishlist.html
  * 
  --------------------------------------------------------------------*/
 
@@ -319,6 +334,8 @@ function createOrdersGrid(ordersArray) {
         var orderNum = ordersArray[i].value.orderNumber;
         var orderKey = ordersArray[i].key;
 
+        console.log(orderKey)
+
         var line_items = ordersArray[i].value.line_items;
 
         console.log(line_items);
@@ -344,7 +361,8 @@ function createOrdersGrid(ordersArray) {
                 date: item.createdAt,
                 size: item.size,
                 quantity: item.quantity,
-                mainImage: item.mainImage
+                mainImage: item.mainImage,
+                reviewStatus: item.reviewStatus
               };
 
             let body = document.getElementById(`${i}_body`);
@@ -355,18 +373,23 @@ function createOrdersGrid(ordersArray) {
                 <p>QUANTITY: ${orderObject.quantity}</p>
                 <p>SIZE: ${orderObject.size}</p>
             </div>
-            <button onclick="redirect('review', '${orderObject.orderKey}')">REVIEW</button>`
+            <div class="ordersReviewButton" id="${i}_${o}_reviewButton">
+            <button onclick="redirect('review', '${orderKey}', '${o}')">REVIEW</button>
+            </div>`
 
+            if (orderObject.reviewStatus == 'true') {
+                document.getElementById(`${i}_${o}_reviewButton`).innerHTML = `<div><p>REVIEWED</p></div>`
+            }
         };
     };
 }
 
 
- function redirect(page, orderKey) {
+ function redirect(page, orderKey, itemNum) {
     if (page === 'details') {
         window.location.href = `orderDetails.html?orderKey=${orderKey}`;
     } else if (page === 'review') {
-        window.location.href = `/reviews/createReview.html?orderKey=${orderKey}`;
+        window.location.href = `/reviews/createReview.html?orderKey=${orderKey}&itemNum=${itemNum}`;
     } else {
         console.log('Error');
     }
@@ -452,7 +475,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                         <p>QUANTITY: ${orderObject.quantity}</p>
                         <p>SIZE: ${orderObject.size}</p>
                     </div>
-                    <button onclick="redirect('review','${orderKey}')">REVIEW</button>
+                    <button onclick="redirect('review','${orderKey}', '${o}')">REVIEW</button>
                 </div>
             </div>`
             };

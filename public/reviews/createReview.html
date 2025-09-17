@@ -46,7 +46,7 @@
 <!-- REVIEWS START ********************************************************-->
 
 <div id="div_formContainer">
-    <form id="form_createReview" onsubmit="checkReview(event, '${productID}'); return false">
+    <form id="form_createReview" onsubmit="checkReview(event); return false">
         <label for="textReview">Your review:</label><br>
         <textarea id="textReview" name="textReview" 
         rows="3" maxlength="150"></textarea><br>
@@ -66,6 +66,10 @@
         onchange="displaySelectedImages()" multiple />
         <div id="div_previewImages"></div>
         </div>
+
+        <label for="displayName">Name to display on review:</label><br>
+        <textarea id="displayName" name="displayName" 
+        rows="1" maxlength="150"></textarea><br>
 
         <input type="submit" value="Submit">
         <p id="status"></p>

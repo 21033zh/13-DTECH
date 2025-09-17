@@ -18,7 +18,7 @@ var uiConfig = {
           createdAt: firebase.database.ServerValue.TIMESTAMP
         }).then(() => {
           // Only redirect *after* the write is successful
-          window.location.href = "account.html";
+          window.location.href = "/account.html";
           return false;
         }).catch((error) => {
           console.error("Failed to save new user data:", error);

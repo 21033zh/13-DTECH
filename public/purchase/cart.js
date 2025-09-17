@@ -128,7 +128,7 @@ async function startCheckout() {
             body: JSON.stringify({
                 userId: user.uid,  // 👈 MUST SEND
                 items: items.map(item => ({
-                    name: item.name,
+                    name: item.productName,
                     price: item.price,
                     id: item.id,
                     size: item.size,
@@ -221,11 +221,15 @@ function loadCart() {
 // ----------------------
 function populateCartDiv(cart, user) {
     console.log(cart)
-    // clear cart div
+
     let cartItemsDiv = document.getElementById("cartItems");
+    let cartPricesDiv = document.getElementById("cartItemPrices");
+    let cartTotal = document.getElementById("cartTotal");
+
     cartItemsDiv.innerHTML = "";
 
     var total = 0;
+    var shipping = 7;
 
     // populate cart div
 
@@ -234,18 +238,19 @@ function populateCartDiv(cart, user) {
         if (user) {
             var price = item.value.price
             var quantity = item.value.quantity
-            var name = item.value.name;
+            var productName = item.value.productName;
             var size = item.value.size;
             var mainImage = item.value.mainImage;
         } else {
             var price = item.price
             var quantity = item.quantity
-            var name = item.name;
+            var productName = item.productName;
             var size = item.size;
             var mainImage = item.mainImage
         }
 
-        console.log(mainImage)
+        cartPricesDiv.innerHTML += `<p>${productName}</p><p>$${price}</p>`
+
         total += price * quantity;
         cartItemsDiv.innerHTML += `
             <div class="product">
@@ -253,7 +258,7 @@ function populateCartDiv(cart, user) {
                     <img src="${mainImage}">
                 </div>
                 <div class="info">
-                    <h3  onclick="goToPage('${productID}')">${name}</h3>
+                    <h3  onclick="goToPage('${productID}')">${productName}</h3>
                     <p>Size: ${size}</p>
                     <p>Price: $${price} x ${quantity}</p>
                 </div>
@@ -263,7 +268,10 @@ function populateCartDiv(cart, user) {
             </div>
         `;
     })
-    document.getElementById("cartTotal").innerText = "Total: $" + total.toFixed(2);
+
+    total += shipping;
+    cartPricesDiv.innerHTML += `<p>Shipping</p><p>$${shipping}</p>`
+    cartTotal.innerText = "Total: $" + total.toFixed(2);
 }
 
 function goToPage(productID) {
@@ -281,6 +289,6 @@ function removeProduct(productID, uid) {
         })
         .catch(function(error) {
             console.log('failure', error);
-            alert(`There was an error deleting '${product.name}' from the cart. Please try again.`);
+            alert(`There was an error deleting '${product.productName}' from the cart. Please try again.`);
         });
 }

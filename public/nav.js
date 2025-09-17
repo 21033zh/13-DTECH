@@ -44,7 +44,7 @@ function navBar() {
 
 <!--MOBILE-search-icon-->
   <div id="mobile_searchIcon" class="icon"> 
-      <amp-img src="/images/search.png" onclick="openSearch()" alt="search">
+      <img src="/images/search.png" onclick="openSearch()" alt="search">
   </div>
 
 <!--WEB-search-bar-->
@@ -96,6 +96,7 @@ function navBar() {
       </form>
   </div>
 
+<!--WEB-nav-bar-->
 <nav>
   <a href="/index.html">HOME</a>
   <div class="shopDropdown">

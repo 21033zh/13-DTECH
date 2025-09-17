@@ -21,7 +21,7 @@ function createGrid(reviewsArray) {
         appendReview(
             reviewsArray[i].value.image0,
             reviewsArray[i].value.textReview,
-            reviewsArray[i].value.name,
+            reviewsArray[i].value.user,
             stars,
             i,
         );
@@ -30,15 +30,27 @@ function createGrid(reviewsArray) {
 
 function appendReview(image, text, name, stars, num) {
     console.log('append review')
-    const review = 
-            `<div class="reviewDiv">
-                <img class="productImage reviewImage" src="${image}")">
-                <p id="${num}stars"></p>
-                <p class="text" >${text}</p>
-                <div class="nameDiv">
-                    <p class="name">- ${name}</p>
-                <div>
-            </div>`;
+    if (image) {
+        var review = 
+        `<div class="reviewDiv">
+            <img class="productImage reviewImage" src="${image}")">
+            <p id="${num}stars"></p>
+            <p class="text" >${text}</p>
+            <div class="nameDiv">
+                <p class="name">- ${name}</p>
+            <div>
+        </div>`;
+    } else {
+        var review = 
+        `<div class="reviewDiv">
+            <p id="${num}stars"></p>
+            <p class="text" >${text}</p>
+            <div class="nameDiv">
+                <p class="name">- ${name}</p>
+            <div>
+        </div>`;
+    }
+   
     document.getElementById("reviewsContainer").innerHTML += review;
     for (s = 0; s < stars; s++ ) {
         const starRow = 
