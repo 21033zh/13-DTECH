@@ -18,7 +18,8 @@ function createProduct(event) {
 
     newProductRef.set({
         productName, price, size, stock,
-        brand, category, colour1, colour2
+        brand, category, colour1, colour2,
+        date: firebase.database.ServerValue.TIMESTAMP
     }).then(() => {
         console.log("Product info saved, ID:", productID);
     }).catch(error => {

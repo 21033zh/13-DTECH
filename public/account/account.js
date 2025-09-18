@@ -464,20 +464,39 @@ firebase.auth().onAuthStateChanged(function(user) {
                     };
     
                 let body = document.getElementById(`grid_productDetails`);
-                body.innerHTML += `
-                <div class="productDetails">
-                <h4>PRODUCT DETAILS</h4>
-                <div class="container_productDetails">
-                    <div class="div_mainImage">
-                    <img src="${orderObject.mainImage}"></div>
-                    <div>
-                        <p class="p_productName">${orderObject.productName}</p>
-                        <p>QUANTITY: ${orderObject.quantity}</p>
-                        <p>SIZE: ${orderObject.size}</p>
+
+                if (item.reviewStatus === 'true') {
+                    body.innerHTML += `
+                    <div class="productDetails">
+                    <h4>PRODUCT DETAILS</h4>
+                    <div class="container_productDetails">
+                        <div class="div_mainImage">
+                        <img src="${orderObject.mainImage}"></div>
+                        <div>
+                            <p class="p_productName">${orderObject.productName}</p>
+                            <p>QUANTITY: ${orderObject.quantity}</p>
+                            <p>SIZE: ${orderObject.size}</p>
+                        </div>
+                        <a>REVIEWED</a>
                     </div>
-                    <button onclick="redirect('review','${orderKey}', '${o}')">REVIEW</button>
-                </div>
-            </div>`
+                </div>`
+                } else {
+                    body.innerHTML += `
+                    <div class="productDetails">
+                    <h4>PRODUCT DETAILS</h4>
+                    <div class="container_productDetails">
+                        <div class="div_mainImage">
+                        <img src="${orderObject.mainImage}"></div>
+                        <div>
+                            <p class="p_productName">${orderObject.productName}</p>
+                            <p>QUANTITY: ${orderObject.quantity}</p>
+                            <p>SIZE: ${orderObject.size}</p>
+                        </div>
+                        <button onclick="redirect('review','${orderKey}', '${o}')">REVIEW</button>
+                    </div>
+                    </div>`
+                }
+                
             };
         });
 

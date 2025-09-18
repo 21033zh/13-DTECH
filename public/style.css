@@ -850,7 +850,27 @@ button {
 
 /*--- ABOUT PAGE --------------------------------------------*/
 #main_about {
-    padding: 20px;
+    padding: 40px;
+}
+
+#descriptionDiv {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    text-align: center;
+}
+
+#descriptionDiv div {
+    padding: 20px 0px 20px 0px;
+    text-align: left;
+} 
+
+#descriptionDiv .image {
+    padding-left: 40px;
+}
+
+#descriptionDiv img {
+    width: 100%;
 }
 
 #teamDiv {
@@ -863,7 +883,7 @@ button {
 
 #zuriDiv, #graceDiv {
     position: relative;
-    margin: 10px 10%;
+    margin: 10px 5%;
     padding: 20px;
     background-color:#ffffff;
     box-shadow: 5px 5px 5px rgb(115, 115, 115);

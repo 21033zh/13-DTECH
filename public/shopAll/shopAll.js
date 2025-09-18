@@ -230,16 +230,18 @@ function handleSortSettings(event, category) {
 }
 
 function sortOldest(category) {
-    productsArray.sort((a, b) => 
-        a.value.date - b.value.date
-    ); 
+    productsArray.sort(function(a, b) {
+        return new Date(a.value.date) - new Date(b.value.date);
+    });
+    console.log(productsArray);
     createGrid(category);
 }
 
 function sortNewest(category) {
-    productsArray.sort((a, b) => 
-        b.value.date - a.value.date
-    ); 
+    productsArray.sort(function(a, b) {
+        return new Date(b.value.date) - new Date(a.value.date);
+    });
+    console.log(productsArray);
     createGrid(category);
 }
 
