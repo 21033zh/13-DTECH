@@ -1,12 +1,14 @@
 var colourFilter;
 var sizeFilter;
-var sortBy = 'date';       // or 'price'
-var sortSettings = 'newest'; // or 'lowPrice', 'highPrice', etc.
+var sortBy = 'date';      
+var sortSettings = 'newest'; 
 var productsArray = [];
 var allProductsArray = []
 
 let productsPerPage = 12;
 let currentIndex = 0;
+let userWishlist = {}; 
+
 
 console.log('page load');
 
@@ -44,7 +46,19 @@ function displayProducts(category) {
             });
         });
         allProductsArray = [].concat(productsArray);
-        createGrid(category);
+
+        // check if user is logged in, then get their wishlist
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                firebase.database().ref(`/accounts/${user.uid}/wishlist`).once('value').then(snap => {
+                    userWishlist = snap.val() || {}; // save wishlist
+                    createGrid(category);
+                });
+            } else {
+                userWishlist = {}; // empty if not logged in
+                createGrid(category);
+            }
+        });
 });
 }
 
@@ -57,8 +71,10 @@ function createGrid(category) {
 
 function loadMoreProducts(category) {
     let endIndex = currentIndex + productsPerPage;
+    
 
     for (let i = currentIndex; i < endIndex && i < productsArray.length; i++) {
+        
         if (category === 'all') {
             appendProduct(
                 productsArray[i].value.mainImage,
@@ -92,14 +108,6 @@ function loadMoreProducts(category) {
 }
 
 function appendProduct(mainImage, productID, productName, productPrice, productSize, productStock) {
-    let allInfo = [
-        mainImage,
-        productID,
-        productName,
-        productPrice,
-        productSize,
-        productStock
-    ]
 
     if (productStock < 1 ) {
         productPrice = 'OUT OF STOCK'
@@ -107,34 +115,51 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
         productPrice = '$' + productPrice;
     }
 
+    const isInWishlist = userWishlist.hasOwnProperty(productID);
+    const heartSrc = isInWishlist ? "/images/heart_filled.png" : "/images/heart.png";
+
+
     const product = 
-            `<div class="productContainer">
+           `<div class="productContainer">
             <div class="productImageContainer">
-            <a href="/products/product.html?productID=${productID}">
-                <img class="productImage" src="${mainImage}">
-            </a>
-                <img class="addToWishlistButton" src="/images/heart.png" onclick="wishlistPressed(
-                '${productID}', '${productName}', '${mainImage}')">
+                <a href="/products/product.html?productID=${productID}">
+                    <img class="productImage" src="${mainImage}">
+                </a>
+                <img class="addToWishlistButton" src="${heartSrc}" 
+                     onclick="wishlistPressed('${productID}', '${productName}', '${mainImage}', this)">
             </div>
-            <p class="productName" href="/products/product.html?productID=${productID}">
-            ${productName}</p>
-            <p class="productSize" >size ${productSize}</p>
+            <p class="productName">${productName}</p>
+            <p class="productSize">size ${productSize}</p>
             <p class="productPrice">${productPrice}</p>
             <div class="big_gap"></div>
-            </div>`
+        </div>`;
             ;
     document.getElementById("products_container").innerHTML += product;
 
 }
 
 
-function wishlistPressed(productID, productName, mainImage) {
+function wishlistPressed(productID, productName, mainImage, buttonEl) {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            console.log("User is signed in:", user);
-            firebase.database().ref("/accounts/" + user.uid + "/wishlist/" + productID ).update({
-                productName,
-                mainImage
+            const itemRef = firebase.database().ref(`/accounts/${user.uid}/wishlist/${productID}`);
+            itemRef.once('value').then(snapshot => {
+                if (snapshot.exists()) {
+                    // remove from wishlist
+                    return itemRef.remove().then(() => {
+                        buttonEl.src = "/images/heart.png";
+                        delete userWishlist[productID]; // keep local state in sync
+                    });
+                } else {
+                    // add to wishlist
+                    return itemRef.set({
+                        productName,
+                        mainImage
+                    }).then(() => {
+                        buttonEl.src = "/images/heart_filled.png";
+                        userWishlist[productID] = { productName, mainImage }; // sync local state
+                    });
+                }
             });
         } else {
             document.getElementById("wishlistPopup").classList.remove("hidden");
