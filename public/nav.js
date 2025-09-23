@@ -124,20 +124,24 @@ function footer() {
   div.innerHTML = `
 <!-- FOOTER SECTION ********************************************************-->
         <div id="footer">
-            <div>
+            <div class="section">
                 <h3>Socials</h3>
                 <ul>
                 <li>
-                    <img src="gmail">
+                  <div>
+                    <img class="footerIcon" src="/images/gmail.png">
                     <button><p>Gmail</p></button>
+                  </div>
                 </li>
                 <li>
-                    <img src="insta">
+                  <div>
+                    <img class="footerIcon" src="/images/insta.png">
                     <button><p>Insta</p></button>
+                  </div>
                 </li>
                 </ul>
             </div>
-            <div>
+            <div class="section">
                 <h3>About Doll Planet</h3>
                 <ul>
                     <li><a href="/about/about.html">About us</a></li>
@@ -145,7 +149,7 @@ function footer() {
                     <li><a href="/about/termsandconditions.html">Terms and conditions</a></li>
                 </ul>
             </div>
-            <div>
+            <div class="section">
                 <h3>Sign up</h3>
                 <a href="/account/account_redirect.html">Make an account</a>
             </div>

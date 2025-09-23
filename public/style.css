@@ -80,7 +80,7 @@ button {
     padding: 20px;
 }
 
-#footer div {
+#footer .section {
     padding: 15px;
     margin-left: 10%;
 }
@@ -109,12 +109,17 @@ button {
     margin: 0px;
 }
 
+.footerIcon {
+    width: 20px;
+    margin-top: 5px;
+}
+
 @media only screen and (max-width: 600px) {
     #footer {
        display: block;
     }
 
-    #footer div{
+    #footer .section{
         margin: 20px;
      }
 
@@ -910,6 +915,17 @@ button {
 }
 
 @media only screen and (max-width: 600px) {
+    #main_about {
+        padding: 10px;
+    }
+    #descriptionDiv {
+        grid-template-columns: 1fr;
+    }
+
+    #descriptionDiv .image {
+        padding: 0px;
+    }
+
     #teamDiv {
         grid-template-columns: 100%;
         grid-template-areas: "grace" "zuri";
@@ -1068,7 +1084,7 @@ button {
 }
 
 #form_createReview label {
-    padding: 10px;
+    padding: 10px 0px;
     font-size: 1rem;
     font-weight: bold;
 }
@@ -1076,7 +1092,7 @@ button {
 
 #form_createReview #textReview, #displayName {
     padding: 10px;
-    margin: 10px;
+    border: 1px solid black;
     font-size: 0.8rem;
     resize: none;
     font-family: "Algera Sans";
@@ -1084,17 +1100,20 @@ button {
     width: 80%;
 }
 
+#div_formContainer textarea {
+    margin: 10px 0px;
+}
+
 #form_createReview #textReview:focus-within,
 #form_createReview #textReview:hover,
 #form_createReview #textReview:valid{
     background-color:rgb(255, 255, 255);
-    border: 0px;
     outline: none;
 }
 
 #form_createReview #div_image {
     padding: 10px;
-    margin: 10px;
+    margin: 10px 0px 20px 0px;
     background-color: #e5e1e7
 }
 
@@ -1110,6 +1129,52 @@ button {
     border-radius: 4px;
 
 }
+
+#div_formContainer #submit {
+    background-color: black;
+    color: white;
+    padding: 14px 35px;
+    margin: 10px 0px;
+    border: none;
+    text-transform:uppercase;
+    cursor: pointer;
+}
+
+#reviewAlert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5); /* dark background */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+.button_inactive {
+    cursor:not-allowed;
+    background-color:#c8c8c8;
+}
+
+.reviewAlert_content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+    width: 80%;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+#alert_button a, #alert_button a:visited  {
+    color: white;
+    padding: 10px 15px;
+    font-size: 0.8rem;
+    background-color: black;
+}
+
 /*--- MAKE ACCOUNT PAGE  ----------------------------------------------*/
 #div_makeAcccountContainer {
     background-color: #ffffff;

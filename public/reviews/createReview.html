@@ -49,10 +49,10 @@
     <form id="form_createReview" onsubmit="checkReview(event); return false">
         <label for="textReview">Your review:</label><br>
         <textarea id="textReview" name="textReview" 
-        rows="3" maxlength="150"></textarea><br>
+        rows="3" maxlength="150" required></textarea><br>
 
         <label for="stars">Stars:</label>
-        <select id="stars" name="stars">
+        <select id="stars" name="stars" required>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -69,14 +69,24 @@
 
         <label for="displayName">Name to display on review:</label><br>
         <textarea id="displayName" name="displayName" 
-        rows="1" maxlength="150"></textarea><br>
+        rows="1" maxlength="150" required></textarea><br>
 
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" id="submit">
         <p id="status"></p>
     </form>
-    <p id="p_uploadStatus"></p>
 </div>
 
+    <div class="hidden" id="reviewAlert">
+        <div class="reviewAlert_content">
+            <div id="alert_message">
+                <p>Uploading your review...</p>
+                <p>Please do not close this page until uploaded</p>
+            </div>
+            <div id="alert_button">
+                <button class="button_inactive">CLOSE</button>
+            </div>
+        </div>
+    </div>
 
 <!-- REVIEWS END ********************************************************-->
  

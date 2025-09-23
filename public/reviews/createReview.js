@@ -17,8 +17,9 @@ function checkReview(event) {
             let stars = document.getElementById("stars").value;
             let displayName = document.getElementById("displayName").value;
 
-            var p_uploadStatus = document.getElementById("p_uploadStatus")
-            p_uploadStatus.innerHTML = "Uploading review...."
+            var reviewAlert = document.getElementById("reviewAlert");
+            reviewAlert.classList.remove("hidden");
+            reviewAlert.style.display = 'flex';
 
 
             const newReviewRef = firebase.database().ref("reviews").push();
@@ -30,37 +31,41 @@ function checkReview(event) {
                 'user': displayName,
                 'uid': user.uid
             }).then(() => {
-                const imageArray = document.getElementById("images").files;
-                if (imageArray) {
-                    for (i = 0; i < imageArray.length; i++) {
-                        let imageNum = 'image' + i;
-                        console.log(imageNum)
-                        console.log(imageArray[i]);
+                const imageArray = document.getElementById("images").files[0]
+                let uploadPromises = [];
+            
+                if (imageArray && imageArray.length > 0) {
+                    let imageNum = 'image' + i;
                         const storageRef = firebase.storage().ref("/reviews_images/" + imageArray[i].name);
-                        storageRef.put(imageArray[i]).then(snapshot => {
-                            return snapshot.ref.getDownloadURL(); // Get public image URL
-                        }).then(downloadURL => {
-                            console.log('added image to database');
-                            return firebase.database().ref("reviews/" + reviewID).update({
-                                [imageNum]: downloadURL 
+            
+                        let uploadTask = storageRef.put(imageArray[i])
+                            .then(snapshot => snapshot.ref.getDownloadURL())
+                            .then(downloadURL => {
+                                return firebase.database().ref("reviews/" + reviewID).update({
+                                    [imageNum]: downloadURL
+                                });
                             });
-                        }).then(() => {
-                            console.log("Images added.");
-                        }).catch(error => {
-                            console.error("Extra images upload failed:", error);
-                        });  
-                    }
-            }
+            
+                        uploadPromises.push(uploadTask);
+                }
+            
+                // Wait for all uploads to finish
+                return Promise.all(uploadPromises);
             }).then(() => {
                 orderRef.update({
                     reviewStatus: 'true'
                 })
             }).then(() => {
                 console.log('uploaded');
-                p_uploadStatus.innerHTML = "Your review has been uploaded!";
+                document.getElementById("alert_message").innerHTML = `<p>Your review has been uploaded</br>Thankyou
+                for your review!</p>`
+                document.getElementById("alert_button").innerHTML = `<a href="/account/account_reviews.html">
+                CLOSE</a>`
             }).catch((error) => {
                 console.error("Error uploading review:", error);
-                p_uploadStatus.innerHTML = "Error uploading your review. Please try again";
+                document.getElementById("alert_message").innerHTML = `<p>There was an error uploading your review. Please try again</p>`
+                document.getElementById("alert_button").innerHTML = `<a href="/account/account_reviews.html">
+                CLOSE</a>`
             });
             });
 
