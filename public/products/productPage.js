@@ -42,7 +42,7 @@ function productPage_addToWishlist() {
 // add product info to the database
     firebase.database().ref("/accounts/" + user.uid + "/wishlist/" + productID).update({
     }).then(() => {
-      createWishlistRemoveButton();
+      createWishlistRemoveButton(user);
     }).catch(err => {
       console.error("Error adding to wishlist:", err);
     });
@@ -62,7 +62,7 @@ function productPage_removeFromWishlist() {
     productRef.remove()
 // update wishlist button
         .then(function() {
-          createWishlistAddButton();
+          createWishlistAddButton(user);
         })
         .catch(function(error) {
             console.log('failure', error);
@@ -100,7 +100,7 @@ function createWishlistRemoveButton(user) {
 
   wishlistContainer.innerHTML = `
     <button id="button_removeFromWishlist">
-      <img src="/images/x.png">
+      <img src="/images/heart_filled.png">
     </button>`;
 
   const btn = document.getElementById("button_removeFromWishlist");
@@ -131,8 +131,10 @@ function loadProductDetails() {
 
       wishlistRef.once("value").then(snapshot => {
         if (snapshot.val() === null) {
+          console.log(user);
           createWishlistAddButton(user);
         } else {
+          console.log(user);
           createWishlistRemoveButton(user);
         }
       });

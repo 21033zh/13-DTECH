@@ -172,6 +172,11 @@ function goToPage(productID) {
     window.location = "productPage.html"
 }
 
+function goToCategory(category) {
+    var page = category + '.html'
+    window.location = page;
+}
+
 function displayProductPage() {
     var productName = sessionStorage.getItem("productName");
     var productPrice = sessionStorage.getItem("productPrice");

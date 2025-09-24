@@ -33,7 +33,7 @@ function navBar() {
       <a href="/shopAll/dresses.html">Dresses</a>
       <a href="/shopAll/shoes.html">Shoes</a>
       <a href="/shopAll/accessories.html">Accessories</a>
-      <a href="/shopAll/art.html">Art</a>
+      <a href="/shopAll/prints.html">Art</a>
       </div>
   </div>
 
@@ -76,6 +76,7 @@ function navBar() {
 </div>
 <div class="icon" id="cart">
   <a href="/purchase/cart.html">
+    <span id="cartCount" class="cart-badge">0</span>
       <img class="navIcons" src="/images/cart.png" alt="cart">
   </a>
 </div>
@@ -108,7 +109,7 @@ function navBar() {
           <a href="/shopAll/dresses.html">Dresses</a>
           <a href="/shopAll/shoes.html">Shoes</a>
           <a href="/shopAll/accessories.html">Accessories</a>
-          <a href="/shopAll/art.html">Art</a>
+          <a href="/shopAll/prints.html">Art</a>
       </div>
       </div>
   <a href="/about/about.html">ABOUT</a>
@@ -116,6 +117,27 @@ function navBar() {
 </nav>
 <!-- NAV BAR END ********************************************************-->
   `
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      const cartRef = firebase.database().ref(`/accounts/${user.uid}/cart/`);
+      cartRef.on('value', snapshot => {
+        const cart = snapshot.val() || {};
+        const count = Object.keys(cart).length; // how many items in cart
+        console.log(cart)
+        const badge = document.getElementById("cartCount");
+        if (badge) {
+          badge.textContent = count;
+          badge.style.display = count > 0 ? "inline-block" : "none"; // hide if empty
+        }
+      });
+    } else {
+      // If logged out, hide badge
+      const badge = document.getElementById("cartCount");
+      if (badge) badge.style.display = "none";
+    }
+  });
+
 }
 
 function footer() {
