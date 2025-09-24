@@ -36,6 +36,7 @@
       </script>
 
         <div id="container_navBar" height="146"></div>
+        <main>
 <!-- CATEGORIES START ***************************************************-->
 <div id="categoriesContainer">
   <div onclick="goToCategory('shopAll')">
@@ -118,6 +119,16 @@
         <div id="products_container"></div>
 
         <button id="loadMoreBtn" onclick="loadMoreProducts('art')">Load More</button>
+
+        <!-- Wishlist Popup -->
+        <div id="wishlistPopup" class="popup hidden">
+          <div class="popup-content">
+            <span id="closePopup" class="close">&times;</span>
+            <h2>Log in to add to your wishlist.</h2>
+            <a href="/account/makeAccount.html">LOG IN</a>
+          </div>
+        </div>
+      </main>
 
         <div id="container_footer"></div>
     </body>

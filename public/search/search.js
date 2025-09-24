@@ -7,6 +7,7 @@ var search_sortSettings = 'newest'; // or 'lowPrice', 'highPrice', etc.
 
 let search_productsPerPage = 12;
 let search_currentIndex = 0;
+let search_userWishlist = {}; 
 
 console.log('page load')
 
@@ -63,8 +64,21 @@ function search_displayProducts() {
         // Sort by relevance (descending)
         search_productsArray.sort((a, b) => b.relevance - a.relevance);
 
-        search_allProductsArray = [].concat(search_productsArray); // optional copy
-        search_createGrid(search_productsArray);
+        search_allProductsArray = [].concat(search_productsArray); 
+        
+        // check if user is logged in, then get their wishlist
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                firebase.database().ref(`/accounts/${user.uid}/wishlist`).once('value').then(snap => {
+                    search_userWishlist = snap.val() || {}; // save wishlist
+                    search_createGrid(search_productsArray);
+                });
+            } else {
+                search_userWishlist = {}; // empty if not logged in
+                search_createGrid(search_productsArray);
+            }
+        });
+        
     });
 }
 
@@ -98,22 +112,53 @@ function search_appendProduct(search_mainImage, search_productID,  search_produc
         search_productPrice = '$' + search_productPrice;
     }
 
+    const search_isInWishlist = search_userWishlist.hasOwnProperty(search_productID);
+    const search_heartSrc = search_isInWishlist ? "/images/heart_filled.png" : "/images/heart.png";
+
     const search_product = 
            `<div class="productContainer">
             <div class="productImageContainer">
-            <a href="/products/product.html?productID=${search_productID}">
-                <img class="productImage" src="${search_mainImage}">
-            </a>
-                <img class="addToWishlistButton" src="/images/heart.png" onclick="wishlistPressed(
-                '${search_productID}', '${search_productName}', '${search_mainImage}')">
+                <a href="/products/product.html?productID=${search_productID}">
+                    <img class="productImage" src="${search_mainImage}">
+                </a>
+                <img class="addToWishlistButton" src="${search_heartSrc}" 
+                     onclick="search_wishlistPressed('${search_productID}', '${search_productName}', '${search_mainImage}', this)">
             </div>
-            <p class="productName" href="/products/product.html?productID=${search_productID}">
-            ${search_productName}</p>
-            <p class="productSize" >size ${search_productSize}</p>
+            <p class="productName">${search_productName}</p>
+            <p class="productSize">size ${search_productSize}</p>
             <p class="productPrice">${search_productPrice}</p>
             <div class="big_gap"></div>
-            </div>`;
+        </div>`;
+            ;
     document.getElementById("search_products_container").innerHTML += search_product;
+}
+
+function search_wishlistPressed(search_productID, search_productName, search_mainImage, search_buttonEl) {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            const search_itemRef = firebase.database().ref(`/accounts/${user.uid}/wishlist/${search_productID}`);
+            search_itemRef.once('value').then(snapshot => {
+                if (snapshot.exists()) {
+                    // remove from wishlist
+                    return search_itemRef.remove().then(() => {
+                        search_buttonEl.src = "/images/heart.png";
+                        delete search_userWishlist[search_productID]; // keep local state in sync
+                    });
+                } else {
+                    // add to wishlist
+                    return search_itemRef.set({
+                        search_productName,
+                        search_mainImage
+                    }).then(() => {
+                        search_buttonEl.src = "/images/heart_filled.png";
+                        search_userWishlist[search_productID] = { search_productName, search_mainImage }; // sync local state
+                    });
+                }
+            });
+        } else {
+            document.getElementById("wishlistPopup").classList.remove("hidden");
+        }
+    });
 }
 
 function search_filterSettings(event) {
