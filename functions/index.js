@@ -39,7 +39,6 @@ exports.createCheckoutSession = functions.https.onRequest(async (req, res) => {
               },
               unit_amount: Math.round(item.price * 100),
             },
-            customer_email: req.body.email,
             quantity: item.quantity || 1,
             productID: item.id,
             size: item.size,
@@ -47,8 +46,9 @@ exports.createCheckoutSession = functions.https.onRequest(async (req, res) => {
             mainImage: item.mainImage,
           })),
           mode: "payment",
-          success_url: "https://dollplanet-947ae.web.app/purchase/success.html",
+          success_url: "https://dollplanet-947ae.web.app/purchase/success.html?session_id={CHECKOUT_SESSION_ID}",
           cancel_url: "https://dollplanet-947ae.web.app/purchase/cart.html",
+          customer_email: req.body.email,
           metadata: { userId: req.body.userId },
         
           // Require shipping address
@@ -117,7 +117,7 @@ exports.createPaymentLink = functions.https.onRequest(async (req, res) => {
           quantity: item.quantity || 1,
         })),
         mode: "payment",
-        success_url: "http://127.0.0.1:5500/purchase/success.html",
+        success_url: "http://127.0.0.1:5500/purchase/success.html?session_id={CHECKOUT_SESSION_ID}",
         cancel_url: "http://127.0.0.1:5500/purchase/cart.html",
         metadata: { userId: req.body.userId }, // 👈 session-wide metadata
       
@@ -125,6 +125,8 @@ exports.createPaymentLink = functions.https.onRequest(async (req, res) => {
         shipping_address_collection: {
           allowed_countries: ["NZ"],
         },
+
+        customer_email: req.body.email,
       
         shipping_options: [
           {
@@ -236,8 +238,18 @@ exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
       // Then write to your main paths
       await admin.database().ref(`/orders/${session.id}`).set(orderData);
       if (orderData.userId !== "guest") {
-        await admin.database().ref(`/accounts/${orderData.userId}/orders/${session.id}`).set(orderData);
+        await admin.database()
+          .ref(`/accounts/${orderData.userId}/orders/${session.id}`)
+          .set(orderData);
+      
+        // --- ✅ CLEAR USER CART ---
+        await admin.database()
+          .ref(`/accounts/${orderData.userId}/cart`)
+          .remove();
+      
+        console.log(`Cart cleared for user ${orderData.userId}`);
       }
+      
 
       console.log(`Order ${session.id} stored in Firebase.`);
     }
@@ -246,5 +258,31 @@ exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
   } catch (err) {
     console.error("⚠️ Webhook signature verification failed:", err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+});
+
+exports.getReceipt = functions.https.onRequest(async (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.status(204).send("");
+
+  try {
+    const sessionId = req.query.session_id;
+    if (!sessionId) {
+      return res.status(400).json({ error: "Missing session_id" });
+    }
+
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {
+      expand: ['payment_intent.charges'],
+    });
+
+    const receiptUrl =
+      session.payment_intent?.charges?.data[0]?.receipt_url || null;
+
+    res.json({ receiptUrl, session });
+  } catch (err) {
+    console.error("Error fetching receipt:", err);
+    res.status(500).json({ error: err.message });
   }
 });

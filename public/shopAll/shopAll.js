@@ -45,6 +45,11 @@ function displayProducts(category) {
                 value: childSnapshot.val()
             });
         });
+
+        productsArray.sort(function(a, b) {
+            return new Date(b.value.date) - new Date(a.value.date);
+        });
+        
         allProductsArray = [].concat(productsArray);
 
         // check if user is logged in, then get their wishlist
@@ -70,42 +75,35 @@ function createGrid(category) {
 }
 
 function loadMoreProducts(category) {
-    let endIndex = currentIndex + productsPerPage;
+    // Use productsArray (already filtered & sorted)
+    const loadMoreBtn = document.getElementById("loadMoreBtn");
+    let arrayToDisplay = productsArray.filter(p => category === 'all' || p.value.category === category);
+    console.log(arrayToDisplay);
+    if (arrayToDisplay.length === 0) {
+        document.getElementById("blankMessage").innerHTML =
+            'No ' + category + ' at the moment. Check back later!';
+        loadMoreBtn.style.display = 'none';
+    } else {
+        let endIndex = currentIndex + productsPerPage;
     
-
-    for (let i = currentIndex; i < endIndex && i < productsArray.length; i++) {
-        
-        if (category === 'all') {
+        for (let i = currentIndex; i < endIndex && i < arrayToDisplay.length; i++) {
             appendProduct(
-                productsArray[i].value.mainImage,
-                productsArray[i].key,
-                productsArray[i].value.productName,
-                productsArray[i].value.price,
-                productsArray[i].value.size,
-                productsArray[i].value.stock
-            );
-        } else if (category === productsArray[i].value.category) {
-            appendProduct(
-                productsArray[i].value.mainImage,
-                productsArray[i].key,
-                productsArray[i].value.productName,
-                productsArray[i].value.price,
-                productsArray[i].value.size,
-                productsArray[i].value.stock
+                arrayToDisplay[i].value.mainImage,
+                arrayToDisplay[i].key,
+                arrayToDisplay[i].value.productName,
+                arrayToDisplay[i].value.price,
+                arrayToDisplay[i].value.size,
+                arrayToDisplay[i].value.stock
             );
         }
+    
+        currentIndex = endIndex; // <-- only update if we actually loaded something
+        loadMoreBtn.style.display = currentIndex >= arrayToDisplay.length ? "none" : "block";
+    }
+    
+
     }
 
-    currentIndex = endIndex;
-
-    // Show or hide the button depending on if there are more products
-    const loadMoreBtn = document.getElementById("loadMoreBtn");
-    if (currentIndex >= productsArray.length) {
-        loadMoreBtn.style.display = "none";
-    } else {
-        loadMoreBtn.style.display = "block";
-    }
-}
 
 function appendProduct(mainImage, productID, productName, productPrice, productSize, productStock) {
 

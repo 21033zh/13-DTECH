@@ -31,18 +31,17 @@ function checkReview(event) {
                 'user': displayName,
                 'uid': user.uid
             }).then(() => {
-                const imageArray = document.getElementById("images").files[0]
+                const image = document.getElementById("images").files[0]
                 let uploadPromises = [];
             
-                if (imageArray && imageArray.length > 0) {
-                    let imageNum = 'image' + i;
-                        const storageRef = firebase.storage().ref("/reviews_images/" + imageArray[i].name);
+                if (image) {
+                        const storageRef = firebase.storage().ref("/reviews_images/" + image.name);
             
-                        let uploadTask = storageRef.put(imageArray[i])
+                        let uploadTask = storageRef.put(image)
                             .then(snapshot => snapshot.ref.getDownloadURL())
                             .then(downloadURL => {
                                 return firebase.database().ref("reviews/" + reviewID).update({
-                                    [imageNum]: downloadURL
+                                    image: downloadURL
                                 });
                             });
             

@@ -19,7 +19,7 @@ function createGrid(reviewsArray) {
         console.log('review');
         var stars = reviewsArray[i].value.stars;
         appendReview(
-            reviewsArray[i].value.image0,
+            reviewsArray[i].value.image,
             reviewsArray[i].value.textReview,
             reviewsArray[i].value.user,
             stars,

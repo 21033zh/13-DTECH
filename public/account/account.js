@@ -149,7 +149,9 @@ function displayUserReviews(uid) {
 
 function createGrid(reviewsArray, uid) {
     console.log(reviewsArray.length)
-    document.getElementById("acc_reviewsContainer").innerHTML = '';
+    var reviewsDiv = document.getElementById("acc_reviewsContainer")
+    reviewsDiv.innerHTML = '';
+
     for (i = 0; i < reviewsArray.length; i++) {
         console.log('key: ' + reviewsArray[i].key)
         console.log('uid: ' + uid)
@@ -159,7 +161,7 @@ function createGrid(reviewsArray, uid) {
             var stars = reviewsArray[i].value.stars;
             appendReview(
                 reviewsArray[i].key,
-                reviewsArray[i].value.image0,
+                reviewsArray[i].value.image,
                 reviewsArray[i].value.textReview,
                 stars,
                 i,
@@ -247,23 +249,29 @@ function createWishlistGrid(wishlistArray) {
     firebase.database().ref('/products/').once('value', function(snapshot) {
         var productsArray = snapshot.val();
         console.log(productsArray);
+        var wishlistDiv = document.getElementById("div_accWishlist");
+        wishlistDiv.innerHTML = '';
 
-        for (i = 0; i < wishlistArray.length; i++) {      
-            var productID = wishlistArray[i].key;
-            var mainImage = productsArray[productID].mainImage;
-            var productName = productsArray[productID].productName;
-            var price = productsArray[productID].price;
-            var size = productsArray[productID].size;
-            appendProduct(
-                productID,
-                mainImage,
-                productName,
-                price,
-                size
-            );
-        };
+        if (wishlistArray.length === 0) {
+            wishlistDiv.innerHTML = `<p>No items in your wishlist</p>`
+        } else {
+            for (i = 0; i < wishlistArray.length; i++) {      
+                var productID = wishlistArray[i].key;
+                var mainImage = productsArray[productID].mainImage;
+                var productName = productsArray[productID].productName;
+                var price = productsArray[productID].price;
+                var size = productsArray[productID].size;
+                appendProduct(
+                    productID,
+                    mainImage,
+                    productName,
+                    price,
+                    size
+                );
+            };
+        }
     });
-    document.getElementById("div_accWishlist").innerHTML = '';
+    
     
 }
 
@@ -330,6 +338,11 @@ function appendProduct(productID, mainImage, productName, productPrice, productS
 
 
 function createOrdersGrid(ordersArray) {
+    let div = document.getElementById("div_orders");
+
+    if (ordersArray.length === 0) {
+        div.innerHTML = `<p>No orders yet...</p>`
+    } else {
     for (i = 0; i < ordersArray.length; i++) {
         var orderNum = ordersArray[i].value.orderNumber;
         var orderKey = ordersArray[i].key;
@@ -339,8 +352,7 @@ function createOrdersGrid(ordersArray) {
         var line_items = ordersArray[i].value.line_items;
 
         console.log(line_items);
-
-        let div = document.getElementById("div_info");
+    
         div.innerHTML += `
         <div class="container_order" id="order${i}">
             <div class="heading" id="${i}_heading">
@@ -382,6 +394,7 @@ function createOrdersGrid(ordersArray) {
             }
         };
     };
+};
 }
 
 

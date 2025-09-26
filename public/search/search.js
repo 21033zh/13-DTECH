@@ -39,12 +39,22 @@ function search_displayProducts() {
             var search_productInfo = childSnapshot.val();
             var searched = 0;
 
+            console.log(search_productInfo)
+
+            const productName = search_productInfo.productName || "";
+            const brand = search_productInfo.brand || "";
+            const colour1 = search_productInfo.colour1 || "";
+            const colour2 = search_productInfo.colour2 || ""
+
+            console.log(productName, brand, colour1, colour2)
+
             for (let i = 0; i < searchWords.length; i++) {
                 const word = searchWords[i].toLowerCase();
                 if (
-                    search_productInfo.productName.toLowerCase().includes(word) ||
-                    search_productInfo.brand.toLowerCase().includes(word) ||
-                    search_productInfo.colour1.toLowerCase().includes(word)
+                    productName.toLowerCase().includes(word) ||
+                    brand.toLowerCase().includes(word) ||
+                    colour1.toLowerCase().includes(word) ||
+                    colour2.toLowerCase().includes(word)
                 ) {
                     searched += 2;
                 } else if (search_productInfo.colour2.toLowerCase().includes(word)) {

@@ -53,17 +53,17 @@
 
         <label for="stars">Stars:</label>
         <select id="stars" name="stars" required>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
         <option value="5">5</option>
+        <option value="4">4</option>
+        <option value="3">3</option>
+        <option value="2">2</option>
+        <option value="1">1</option>
         </select><br>
 
         <div id="div_image">
         <label for="image">Images:</label><br>
         <input type="file" id="images" name="main_image" accept="image/png, image/jpeg" 
-        onchange="displaySelectedImages()" multiple />
+        onchange="displaySelectedImages()"/>
         <div id="div_previewImages"></div>
         </div>
 

@@ -6,6 +6,7 @@ function createProduct(event) {
     const productName = document.getElementById("title").value;
     const price = document.getElementById("price").value;
     const size = document.getElementById("size").value;
+    const description = document.getElementById("description").value;
     const stock = document.getElementById("stock").value;
     const brand = document.getElementById("brand").value;
     const category = document.getElementById("category").value;
@@ -18,7 +19,7 @@ function createProduct(event) {
 
     newProductRef.set({
         productName, price, size, stock,
-        brand, category, colour1, colour2,
+        brand, category, colour1, colour2, description,
         date: firebase.database.ServerValue.TIMESTAMP
     }).then(() => {
         console.log("Product info saved, ID:", productID);
