@@ -27,78 +27,82 @@ function addToCart() {
     const user = firebase.auth().currentUser;
     const productId = urlParams.get('productID');
 
-    const productRef = firebase.database().ref(`/products/${productId}/`);
-    const cartRef = firebase.database().ref(`/accounts/${user.uid}/cart`);
+    var product = {};
 
+    const productRef = firebase.database().ref(`/products/${productId}/`);
     productRef.once("value").then(snapshot => {
         var snapshot = snapshot.val()
-        var product = {
+        product = {
             id: productId,
             productName: snapshot.productName,
             price: snapshot.price,
             mainImage: snapshot.mainImage,
             size: snapshot.size,
-            quantity: 1
+            quantity: 1,
+            stock: snapshot.stock
         };
-
-        // Check if the product is in the cart
-        cartRef.once('value')
-        .then(snapshot => {
-        if (snapshot.exists()) {
-            console.log('Product is already in the cart.');
-            console.log(snapshot)
-        } else {
-            console.log('Product is not in the cart.');
-        }
-        })
-        .catch(error => {
-        console.error('Error checking cart:', error);
-        });
-
-        console.log(product)
-
-    if (user) {
-        console.log('user is logged in')
-        // Save to Firebase
-        console.log(product)
-        const cartRef = firebase.database().ref(`/accounts/${user.uid}/cart/${product.id}`);
-        cartRef.once("value").then(snapshot => {
-            const existing = snapshot.val();
-            console.log('existing: ' + existing)
-            console.log(cartRef)
-            const newQty = (existing ? existing.quantity : 0) + 1;
-
-            cartRef.set({
-                ...product,
-                quantity: newQty
-            })
-            .then(() => {
-                console.log("Cart updated successfully!");
-                const buttonDiv = document.getElementById("container_cartButton");
-                buttonDiv.innerHTML = `<div class="div_addToCart">Added to cart</div>`;
-            })
-            .catch((error) => {
-                alert("Error adding to your cart. Please try again.")
+        return product;
+    }).then(product => {
+        if (user) {
+            console.log('user is logged in');
+            const cartRef = firebase.database().ref(`/accounts/${user.uid}/cart/${product.id}`);
+        
+            cartRef.once("value").then(snapshot => {
+                const existing = snapshot.val();
+                const currentQty = existing ? existing.quantity : 0;
+                const newQty = currentQty + 1;
+        
+                // Check against available stock
+                if (newQty > product.stock) {
+                    alert("Sorry, no more stock available for this item.");
+                    return;
+                }
+        
+                cartRef.set({
+                    ...product,
+                    quantity: newQty
+                })
+                .then(() => {
+                    console.log("Cart updated successfully!");
+                    const buttonDiv = document.getElementById("container_cartButton");
+                    buttonDiv.innerHTML = `<div class="div_addToCart">Added to cart</div>`;
+                })
+                .catch((error) => {
+                    alert("Error adding to your cart. Please try again.");
+                });
             });
-
-        });
-    } else {
-        console.log('user is not logged in')
-        // Save to localStorage
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const existing = cart.find(item => item.id === product.id);
-
-        console.log(product)
-
-        if (existing) {
-            existing.quantity += 1;
+        
         } else {
-            cart.push(product);
-        }
+            console.log('user is not logged in');
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const existing = cart.find(item => item.id === product.id);
+        
+            const currentQty = existing ? existing.quantity : 0;
+            const newQty = currentQty + 1;
 
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }
-    });
+            console.log(currentQty, newQty)
+
+            console.log(product.stock)
+        
+            // Check stock
+            if (newQty > product.stock) {
+                renderInCartButton()
+                alert("Sorry, no more stock available for this item.");
+                return;
+            }
+        
+            if (existing) {
+                existing.quantity = newQty;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+        
+            localStorage.setItem("cart", JSON.stringify(cart));
+            console.log(JSON.parse(localStorage.getItem("cart")));
+
+        }
+    })
+        
 }
 
 // ----------------------

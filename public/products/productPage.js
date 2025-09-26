@@ -91,6 +91,7 @@ function productPage_removeFromWishlist() {
   });
 }
 
+
 /**-----------------------------------------------------------------
  * createWishlistRemoveButton
  ------------------------------------------------------------------*/
@@ -178,42 +179,50 @@ function displayProductDetails(cartRef, user) {
     // Handle cart button
     // ----------------------------
     var container_cartButton = document.getElementById("container_cartButton");
-   
-    if (stock > 0) {
-      if (user) { 
-        cartRef.once('value').then(snapshot => {
-          if (snapshot.exists()) {
-            container_cartButton.innerHTML = `<div class="div_addToCart">IN CART</div>`;
-          } else {
-            console.log('stock higher than 0');
-            container_cartButton.innerHTML = `<button id="button_addToCart">ADD TO CART</button>`;
-            const addToCartButton = document.getElementById("button_addToCart");
-  
-            addToCartButton.addEventListener("click", () => {
-                // user signed in → normal addToCart
-                cartRef.once('value').then(snapshot => {
-                  if (!snapshot.exists()) {
-                    addToCart();
-                  } else {
-                    showPopup("Error - already in cart")
-                  }
-                });
-            });
-  
-          }
-        })
-      } else {
-        container_cartButton.innerHTML = `<button id="button_addToCart">ADD TO CART</button>`;
-        const addToCartButton = document.getElementById("button_addToCart");
 
-        addToCartButton.addEventListener("click", () => {
-            // user NOT signed in, so show popup
-            showPopup("Log in to add to cart");
-        });
+    // out of stock button
+    if (stock <= 0) {
+      container_cartButton.innerHTML = `<div class="div_addToCart">OUT OF STOCK</div>`;
+      return;
+    }
+
+    // add to cart button
+    const renderAddToCart = () => {
+      container_cartButton.innerHTML = `<button id="button_addToCart">ADD TO CART</button>`;
+      document.getElementById("button_addToCart")
+        .addEventListener("click", addToCart);
+    };
+  
+    // if user has a cart
+    if (cartRef) {
+      cartRef.once("value").then(snapshot => {
+        // if the product is in the cart, create "in cart" button
+        if (snapshot.exists()) {
+          renderInCartButton()
+        } else {
+          renderAddToCart();
+        }
+      });
+    // if user does not have a cart yet
+    } else if (!user) {
+      console.log('not signed in');
+      let pp_cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const pp_existing = pp_cart.find(item => item.id === productID);
+  
+      const pp_qty = pp_existing ? pp_existing.quantity : 0;
+
+      console.log(pp_qty)
+
+      // Check stock
+      if (pp_qty >= stock) {
+          renderInCartButton()
+      } else {
+        renderAddToCart();
       }
     } else {
-      container_cartButton.innerHTML = `<div class="div_addToCart">OUT OF STOCK</div>`;
+      renderAddToCart();
     }
+  
 
     // ----------------------------
     // Colour display
@@ -262,6 +271,10 @@ function displayProductDetails(cartRef, user) {
     document.getElementById("p_description").innerHTML = description;
     document.getElementById("p_flaws").innerHTML = flaws;
   });
+}
+
+function renderInCartButton() {
+  container_cartButton.innerHTML = `<div class="div_addToCart">IN CART</div>`;
 }
 
 /**-----------------------------------------------------------------
