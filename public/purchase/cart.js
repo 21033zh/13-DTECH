@@ -110,14 +110,16 @@ function addToCart() {
 // ----------------------
 async function startCheckout() {
     const user = firebase.auth().currentUser;
-    if (!user) {
-        alert("You must be signed in to checkout.");
-        return;
+
+    let cart;
+    if (user) {
+        const snapshot = await firebase.database().ref(`/accounts/${user.uid}/cart`).once("value");
+        cart = snapshot.val() || {};
+    } else {
+        cart = JSON.parse(localStorage.getItem("cart")) || [];
     }
 
-    const snapshot = await firebase.database().ref(`/accounts/${user.uid}/cart`).once("value");
-    const cart = snapshot.val() || {};
-    const items = Object.values(cart);
+    const items = user ? Object.values(cart) : cart; // cart is object for logged in, array for guest
 
     if (items.length === 0) {
         alert("Your cart is empty.");
@@ -126,11 +128,13 @@ async function startCheckout() {
 
     try {
         console.log(items);
+
         const response = await fetch("https://createpaymentlink-cpk5xp36za-uc.a.run.app", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                userId: user.uid,  // 👈 MUST SEND
+                userId: user ? user.uid : null, // optional for guest checkout
+                email: user ? user.email : null, // optional
                 items: items.map(item => ({
                     name: item.productName,
                     price: item.price,
@@ -141,6 +145,7 @@ async function startCheckout() {
                 }))
             })
         });
+
 
         const data = await response.json();
 
@@ -206,15 +211,17 @@ function loadCart() {
                     });
                     console.log(cart)
                 })
-                populateCartDiv(cart, user);
+                populateCartDiv(cart);
             });
         } else {
             let storedCartString = localStorage.getItem("cart");
             cart = JSON.parse(storedCartString);
+
+            console.log(cart)
             
             document.getElementById("cart_alert").innerHTML = 
             '<button><a href="/account/account.html">Sign in to save your cart</a></button>'
-            populateCartDiv(cart, user);
+            populateCartDiv(cart);
         }
 
     });
@@ -223,9 +230,7 @@ function loadCart() {
 // ----------------------
 // POPULATE THE CART ON CART.HTML
 // ----------------------
-function populateCartDiv(cart, user) {
-    console.log(cart)
-
+function populateCartDiv(cart) {
     let cartItemsDiv = document.getElementById("cartItems");
     let cartPricesDiv = document.getElementById("cartItemPrices");
     let cartTotal = document.getElementById("cartTotal");
@@ -235,17 +240,22 @@ function populateCartDiv(cart, user) {
     var total = 0;
     var shipping = 7;
 
+    const user = firebase.auth().currentUser;
+
+    console.log(user)
     // populate cart div
 
+    if (cart){
     cart.forEach(item => {
-        var productID = item.key;
         if (user) {
+            var productID = item.key;
             var price = item.value.price
             var quantity = item.value.quantity
             var productName = item.value.productName;
             var size = item.value.size;
             var mainImage = item.value.mainImage;
         } else {
+            var productID = item.id;
             var price = item.price
             var quantity = item.quantity
             var productName = item.productName;
@@ -266,7 +276,7 @@ function populateCartDiv(cart, user) {
                     <p>Size: ${size}</p>
                     <p>Price: $${price} x ${quantity}</p>
                 </div>
-                <div onclick="removeProduct('${productID}', '${user.uid}')" class="remove">
+                <div onclick="removeProduct('${productID}')" class="remove">
                     <img src="/images/x.png">
                 </div>
             </div>
@@ -276,17 +286,23 @@ function populateCartDiv(cart, user) {
     total += shipping;
     cartPricesDiv.innerHTML += `<p>Shipping</p><p>$${shipping}</p>`
     cartTotal.innerText = "Total: $" + total.toFixed(2);
+
+    } else {
+        cartItemsDiv.innerHTML += `<p>Cart is empty</p>`
+    }
+
 }
 
 function goToPage(productID) {
     window.location=`/products/product.html?productID=${productID}`;
 }
 
-function removeProduct(productID, uid) {
-    console.log(productID);
+function removeProduct(productID) {
+    const user = firebase.auth().currentUser;
 
-    var productRef = firebase.database().ref(`/accounts/${uid}/cart/${productID}`);
-    productRef.remove()
+    if (user) {
+        var productRef = firebase.database().ref(`/accounts/${uid}/cart/${productID}`);
+        productRef.remove()
         .then(function() {
             location.reload();
             console.log('success');
@@ -295,4 +311,13 @@ function removeProduct(productID, uid) {
             console.log('failure', error);
             alert(`There was an error deleting '${product.productName}' from the cart. Please try again.`);
         });
+    } else {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart = cart.filter(item => item.id !== productID);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        console.log("Updated cart:", cart);
+
+        }
+
+    
 }

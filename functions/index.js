@@ -23,54 +23,52 @@ exports.createCheckoutSession = functions.https.onRequest(async (req, res) => {
             return res.status(400).json({ error: "No items provided" });
         }
 
-        const session = await stripe.checkout.sessions.create({
+        const sessionParams = {
           payment_method_types: ["card"],
           line_items: items.map(item => ({
-            price_data: {
-              currency: "nzd",
-              product_data: {
-                name: item.name,
-                metadata: {
-                  productID: item.id,
-                  size: item.size,
-                  mainImage: item.mainImage,
-                  reviewStatus: 'false'
-                }
+              price_data: {
+                  currency: "nzd",
+                  product_data: {
+                      name: item.name,
+                      metadata: {
+                          productID: item.id,
+                          size: item.size,
+                          mainImage: item.mainImage,
+                          reviewStatus: 'false'
+                      }
+                  },
+                  unit_amount: Math.round(item.price * 100),
               },
-              unit_amount: Math.round(item.price * 100),
-            },
-            quantity: item.quantity || 1,
-            productID: item.id,
-            size: item.size,
-            name: item.name,
-            mainImage: item.mainImage,
+              quantity: item.quantity || 1,
           })),
           mode: "payment",
           success_url: "https://dollplanet-947ae.web.app/purchase/success.html?session_id={CHECKOUT_SESSION_ID}",
           cancel_url: "https://dollplanet-947ae.web.app/purchase/cart.html",
-          customer_email: req.body.email,
-          metadata: { userId: req.body.userId },
-        
-          // Require shipping address
+          metadata: { userId: req.body.userId || "guest" },
           shipping_address_collection: {
-            allowed_countries: ["NZ"], // adjust countries you ship to
+              allowed_countries: ["NZ"],
           },
-        
-          // Optional: shipping options like fixed cost
           shipping_options: [
-            {
-              shipping_rate_data: {
-                display_name: "Standard Shipping",
-                type: "fixed_amount",
-                fixed_amount: { amount: 700, currency: "nzd" }, // $7.00
-                delivery_estimate: {
-                  minimum: { unit: "business_day", value: 5 },
-                  maximum: { unit: "business_day", value: 7 },
-                },
+              {
+                  shipping_rate_data: {
+                      display_name: "Standard Shipping",
+                      type: "fixed_amount",
+                      fixed_amount: { amount: 700, currency: "nzd" },
+                      delivery_estimate: {
+                          minimum: { unit: "business_day", value: 5 },
+                          maximum: { unit: "business_day", value: 7 },
+                      },
+                  },
               },
-            },
           ],
-        });
+      };
+      
+      // ✅ Only add customer_email if it exists and is valid
+      if (req.body.email && typeof req.body.email === "string") {
+          sessionParams.customer_email = req.body.email;
+      }
+      
+      const session = await stripe.checkout.sessions.create(sessionParams);
 
         res.json({ url: session.url });
     } catch (err) {
@@ -80,77 +78,77 @@ exports.createCheckoutSession = functions.https.onRequest(async (req, res) => {
 });
 
 exports.createPaymentLink = functions.https.onRequest(async (req, res) => {
-    // Set CORS headers on all responses
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type");
-  
-    if (req.method === "OPTIONS") {
-      // Preflight request. Respond with 204 (No Content)
-      return res.status(204).send("");
-    }
-  
-    try {
-      // Parse JSON safely
-      const { items } = req.body;
-      if (!items || !Array.isArray(items) || items.length === 0) {
-        return res.status(400).send({ error: "Invalid or empty items array" });
-      }
-  
-      // Create Stripe Checkout session
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        line_items: items.map(item => ({
-          price_data: {
-            currency: "nzd",
-            product_data: {
-              name: item.name,
-              metadata: {
-                productID: item.id,
-                size: item.size,
-                mainImage: item.mainImage,
-                reviewStatus: 'false'
-              }
-            },
-            unit_amount: Math.round(item.price * 100),
-          },
-          quantity: item.quantity || 1,
-        })),
-        mode: "payment",
-        success_url: "http://127.0.0.1:5500/purchase/success.html?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url: "http://127.0.0.1:5500/purchase/cart.html",
-        metadata: { userId: req.body.userId }, // 👈 session-wide metadata
-      
-        // Require shipping address
-        shipping_address_collection: {
-          allowed_countries: ["NZ"],
-        },
+  // Set CORS headers
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
 
-        customer_email: req.body.email,
-      
-        shipping_options: [
-          {
-            shipping_rate_data: {
-              display_name: "Standard Shipping",
-              type: "fixed_amount",
-              fixed_amount: { amount: 700, currency: "nzd" },
-              delivery_estimate: {
-                minimum: { unit: "business_day", value: 5 },
-                maximum: { unit: "business_day", value: 7 },
-              },
+  if (req.method === "OPTIONS") {
+    return res.status(204).send("");
+  }
+
+  try {
+    const { items, userId, email } = req.body;
+
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).send({ error: "Invalid or empty items array" });
+    }
+
+    const sessionParams = {
+      payment_method_types: ["card"],
+      line_items: items.map(item => ({
+        price_data: {
+          currency: "nzd",
+          product_data: {
+            name: item.name,
+            metadata: {
+              productID: item.id,
+              size: item.size,
+              mainImage: item.mainImage,
+              reviewStatus: "false",
             },
           },
-        ],
-      });
-      
-      // Return URL
-      return res.status(200).json({ url: session.url });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ error: err.message });
+          unit_amount: Math.round(item.price * 100),
+        },
+        quantity: item.quantity || 1,
+      })),
+      mode: "payment",
+      success_url:
+        "https://dollplanet-947ae.web.app/purchase/success.html?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url:
+        "https://dollplanet-947ae.web.app/purchase/cart.html",
+      metadata: { userId: userId || "guest" },
+      shipping_address_collection: {
+        allowed_countries: ["NZ"],
+      },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            display_name: "Standard Shipping",
+            type: "fixed_amount",
+            fixed_amount: { amount: 700, currency: "nzd" },
+            delivery_estimate: {
+              minimum: { unit: "business_day", value: 5 },
+              maximum: { unit: "business_day", value: 7 },
+            },
+          },
+        },
+      ],
+    };
+
+    if (email && typeof email === "string" && email.includes("@")) {
+      sessionParams.customer_email = email;
     }
-  });
-  
+
+    // ✅ Actually create the session
+    const session = await stripe.checkout.sessions.create(sessionParams);
+
+    return res.status(200).json({ url: session.url });
+  } catch (err) {
+    console.error("Checkout error:", err);
+    return res.status(500).json({ error: err.message });
+  }
+});
 
   // ----------------------
 // Handle Stripe Webhooks
@@ -284,5 +282,25 @@ exports.getReceipt = functions.https.onRequest(async (req, res) => {
   } catch (err) {
     console.error("Error fetching receipt:", err);
     res.status(500).json({ error: err.message });
+  }
+});
+
+exports.getSessionInfo = functions.https.onRequest(async (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.status(204).send("");
+
+  try {
+      const sessionId = req.query.session_id;
+      if (!sessionId) {
+          return res.status(400).json({ error: "Missing session_id" });
+      }
+
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
+      res.json({ session });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: err.message });
   }
 });
