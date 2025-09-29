@@ -19,20 +19,19 @@ document.addEventListener("DOMContentLoaded", () => {
         addToCart(productID);
       }
     });
+    document.getElementById("closePopup").addEventListener("click", () => {
+        console.log('x button pressed')
+        document.getElementById("wishlistPopup").classList.add("hidden");
+    });
+    
+    // Optional: close popup if user clicks outside it
+    document.getElementById("wishlistPopup").addEventListener("click", (e) => {
+        if (e.target.id === "wishlistPopup") {
+            e.target.classList.add("hidden");
+        }
+    });
 });
-  
 
-document.getElementById("closePopup").addEventListener("click", () => {
-    console.log('x button pressed')
-    document.getElementById("wishlistPopup").classList.add("hidden");
-});
-
-// Optional: close popup if user clicks outside it
-document.getElementById("wishlistPopup").addEventListener("click", (e) => {
-    if (e.target.id === "wishlistPopup") {
-        e.target.classList.add("hidden");
-    }
-});
 
 function displayProducts(category) {
     console.log('displayProducts')
@@ -120,10 +119,10 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
     const product = 
            `<div class="productContainer">
             <div class="productImageContainer">
-                <a href="/products/product.html?productID=${productID}">
-                    <img class="productImage" src="${mainImage}">
+                <a aria-label="link to ${productName}" href="/products/product.html?productID=${productID}">
+                    <img alt="model wearing ${productName}" class="productImage" src="${mainImage}">
                 </a>
-                <img class="addToWishlistButton" src="${heartSrc}" 
+                <img alt="wishlist button" class="addToWishlistButton" src="${heartSrc}" 
                      onclick="wishlistPressed('${productID}', '${productName}', '${mainImage}', this)">
             </div>
             <p class="productName">${productName}</p>

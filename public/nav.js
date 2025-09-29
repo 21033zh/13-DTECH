@@ -147,24 +147,24 @@ function footer() {
 <!-- FOOTER SECTION ********************************************************-->
         <div id="footer">
             <div class="section">
-                <h3>Socials</h3>
+                <h1 class="footerHeader">Socials</h1>
                 <ul>
                 <li>
                   <div>
-                    <img class="footerIcon" src="/images/gmail.png">
+                    <img width="20px" height="20px" class="footerIcon" src="/images/gmail.png" alt="gmail icon">
                     <button><p>Gmail</p></button>
                   </div>
                 </li>
                 <li>
                   <div>
-                    <img class="footerIcon" src="/images/insta.png">
+                    <img width="20px" height="20px" class="footerIcon" src="/images/insta.png" alt="instagram icon">
                     <button><p>Insta</p></button>
                   </div>
                 </li>
                 </ul>
             </div>
             <div class="section">
-                <h3>About Doll Planet</h3>
+                <h1 class="footerHeader">About Doll Planet</h1>
                 <ul>
                     <li><a href="/about/about.html">About us</a></li>
                     <li><a href="/about/privacypolicy.html">Privacy policy</a></li>
@@ -172,7 +172,7 @@ function footer() {
                 </ul>
             </div>
             <div class="section">
-                <h3>Sign up</h3>
+                <h1 class="footerHeader">Sign up</h1>
                 <a href="/account/account_redirect.html">Make an account</a>
             </div>
         </div>

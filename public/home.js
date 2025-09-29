@@ -30,7 +30,7 @@ function createRow(productsArray) {
             const product = 
             `<div class="featured_product">
             <a href="/products/product.html?productID=${productsArray[i].key}">
-            <img src="${productsArray[i].value.mainImage}" class="featured_image">
+            <img alt="${productsArray[i].value.productName}" src="${productsArray[i].value.mainImage}" class="featured_image">
             <div class="info_card">
             <p>${productsArray[i].value.productName}</p>
             <p>size ${productsArray[i].value.size}</p>

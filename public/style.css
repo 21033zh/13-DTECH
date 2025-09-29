@@ -21,6 +21,10 @@ a {
     text-align: center;
 }
 
+h2 {
+    font-size: 1.2rem;
+}
+
 h1 {
     margin-left: 5px;
 }
@@ -71,7 +75,17 @@ button {
     100% { opacity: 0; }
   }
 
-
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 
 /*--- FOOTER --------------------------------------*/
 #footer {
@@ -89,7 +103,7 @@ button {
     margin-left: 10%;
 }
 
-#footer h3 {
+#footer .footerHeader {
     font-size: 1rem;
 }
 
@@ -403,13 +417,13 @@ button {
   }
   
   /* Close button */
-  .close {
+  #closePopup {
     position: absolute;
-    top: 15px;
-    right: 20px;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    width: 20px;
+    height: 20px;
   }
   
 #blankMessage {
@@ -886,17 +900,25 @@ button {
     padding: 40px;
 }
 
-#descriptionDiv {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 60% 40%;
-    text-align: center;
+#aboutH1 {
+    margin: 10px 0px 0px 0px;
+    padding: 0px;
 }
 
-#descriptionDiv div {
-    padding: 20px 0px 20px 0px;
+#aboutUs_headerDiv {
+    margin: 20px 0px;
+}
+
+#aboutUs_headerImg {
+    width: 100%;
+    height: auto;
+}
+
+#descriptionDiv {
+    width: 100%;
     text-align: left;
-} 
+    padding: 5px 0px 50px 0px;
+}
 
 #descriptionDiv .image {
     padding-left: 40px;
@@ -916,10 +938,10 @@ button {
 
 #zuriDiv, #graceDiv {
     position: relative;
-    margin: 10px 5%;
+    margin: 10px 5% 40px 5%;
     padding: 20px;
     background-color:#ffffff;
-    box-shadow: 5px 5px 5px rgb(115, 115, 115);
+   
     border: solid 1px black;
 }
 
@@ -1058,7 +1080,7 @@ button {
     padding: 10px
 }
 
-#star {
+.star {
     width: 20px;
     padding: 5px;
 }
@@ -1078,6 +1100,11 @@ button {
 
     #reviewsHeading a {
         width: 50%;
+    }
+
+    .star {
+        width: 12px;
+        padding: 3px;
     }
 }
 

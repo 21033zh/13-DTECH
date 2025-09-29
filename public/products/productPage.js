@@ -176,6 +176,53 @@ function displayProductDetails(cartRef, user) {
     var stock = Number(productInfo.stock);
 
     // ----------------------------
+    // Colour display
+    // ----------------------------
+    document.getElementById("div_colour").innerHTML = ""; // reset
+    var div_colour1 = `<div id="colour1"></div><p>${colour1}</p>`;
+    document.getElementById("div_colour").innerHTML += div_colour1;
+    var newdiv_colour1 = document.getElementById("colour1");
+    newdiv_colour1.style.backgroundColor = colour1code;
+    if (colour1 === "white") newdiv_colour1.style.border = "1px solid black";
+
+    var div_colour2 = `<div id="colour2"></div><p>${colour2}</p>`;
+    document.getElementById("div_colour").innerHTML += div_colour2;
+    var newdiv_colour2 = document.getElementById("colour2");
+    newdiv_colour2.style.backgroundColor = colour2code;
+    if (colour2 === "white") newdiv_colour2.style.border = "1px solid black";
+
+    // ----------------------------
+    // Images
+    // ----------------------------
+    var ul_photos = document.getElementById("ul_photos");
+    ul_photos.innerHTML = ""; 
+
+    imagesArray = Object.values(imagesObject);
+   
+    for (let i = 0; i < imagesArray.length; i++) {
+      console.log('hi')
+      let photo = `<li><img id="slide${i}" src="${imagesArray[i]}"></li>`;
+      ul_photos.innerHTML += photo;
+    }
+
+    var div = document.getElementById("div_selectedImage");
+    div.innerHTML = `<img class="img_selected" src=${imagesArray[slidePlace]}>`;
+
+    var img_selectedSlide = document.getElementById("slide0");
+    if (img_selectedSlide) img_selectedSlide.style.opacity = 0.5;
+
+    // ----------------------------
+    // Text fields
+    // ----------------------------
+    document.getElementById("title").innerHTML = productName;
+    document.getElementById("h1_name").innerHTML = productName;
+    document.getElementById("p_price").innerHTML = '$' + price;
+    document.getElementById("p_brand").innerHTML = brand;
+    document.getElementById("p_size").innerHTML = size;
+    document.getElementById("p_description").innerHTML = description;
+    document.getElementById("p_flaws").innerHTML = flaws;
+
+     // ----------------------------
     // Handle cart button
     // ----------------------------
     var container_cartButton = document.getElementById("container_cartButton");
@@ -223,53 +270,6 @@ function displayProductDetails(cartRef, user) {
       renderAddToCart();
     }
   
-
-    // ----------------------------
-    // Colour display
-    // ----------------------------
-    document.getElementById("div_colour").innerHTML = ""; // reset
-    var div_colour1 = `<div id="colour1"></div><p>${colour1}</p>`;
-    document.getElementById("div_colour").innerHTML += div_colour1;
-    var newdiv_colour1 = document.getElementById("colour1");
-    newdiv_colour1.style.backgroundColor = colour1code;
-    if (colour1 === "white") newdiv_colour1.style.border = "1px solid black";
-
-    var div_colour2 = `<div id="colour2"></div><p>${colour2}</p>`;
-    document.getElementById("div_colour").innerHTML += div_colour2;
-    var newdiv_colour2 = document.getElementById("colour2");
-    newdiv_colour2.style.backgroundColor = colour2code;
-    if (colour2 === "white") newdiv_colour2.style.border = "1px solid black";
-
-    // ----------------------------
-    // Images
-    // ----------------------------
-    var ul_photos = document.getElementById("ul_photos");
-    ul_photos.innerHTML = ""; 
-
-    imagesArray = Object.values(imagesObject);
-   
-    for (let i = 0; i < imagesArray.length; i++) {
-      console.log('hi')
-      let photo = `<li><img id="slide${i}" src="${imagesArray[i]}"></li>`;
-      ul_photos.innerHTML += photo;
-    }
-
-    var div = document.getElementById("div_selectedImage");
-    div.innerHTML = `<img class="img_selected" src=${imagesArray[slidePlace]}>`;
-
-    var img_selectedSlide = document.getElementById("slide0");
-    if (img_selectedSlide) img_selectedSlide.style.opacity = 0.5;
-
-    // ----------------------------
-    // Text fields
-    // ----------------------------
-    document.getElementById("title").innerHTML = productName;
-    document.getElementById("h1_name").innerHTML = productName;
-    document.getElementById("p_price").innerHTML = '$' + price;
-    document.getElementById("p_brand").innerHTML = brand;
-    document.getElementById("p_size").innerHTML = size;
-    document.getElementById("p_description").innerHTML = description;
-    document.getElementById("p_flaws").innerHTML = flaws;
   });
 }
 

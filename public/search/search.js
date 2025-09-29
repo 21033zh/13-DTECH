@@ -128,10 +128,10 @@ function search_appendProduct(search_mainImage, search_productID,  search_produc
     const search_product = 
            `<div class="productContainer">
             <div class="productImageContainer">
-                <a href="/products/product.html?productID=${search_productID}">
-                    <img class="productImage" src="${search_mainImage}">
+                <a aria-label="link to ${search_productName}" href="/products/product.html?productID=${search_productID}">
+                    <img alt="${search_productName}" class="productImage" src="${search_mainImage}">
                 </a>
-                <img class="addToWishlistButton" src="${search_heartSrc}" 
+                <img class="addToWishlistButton" src="${search_heartSrc}" alt="wishlist button"
                      onclick="search_wishlistPressed('${search_productID}', '${search_productName}', '${search_mainImage}', this)">
             </div>
             <p class="productName">${search_productName}</p>

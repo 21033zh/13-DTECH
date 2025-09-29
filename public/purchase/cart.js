@@ -54,18 +54,17 @@ function addToCart() {
         
                 // Check against available stock
                 if (newQty > product.stock) {
-                    alert("Sorry, no more stock available for this item.");
+                    renderInCartButton()
+                    showPopup("Sorry, no more stock available for this item.");
                     return;
                 }
-        
+
                 cartRef.set({
                     ...product,
                     quantity: newQty
                 })
                 .then(() => {
-                    console.log("Cart updated successfully!");
-                    const buttonDiv = document.getElementById("container_cartButton");
-                    buttonDiv.innerHTML = `<div class="div_addToCart">Added to cart</div>`;
+                    showPopup("Added to cart");
                 })
                 .catch((error) => {
                     alert("Error adding to your cart. Please try again.");
@@ -87,7 +86,7 @@ function addToCart() {
             // Check stock
             if (newQty > product.stock) {
                 renderInCartButton()
-                alert("Sorry, no more stock available for this item.");
+                showPopup("Sorry, no more stock available for this item.");
                 return;
             }
         
@@ -96,6 +95,8 @@ function addToCart() {
             } else {
                 cart.push({ ...product, quantity: 1 });
             }
+
+            showPopup("Added to cart");
         
             localStorage.setItem("cart", JSON.stringify(cart));
             console.log(JSON.parse(localStorage.getItem("cart")));
@@ -242,10 +243,10 @@ function populateCartDiv(cart) {
 
     const user = firebase.auth().currentUser;
 
-    console.log(user)
+    console.log(cart)
     // populate cart div
 
-    if (cart){
+    if (cart.length > 0) {
     cart.forEach(item => {
         if (user) {
             var productID = item.key;
@@ -286,8 +287,11 @@ function populateCartDiv(cart) {
     total += shipping;
     cartPricesDiv.innerHTML += `<p>Shipping</p><p>$${shipping}</p>`
     cartTotal.innerText = "Total: $" + total.toFixed(2);
+    console.log('cart is not empty')
+
 
     } else {
+        console.log('cart is empty')
         cartItemsDiv.innerHTML += `<p>Cart is empty</p>`
     }
 
@@ -301,7 +305,7 @@ function removeProduct(productID) {
     const user = firebase.auth().currentUser;
 
     if (user) {
-        var productRef = firebase.database().ref(`/accounts/${uid}/cart/${productID}`);
+        var productRef = firebase.database().ref(`/accounts/${user.uid}/cart/${productID}`);
         productRef.remove()
         .then(function() {
             location.reload();
