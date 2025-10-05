@@ -3,8 +3,6 @@ var uiConfig = {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
       var user = authResult.user;
       var isNewUser = authResult.additionalUserInfo.isNewUser;
-
-      if (isNewUser && user && user.uid) {
         const displayName = user.displayName || "Unnamed User";
         const nameArray = displayName.split(" ");
         const firstName = nameArray[0] || "";
@@ -23,6 +21,7 @@ var uiConfig = {
             createdAt: firebase.database.ServerValue.TIMESTAMP,
           })
           .then(() => {
+            window.location = "account.html";
             return true;
           })
           .catch((error) => {
@@ -30,12 +29,6 @@ var uiConfig = {
             alert("There was an error creating your account. Please try again.");
             return false;
           });
-      } else {
-        // Existing user → just redirect
-        console.log("Existing user login:", user.uid, user.email);
-        window.location.href = "account.html";
-        return false;
-      }
     },
     signInFailure: function (error) {
       console.error("Sign-in failure:", error);
@@ -46,10 +39,7 @@ var uiConfig = {
     },
   },
 
-  queryParameterForSignInSuccessUrl: "signInSuccessUrl",
   signInFlow: "popup",
-
-  signInSuccessUrl: "account.html",
 
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,

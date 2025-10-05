@@ -2,6 +2,8 @@
 <html lang="en">
     <head title="Doll Planet">
       <title>Doll Planet | Shop All</title>
+      <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta
         name="description"
@@ -39,38 +41,38 @@
           });
       </script>
 
-        <div id="container_navBar" height="146"></div>
+        <div id="container_navBar"></div>
 
   <main>
 <!-- CATEGORIES START ***************************************************-->
         <div id="categoriesContainer">
             <div id="selectedCategory" onclick="goToCategory('shopAll')">
               <img src="images/all_s.jpg" alt="all">
-              <p>All</p>
+              <h2>All</h2>
             </div>
             <div onclick="goToCategory('dresses')">
               <img src="images/dresses.jpg" alt="dresses">
-              <p>Dresses</p>
+              <h2>Dresses</h2>
             </div>
             <div onclick="goToCategory('tops')">
               <img  src="images/tops.jpg" alt="tops">
-              <p>Tops</p>
+              <h2>Tops</h2>
             </div>
             <div onclick="goToCategory('shoes')">
               <img  src="images/shoes.jpg" alt="shoes">
-              <p>Shoes</p>
+              <h2>Shoes</h2>
             </div>
             <div onclick="goToCategory('bottoms')">
               <img  src="images/bottoms.jpg" alt="bottoms">
-              <p>Bottoms</p>
+              <h2>Bottoms</h2>
             </div>
             <div onclick="goToCategory('accessories')">
               <img  src="images/accessories.jpg" alt="accessories">
-              <p>Accessories</p>
+              <h2>Accessories</h2>
             </div>
             <div onclick="goToCategory('prints')">
               <img  src="images/prints.jpg" alt="prints">
-              <p>Prints</p>
+              <h2>Prints</h2>
             </div>
         </div> 
 <!-- CATEGORIES END ***************************************************-->
@@ -83,7 +85,7 @@
 <form id="shopForm" onchange="filterSettings(event, 'all'); return false">
 <div id="colourFilterDiv">
 
-  <label for="colour" class="sr-only">Filter by colour:</label>
+  <label for="colourDropdown" class="sr-only">Filter by colour:</label>
     <select id="colourDropdown" name="colour">
       <option value="all">All colours</option>
       <option value="red">Red</option>
@@ -99,7 +101,7 @@
     </select>
 </div>
 
-<label for="size" class="sr-only">Filter by size:</label>
+<label for="sizeDropdown" class="sr-only">Filter by size:</label>
 <div id="sizeFilterDiv">
     <select id="sizeDropdown" name="size">
       <option value="all">All sizes</option>
@@ -113,7 +115,7 @@
 </div>
 </form>
 
-<label for="sortBy" class="sr-only">Sort by:</label>
+<label for="sortDropdown" class="sr-only">Sort by:</label>
 <form id="sortDiv" onchange="handleSortSettings(event, 'all'); return false">
   <select id="sortDropdown" name="sortDropdown">
     <option value="newest">Sort by newest</option>

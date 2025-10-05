@@ -50,10 +50,10 @@ function navBar() {
 <!--WEB-search-bar-->
   <div id="div_search">
       <form id="web_searchForm" class="form_searchBar" onsubmit="web_searchSubmit(event); return false">
-          <input class="submitButton" type="image" id="web_searchSubmit"
+          <input class="submitButton" type="image" id="web_searchSubmit" aria-label="search bar submit" 
           src="/images/search.png" alt="submit">
-          <input class="inputBar" type="text" id="web_searchInput"
-          placeholder="Search..." required>
+          <input class="inputBar" type="text" id="web_searchInput" aria-label="search bar" 
+          placeholder="Search..." required autocomplete="off">
           <div id="inputBar_line"></div>
       </form>
   </div>
@@ -91,8 +91,8 @@ function navBar() {
 <!--MOBILE-search-bar-->
   <div id="mobile_div_search" class="searchNeutral">
       <form id="mobile_searchForm" class="form_searchBar" onsubmit="mobile_searchSubmit(event); return false">
-          <input class="inputBar" id="mobile_searchInput" type="text" autofocus required>
-          <input class="submitButton" id="mb_searchSubmit" type="image"
+          <input class="inputBar" id="mobile_searchInput" type="text" autofocus required aria-label="search bar" >
+          <input class="submitButton" id="mb_searchSubmit" type="image" aria-label="search bar submit" 
           src="/images/search.png" alt="submit">
       </form>
   </div>

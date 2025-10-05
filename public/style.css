@@ -437,12 +437,11 @@ button {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     text-align: center;
-    color: white;
     background-color: #ffffff;
     padding: 10px 0px;
 }
 
-#selectedCategory p {
+#selectedCategory h2, #selectedCategory p {
     display: none;
 }
 
@@ -450,6 +449,7 @@ button {
     position: relative;
     margin: 15px 5px;
     cursor: pointer;
+    background-color: black;
 }
 
 #categoriesContainer div:hover {
@@ -457,13 +457,13 @@ button {
 }
 
 
-
-#categoriesContainer p {
+#categoriesContainer h2, #categoriesContainer p {
     font-size: 90%;
     font-weight: 700;
     margin: 0px;
     position: absolute;
     top: 50%;
+    color: white;
     left: 50%;
     transform: translate(-50%, -50%);
     text-transform: uppercase;
@@ -494,7 +494,6 @@ button {
     font-weight: 400;
     font-size: 0.8rem;
     display: block;
-    width: max-width;
     text-transform: uppercase;
 }
 
@@ -539,7 +538,6 @@ button {
         font-weight: 400;
         font-size: 0.8rem;
         display: block;
-        width: max-width;
         text-transform: uppercase;
     }
     
@@ -597,6 +595,7 @@ button {
     font-size: 1.2rem;
     padding: 3px 0px;
     margin: 0px;
+    font-weight: 400;
     display: block;
 }
 
@@ -677,7 +676,7 @@ button {
     display: inline;
 }
 
-#container_info h6 {
+#container_info .bold {
     font-size: 0.8rem;
     padding: 0px;
     margin: 3px 0px;
@@ -697,6 +696,7 @@ button {
     font-size: 1.1rem;
     font-weight: bold;
     display: block;
+    margin: 3px 0px;
 }
 
 #container_colours {
@@ -1093,7 +1093,6 @@ button {
 @media only screen and (max-width: 600px) {
     #reviewsContainer {
         column-count: 2;
-        font-size: 0.rem;
         column-gap: 10px;
         margin: 10px;
     }
@@ -1513,7 +1512,6 @@ button {
     width: 100%;
     display: inline-block;
     margin: 10px 0px;
-    padding: 10px;
     background-color: #ffffff;
 }
 
@@ -1770,6 +1768,11 @@ button {
 
 /*----- SEARCH PAGE ------------------------------------------*/
 /*---PRODUCTS-SECTION----*/
+#p_noResults {
+    padding: 50px 10px;
+    font-size: 1.2rem;
+}
+
 #search_products_container {
     display: grid;
     width: 100%;
@@ -1907,7 +1910,7 @@ header {
 
 .cart-badge {
     position: absolute;
-    background: #7b628b;
+    background: #8a739a;
     color: white;
     font-size: 12px;
     font-weight: bold;

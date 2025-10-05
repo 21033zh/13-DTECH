@@ -20,6 +20,18 @@ const defaultColour = "#ffffff";
 var imagesArray = [];
 var slidePlace = 0;
 
+document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("keydown", function (e) {
+  console.log("pressed")
+  if (e.key === "ArrowLeft") {
+    prevSlide();
+    console.log("back");
+  } else if (e.key === "ArrowRight") {
+    nextSlide();
+    console.log("next");
+  }
+});
+});
 
 /**-----------------------------------------------------------------
  * productPage_addToWishlist
@@ -78,7 +90,7 @@ function productPage_removeFromWishlist() {
 
   wishlistContainer.innerHTML = `
     <button id="button_addToWishlist">
-      <img src="/images/heart.png">
+      <img src="/images/heart.png" alt="Add to Wishlist">
     </button>`;
 
   const btn = document.getElementById("button_addToWishlist");
@@ -101,7 +113,7 @@ function createWishlistRemoveButton(user) {
 
   wishlistContainer.innerHTML = `
     <button id="button_removeFromWishlist">
-      <img src="/images/heart_filled.png">
+      <img src="/images/heart_filled.png" alt="Remove from wishlist">
     </button>`;
 
   const btn = document.getElementById("button_removeFromWishlist");
@@ -201,12 +213,12 @@ function displayProductDetails(cartRef, user) {
    
     for (let i = 0; i < imagesArray.length; i++) {
       console.log('hi')
-      let photo = `<li><img id="slide${i}" src="${imagesArray[i]}"></li>`;
+      let photo = `<li><img id="slide${i}" src="${imagesArray[i]}" alt="Photo on the sidebar of ${productName}></li>`;
       ul_photos.innerHTML += photo;
     }
 
     var div = document.getElementById("div_selectedImage");
-    div.innerHTML = `<img class="img_selected" src=${imagesArray[slidePlace]}>`;
+    div.innerHTML = `<img class="img_selected" src=${imagesArray[slidePlace]} alt="Big photo of ${productName}>`;
 
     var img_selectedSlide = document.getElementById("slide0");
     if (img_selectedSlide) img_selectedSlide.style.opacity = 0.5;
@@ -214,6 +226,7 @@ function displayProductDetails(cartRef, user) {
     // ----------------------------
     // Text fields
     // ----------------------------
+    console.log(productName);
     document.getElementById("title").innerHTML = productName;
     document.getElementById("h1_name").innerHTML = productName;
     document.getElementById("p_price").innerHTML = '$' + price;
@@ -316,7 +329,7 @@ function nextSlide() {
     img_selectedSlide.style.opacity = 0.5;
 
 
-    var image = `<img class="img_selected" src=${imagesArray[slidePlace]}>`;
+    var image = `<img class="img_selected" src=${imagesArray[slidePlace]}> alt="${productName}`;
     div.innerHTML = image;
 }
 

@@ -38,6 +38,7 @@ function populateAccountInfo() {
             var uid = user.uid;
             firebase.database().ref('/accounts/' + uid).once('value', function(snapshot) {
                 var accountInfo = snapshot.val();
+                console.log(uid)
                 sessionStorage.setItem("firstName", accountInfo.firstName);
                 document.getElementById("p_welcomeName").innerHTML = accountInfo.firstName;
                 document.getElementById("p_firstName").innerHTML = accountInfo.firstName;
@@ -91,24 +92,32 @@ function editName(name) {
             p_name.innerText = oldValue; // No change
             return;
         }
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                // User is signed in.
-                var uid = user.uid
-                firebase.database().ref(`/accounts/`+uid+'/' + name +'Name/').set(newValue)
-                .then(() => {
-                    p_name.innerText = newValue;
-                })
-                .catch((error) => {
-                    console.error("Failed to update field:", error);
-                    p_name.innerText = oldValue;
-                });
-            } else {
-                // User is signed out.
-                console.log("user signed out")
-                window.location="makeAccount.html"
-            }
-        });
+
+        console.log(newValue);
+
+        if (/^[A-Za-z]+$/.test(newValue) && newValue.length > 1 && newValue.length < 15) {
+            console.log(name.length)
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    // User is signed in.
+                    var uid = user.uid
+                    firebase.database().ref(`/accounts/`+uid+'/' + name +'Name/').set(newValue)
+                    .then(() => {
+                        p_name.innerText = newValue;
+                    })
+                    .catch((error) => {
+                        console.error("Failed to update field:", error);
+                        p_name.innerText = oldValue;
+                    });
+                } else {
+                    // User is signed out.
+                    console.log("user signed out")
+                    window.location="makeAccount.html"
+                }
+            });
+        } else {
+            alert("Name is invalid. Please only use less than 15 letters, no special characters.")
+        }
         
     }
 }
@@ -192,7 +201,7 @@ function appendReview(productID, image, text, stars, num, uid) {
     document.getElementById("acc_reviewsContainer").innerHTML += review;
     for (s = 0; s < stars; s++ ) {
         const starRow = 
-        `<img id="star" src="/images/star.webp">`
+        `<img class="star" src="/images/star.webp">`
         document.getElementById(`acc_${num}stars`).innerHTML += starRow;
     }  
 }
@@ -280,14 +289,18 @@ function appendProduct(productID, mainImage, productName, productPrice, productS
            `<div class="productContainer">
             <div class="productImageContainer">
                 <img class="productImage" src="${mainImage}"
-                 onclick="goToPage()">
+                 onclick="goToPage('${productID}')">
             </div>
             <button onclick="account_removeFromWishlist('${productID}')">Remove</button>
-            <p class="productName"  onclick="goToPage()">${productName}</p>
+            <p class="productName"  onclick="goToPage('${productID}')">${productName}</p>
             <p class="productSize" >size ${productSize}</p>
             <p class="productPrice">$${productPrice}</p>
             </div>`;
     document.getElementById("div_accWishlist").innerHTML += product;
+}
+
+function goToPage(productID) {
+    window.location = `/products/product.html?productID=${productID}`
 }
 
 /**-----------------------------------------------------------------

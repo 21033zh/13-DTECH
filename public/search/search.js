@@ -2,8 +2,8 @@ var search_productsArray = [];
 var search_allProductsArray = [];
 var search_colourFilter;
 var search_sizeFilter;
-var search_sortBy = 'date';       // or 'price'
-var search_sortSettings = 'newest'; // or 'lowPrice', 'highPrice', etc.
+var search_sortBy = 'relevance';       // or 'price'
+var search_sortSettings = 'relevance'; // or 'lowPrice', 'highPrice', etc.
 
 let search_productsPerPage = 12;
 let search_currentIndex = 0;
@@ -38,26 +38,24 @@ function search_displayProducts() {
         snapshot.forEach(function(childSnapshot) {
             var search_productInfo = childSnapshot.val();
             var searched = 0;
-
-            console.log(search_productInfo)
-
             const productName = search_productInfo.productName || "";
             const brand = search_productInfo.brand || "";
             const colour1 = search_productInfo.colour1 || "";
-            const colour2 = search_productInfo.colour2 || ""
-
-            console.log(productName, brand, colour1, colour2)
+            const colour2 = search_productInfo.colour2 || "";
+            const description = search_productInfo.description || ""
+            console.log(description)
 
             for (let i = 0; i < searchWords.length; i++) {
                 const word = searchWords[i].toLowerCase();
                 if (
                     productName.toLowerCase().includes(word) ||
                     brand.toLowerCase().includes(word) ||
-                    colour1.toLowerCase().includes(word) ||
-                    colour2.toLowerCase().includes(word)
+                    colour1.toLowerCase().includes(word)
                 ) {
+                    searched += 3;
+                } else if (colour2.toLowerCase().includes(word)) {
                     searched += 2;
-                } else if (search_productInfo.colour2.toLowerCase().includes(word)) {
+                } else if (description.toLowerCase().includes(word)) {
                     searched += 1;
                 }
             }
@@ -69,12 +67,19 @@ function search_displayProducts() {
                     relevance: searched
                 });
             }
+
+            search_allProductsArray = [].concat(search_productsArray); 
+
         });
-
         // Sort by relevance (descending)
-        search_productsArray.sort((a, b) => b.relevance - a.relevance);
+        search_sortByRelevance()
+        
+    });
+}
 
-        search_allProductsArray = [].concat(search_productsArray); 
+function search_sortByRelevance() {
+    console.log('search_sortByRelevance')
+    search_productsArray.sort((a, b) => b.relevance - a.relevance);
         
         // check if user is logged in, then get their wishlist
         firebase.auth().onAuthStateChanged(function(user) {
@@ -88,16 +93,18 @@ function search_displayProducts() {
                 search_createGrid(search_productsArray);
             }
         });
-        
-    });
 }
 
 function search_createGrid() {
     console.log('search_createGrid');
     console.log(search_productsArray)
-    document.getElementById("search_products_container").innerHTML = '';
-    search_currentIndex = 0; // reset whenever grid is recreated
-    search_loadMoreProducts(search_productsArray);
+    if (search_productsArray.length > 0 ) {
+        document.getElementById("search_products_container").innerHTML = '';
+        search_currentIndex = 0; // reset whenever grid is recreated
+        search_loadMoreProducts(search_productsArray);
+    } else {
+        document.getElementById("search_products_container").innerHTML = '<p id="p_noResults">NO RESULTS</p>';
+    }   
 }
 
 function search_loadMoreProducts() {
@@ -187,7 +194,8 @@ function search_filterSettings(event) {
             child.value.size === search_sizeFilter)) {
                 search_productsArray.push({
                     key: child.key,
-                    value: child.value
+                    value: child.value,
+                    relevance: child.relevance 
                 });
         } else {
             console.log('search_ not filtered')
@@ -211,7 +219,8 @@ function search_filterSettings(event) {
             search_sortHighPrice();
         }
     } else {
-        search_createGrid();
+        search_sortByRelevance();
+        console.log('filtered and sorting by relevance')
     }
 }
 
@@ -224,7 +233,11 @@ function search_handleSortSettings(event) {
         search_sortBy = 'date'
     } else if (search_sortSettings === 'lowPrice' || search_sortSettings === 'highPrice') {
         search_sortBy = 'price'
+    } else {
+        search_sortBy = 'relevance';
     }
+
+    console.log('sort by', search_sortBy)
 
      if (search_sortBy === 'date') {
         if (search_sortSettings === 'newest') {
@@ -240,6 +253,9 @@ function search_handleSortSettings(event) {
         } else {
             search_sortHighPrice();
         }
+    } else {
+        console.log('handle sort settings relevance')
+        search_sortByRelevance()
     }
 }
 

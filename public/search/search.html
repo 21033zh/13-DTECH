@@ -37,7 +37,7 @@
             });
         </script>
 
-        <div id="container_navBar" height="146"></div>
+        <div id="container_navBar"></div>
 
         <h1>SEARCH RESULTS FOR: </h1>
         <div id="div_searchedFor"></div>
@@ -75,6 +75,7 @@
             
             <form id="sortDiv" onchange="search_handleSortSettings(event, 'all'); return false">
               <select id="search_sortDropdown" name="sortDropdown">
+                <option value="relevance">Sort by relevance</option>
                 <option value="newest">Sort by newest</option>
                 <option value="oldest">Sory by oldest</option>
                 <option value="lowPrice">Sort by lowest price</option>

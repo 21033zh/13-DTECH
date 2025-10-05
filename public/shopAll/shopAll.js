@@ -125,7 +125,7 @@ function appendProduct(mainImage, productID, productName, productPrice, productS
                 <img alt="wishlist button" class="addToWishlistButton" src="${heartSrc}" 
                      onclick="wishlistPressed('${productID}', '${productName}', '${mainImage}', this)">
             </div>
-            <p class="productName">${productName}</p>
+            <h3 class="productName">${productName}</h3>
             <p class="productSize">size ${productSize}</p>
             <p class="productPrice">${productPrice}</p>
             <div class="big_gap"></div>
